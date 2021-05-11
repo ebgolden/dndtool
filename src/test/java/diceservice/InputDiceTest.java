@@ -85,4 +85,15 @@ public class InputDiceTest {
                 .build();
         Assertions.assertTrue(Arrays.equals(inputDice.getDiceResponse(inputDiceRequest).getDiceRolls(), expectedDiceResponse.getDiceRolls()), "Unequal dice rolls returned.");
     }
+
+    @Test
+    public void shouldReturnEmptyDiceRollsForNullRequest() {
+        int[] expectedDiceRolls = new int[] {};
+        InputDiceRequest inputDiceRequest = null;
+        DiceResponse expectedDiceResponse = DiceResponse
+                .builder()
+                .diceRolls(expectedDiceRolls)
+                .build();
+        Assertions.assertTrue(Arrays.equals(inputDice.getDiceResponse(inputDiceRequest).getDiceRolls(), expectedDiceResponse.getDiceRolls()), "Unequal dice rolls returned.");
+    }
 }
