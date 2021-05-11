@@ -1,17 +1,6 @@
 package diceservice;
 
-import diceservice.bll.DiceBusinessLogic;
-import diceservice.bll.DiceBusinessLogicConverter;
-
-public class InputDice {
-    private DiceBusinessLogicConverter diceBusinessLogicConverter;
-    private DiceBusinessLogic diceBusinessLogic;
-
-    public InputDice() {
-        diceBusinessLogicConverter = new DiceBusinessLogicConverter();
-        diceBusinessLogic = new DiceBusinessLogic();
-    }
-
+public interface InputDice {
     /**
      * Returns a DiceResponse containing an array of positive, non-zero integer
      * dice rolls.  Accepts an array of dice rolls in an InputDiceRequest.
@@ -19,8 +8,5 @@ public class InputDice {
      * @param inputDiceRequest InputDiceRequest containing integer array of dice rolls
      * @return DiceResponse containing an array of positive, non-zero integer dice rolls
      */
-    public DiceResponse getDiceResponse(InputDiceRequest inputDiceRequest) {
-        DiceResponse diceResponse = diceBusinessLogicConverter.getDiceResponseFromInputDiceRequest(inputDiceRequest);
-        return diceBusinessLogic.filterDiceResponse(diceResponse);
-    }
+    DiceResponse getDiceResponse(InputDiceRequest inputDiceRequest);
 }

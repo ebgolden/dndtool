@@ -1,5 +1,10 @@
 package diceservice;
 
+import lombok.Builder;
+import lombok.Value;
+
+@Builder
+@Value
 public class InputDiceRequest {
-    public int[] diceRolls;
+    int[] diceRolls;
 }
