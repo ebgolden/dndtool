@@ -5,6 +5,5 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CharacterObject {
-    String id;
+public class Action {
 }

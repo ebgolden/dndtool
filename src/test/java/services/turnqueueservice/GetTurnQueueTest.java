@@ -84,7 +84,9 @@ public class GetTurnQueueTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
         try {
-            characterJson = objectMapper.writeValueAsString(CharacterObject.builder().build());
+            characterJson = objectMapper.writeValueAsString(CharacterObject
+                    .builder()
+                    .build());
         } catch (JsonProcessingException e) {
             characterJson = "{}";
         }
