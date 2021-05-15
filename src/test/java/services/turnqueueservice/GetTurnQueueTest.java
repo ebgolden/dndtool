@@ -95,7 +95,10 @@ public class GetTurnQueueTest {
             if (currentCharacterIndex < (characterCount - 1))
                 responseJson.append(",");
         }
-        responseJson.append("],\"currentTurnIndex\":").append(currentTurnIndex).append("}");
+        responseJson
+                .append("],\"currentTurnIndex\":")
+                .append(currentTurnIndex)
+                .append("}");
         return responseJson.toString();
     }
 

@@ -1,0 +1,12 @@
+package services.characterdetailservice.bll;
+
+import services.characterdetailservice.CharacterDetailsRequest;
+import services.characterdetailservice.CharacterDetailsResponse;
+import services.characterdetailservice.bll.bo.CharacterAndPlayerBo;
+import services.characterdetailservice.bll.bo.CharacterDetailsAndVisibilityBo;
+
+public interface CharacterDetailBusinessLogicConverter {
+    CharacterAndPlayerBo getCharacterAndPlayerBoFromCharacterDetailsRequest(CharacterDetailsRequest characterDetailsRequest);
+
+    CharacterDetailsResponse getCharacterDetailsResponseFromCharacterDetailsBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo);
+}

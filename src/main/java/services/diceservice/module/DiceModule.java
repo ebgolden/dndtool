@@ -11,7 +11,6 @@ import services.diceservice.bll.DiceBusinessLogicConverterImpl;
 import services.diceservice.bll.DiceBusinessLogicImpl;
 
 public class DiceModule extends AbstractModule {
-
     @Override
     protected void configure() {
         bind(InputDice.class).to(InputDiceImpl.class);
