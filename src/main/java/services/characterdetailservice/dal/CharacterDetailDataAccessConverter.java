@@ -8,6 +8,8 @@ import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
 public interface CharacterDetailDataAccessConverter {
     CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo);
 
+    CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo);
+
     CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBoFromCharacterDetailsDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao);
 
     CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);

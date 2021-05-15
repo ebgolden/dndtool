@@ -78,7 +78,7 @@ public class GetCharacterDetailsTest {
     }
 
     @Test
-    public void shouldReturnCharacterWithoutIdWhilePlayerWhileVisibilityFalse() {
+    public void shouldReturnCharacterWithoutIdWhileDifferentPlayerWhileVisibilityFalse() {
         String characterPlayerId = "1";
         String playerId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);

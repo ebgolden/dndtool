@@ -17,4 +17,11 @@ public class CharacterDetailDataAccessImpl implements CharacterDetailDataAccess 
         String latestJsonObject = dataOperator.getResponseJson();
         return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(latestJsonObject);
     }
+
+    public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao) {
+        String characterAndVisibilityJson = characterDetailsAndVisibilityDao.getCharacterDetailsAndVisibilityJson();
+        dataOperator.sendRequestJson(characterAndVisibilityJson);
+        String updatedJsonObject = dataOperator.getResponseJson();
+        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(updatedJsonObject);
+    }
 }

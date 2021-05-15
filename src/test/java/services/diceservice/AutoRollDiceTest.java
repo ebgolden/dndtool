@@ -34,7 +34,7 @@ public class AutoRollDiceTest {
         int amountOfDice = 2;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(encodedDice);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
@@ -43,7 +43,7 @@ public class AutoRollDiceTest {
         int amountOfDice = 2;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(encodedDice);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AutoRollDiceTest {
         int amountOfDice = 0;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(encodedDice);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
@@ -61,7 +61,7 @@ public class AutoRollDiceTest {
         int amountOfDice = 2;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(encodedDice);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
@@ -70,7 +70,7 @@ public class AutoRollDiceTest {
         int amountOfDice = 0;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(encodedDice);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
@@ -78,14 +78,14 @@ public class AutoRollDiceTest {
         int amountOfDice = 0;
         AutoRollDiceRequest autoRollDiceRequest = createAutoRollDiceRequest(null);
         int[] diceRolls = getDiceRollsResponse(autoRollDiceRequest);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     @Test
     public void shouldReturnEmptyArrayOfDiceRollsForNullRequest() {
         int amountOfDice = 0;
         int[] diceRolls = getDiceRollsResponse(null);
-        Assertions.assertEquals(diceRolls.length, amountOfDice, "Unequal amount of dice rolls returned.");
+        Assertions.assertEquals(amountOfDice, diceRolls.length, "Unequal amount of dice rolls returned.");
     }
 
     private AutoRollDiceRequest createAutoRollDiceRequest(String[] encodedDice) {

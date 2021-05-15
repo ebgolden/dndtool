@@ -38,7 +38,7 @@ public class GetActionsTest {
         int actionCount = 3;
         String responseJson = createMockResponseJson(actionCount);
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
-        Assertions.assertEquals(actionsResponse.getActions().length, actionCount, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
     @Test
@@ -46,7 +46,7 @@ public class GetActionsTest {
         int actionCount = 0;
         String responseJson = createMockResponseJson(actionCount);
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
-        Assertions.assertEquals(actionsResponse.getActions().length, actionCount, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
     @Test
@@ -54,14 +54,14 @@ public class GetActionsTest {
         int actionCount = 0;
         String responseJson = "{}";
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
-        Assertions.assertEquals(actionsResponse.getActions().length, actionCount, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
     @Test
     public void shouldReturnNoActionsWhenNullJson() {
         int actionCount = 0;
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(null);
-        Assertions.assertEquals(actionsResponse.getActions().length, actionCount, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
     private String createMockResponseJson(int actionCount) {

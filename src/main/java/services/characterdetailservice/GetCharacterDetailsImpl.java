@@ -14,7 +14,7 @@ public class GetCharacterDetailsImpl implements GetCharacterDetails {
 
     public CharacterDetailsResponse getCharacterDetailsResponse(CharacterDetailsRequest characterDetailsRequest) {
         CharacterAndPlayerBo characterAndPlayerBo = characterDetailBusinessLogicConverter.getCharacterAndPlayerBoFromCharacterDetailsRequest(characterDetailsRequest);
-        CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailBusinessLogic.getCharacterDetailsBo(characterAndPlayerBo);
+        CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailBusinessLogic.getCharacterDetailsAndVisibilityBo(characterAndPlayerBo);
         return characterDetailBusinessLogicConverter.getCharacterDetailsResponseFromCharacterDetailsBo(characterDetailsAndVisibilityBo);
     }
 }

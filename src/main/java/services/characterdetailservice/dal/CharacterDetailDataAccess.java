@@ -5,4 +5,6 @@ import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
 
 public interface CharacterDetailDataAccess {
     CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDao(CharacterDao characterDao);
+
+    CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao);
 }

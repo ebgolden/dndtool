@@ -27,6 +27,30 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
                 .build();
     }
 
+    public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
+        CharacterObject character = characterDetailsAndVisibilityBo.getCharacter();
+        String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String characterJson = "{}";
+        try {
+            characterJson = objectMapper.writeValueAsString(character);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String characterDetailsAndVisibilityJson = "{}";
+        if ((!characterJson.equals("{}") && (!characterJson.equals("null"))) || !visibilityJson.equals("{}"))
+            characterDetailsAndVisibilityJson = "{" +
+                    "characterDetails:" +
+                    characterJson +
+                    ",visibility:" +
+                    visibilityJson +
+                    "}";
+        return CharacterDetailsAndVisibilityDao
+                .builder()
+                .characterDetailsAndVisibilityJson(characterDetailsAndVisibilityJson)
+                .build();
+    }
+
     public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBoFromCharacterDetailsDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao) {
         String characterDetailsAndVisibilityJson = characterDetailsAndVisibilityDao.getCharacterDetailsAndVisibilityJson();
         if (characterDetailsAndVisibilityJson == null)
