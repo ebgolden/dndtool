@@ -15,6 +15,6 @@ public class UpdateCharacterDetailsVisibilityImpl implements UpdateCharacterDeta
     public CharacterDetailsVisibilityResponse getCharacterDetailsVisibilityResponse(CharacterDetailsVisibilityRequest characterDetailsVisibilityRequest) {
         CharacterDetailsAndVisibilityAndPlayerBo characterDetailsAndVisibilityAndPlayerBo = characterDetailBusinessLogicConverter.getCharacterDetailsAndVisibilityAndPlayerBoFromCharacterDetailsVisibilityRequest(characterDetailsVisibilityRequest);
         CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailBusinessLogic.getCharacterDetailsAndVisibilityBo(characterDetailsAndVisibilityAndPlayerBo);
-        return characterDetailBusinessLogicConverter.getCharacterDetailsVisibilityResponseFromCharacterDetailsBo(characterDetailsAndVisibilityBo);
+        return characterDetailBusinessLogicConverter.getCharacterDetailsVisibilityResponseFromCharacterDetailsAndVisibilityBo(characterDetailsAndVisibilityBo);
     }
 }

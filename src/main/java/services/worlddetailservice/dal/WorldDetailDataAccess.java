@@ -5,4 +5,6 @@ import services.worlddetailservice.dal.dao.WorldDetailsAndVisibilityDao;
 
 public interface WorldDetailDataAccess {
     WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDao(WorldDao worldDao);
+
+    WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDao(WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao);
 }

@@ -3,6 +3,8 @@ package services.worlddetailservice.module;
 import com.google.inject.AbstractModule;
 import services.worlddetailservice.GetWorldDetails;
 import services.worlddetailservice.GetWorldDetailsImpl;
+import services.worlddetailservice.UpdateWorldDetailsVisibility;
+import services.worlddetailservice.UpdateWorldDetailsVisibilityImpl;
 import services.worlddetailservice.bll.WorldDetailBusinessLogic;
 import services.worlddetailservice.bll.WorldDetailBusinessLogicConverter;
 import services.worlddetailservice.bll.WorldDetailBusinessLogicConverterImpl;
@@ -16,6 +18,7 @@ public class WorldDetailModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(GetWorldDetails.class).to(GetWorldDetailsImpl.class);
+        bind(UpdateWorldDetailsVisibility.class).to(UpdateWorldDetailsVisibilityImpl.class);
         bind(WorldDetailBusinessLogicConverter.class).to(WorldDetailBusinessLogicConverterImpl.class);
         bind(WorldDetailBusinessLogic.class).to(WorldDetailBusinessLogicImpl.class);
         bind(WorldDetailDataAccessConverter.class).to(WorldDetailDataAccessConverterImpl.class);

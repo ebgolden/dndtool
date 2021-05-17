@@ -2,11 +2,20 @@ package services.worlddetailservice.bll;
 
 import services.worlddetailservice.WorldDetailsRequest;
 import services.worlddetailservice.WorldDetailsResponse;
+import services.worlddetailservice.WorldDetailsVisibilityRequest;
+import services.worlddetailservice.WorldDetailsVisibilityResponse;
 import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
+import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndPlayerBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
 
 public interface WorldDetailBusinessLogicConverter {
     WorldAndPlayerBo getWorldAndPlayerBoFromWorldDetailsRequest(WorldDetailsRequest worldDetailsRequest);
 
     WorldDetailsResponse getWorldDetailsResponseFromWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo);
+
+    WorldDetailsVisibilityResponse getWorldDetailsVisibilityResponseFromWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo);
+
+    WorldDetailsAndVisibilityAndPlayerBo getWorldDetailsAndVisibilityAndPlayerBoFromWorldDetailsVisibilityRequest(WorldDetailsVisibilityRequest worldDetailsVisibilityRequest);
+
+    WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo);
 }

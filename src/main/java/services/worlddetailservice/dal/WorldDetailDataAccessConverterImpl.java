@@ -27,6 +27,30 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
                 .build();
     }
 
+    public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo) {
+        World world = worldDetailsAndVisibilityBo.getWorld();
+        String visibilityJson = worldDetailsAndVisibilityBo.getVisibilityJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String worldJson = "{}";
+        try {
+            worldJson = objectMapper.writeValueAsString(world);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String worldDetailsAndVisibilityJson = "{}";
+        if ((!worldJson.equals("{}") && (!worldJson.equals("null"))) || !visibilityJson.equals("{}"))
+            worldDetailsAndVisibilityJson = "{" +
+                    "worldDetails:" +
+                    worldJson +
+                    ",visibility:" +
+                    visibilityJson +
+                    "}";
+        return WorldDetailsAndVisibilityDao
+                .builder()
+                .worldDetailsAndVisibilityJson(worldDetailsAndVisibilityJson)
+                .build();
+    }
+
     public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityDao(WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao) {
         String worldDetailsAndVisibilityJson = worldDetailsAndVisibilityDao.getWorldDetailsAndVisibilityJson();
         if (worldDetailsAndVisibilityJson == null)

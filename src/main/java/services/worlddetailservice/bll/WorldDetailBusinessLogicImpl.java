@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
+import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndPlayerBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
 import services.worlddetailservice.dal.WorldDetailDataAccess;
 import services.worlddetailservice.dal.WorldDetailDataAccessConverter;
@@ -21,6 +22,8 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
     private WorldDetailDataAccessConverter worldDetailDataAccessConverter;
     @Inject
     private WorldDetailDataAccess worldDetailDataAccess;
+    @Inject
+    private WorldDetailBusinessLogicConverter worldDetailBusinessLogicConverter;
 
     public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBo(WorldAndPlayerBo worldAndPlayerBo) {
         WorldDao worldDao = worldDetailDataAccessConverter.getWorldDaoFromWorldAndPlayerBo(worldAndPlayerBo);
@@ -30,6 +33,14 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
         if (worldDetailsAndVisibilityBo.getWorld() == null)
             return worldDetailsAndVisibilityBo;
         return filterWorldDetailsAndVisibilityBo(worldDetailsAndVisibilityBo, player);
+    }
+
+    public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
+        WorldDetailsAndVisibilityAndPlayerBo filteredWorldDetailsAndVisibilityAndPlayerBo = filterWorldDetailsAndVisibilityAndPlayerBo(worldDetailsAndVisibilityAndPlayerBo);
+        WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo = worldDetailBusinessLogicConverter.getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndPlayerBo(filteredWorldDetailsAndVisibilityAndPlayerBo);
+        WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao = worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityBo(worldDetailsAndVisibilityBo);
+        worldDetailsAndVisibilityDao = worldDetailDataAccess.getWorldDetailsAndVisibilityDao(worldDetailsAndVisibilityDao);
+        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityDao(worldDetailsAndVisibilityDao);
     }
 
     private WorldDetailsAndVisibilityBo filterWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo, Player player) {
@@ -75,4 +86,21 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
                 .visibilityJson(visibilityJson)
                 .build();
     }
+
+    private WorldDetailsAndVisibilityAndPlayerBo filterWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
+        World world = worldDetailsAndVisibilityAndPlayerBo.getWorld();
+        String visibilityJson = worldDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Player player = worldDetailsAndVisibilityAndPlayerBo.getPlayer();
+        if (player.getClass() != DungeonMaster.class) {
+            visibilityJson = "{}";
+            world = null;
+        }
+        return WorldDetailsAndVisibilityAndPlayerBo
+                .builder()
+                .world(world)
+                .visibilityJson(visibilityJson)
+                .player(player)
+                .build();
+    }
+
 }

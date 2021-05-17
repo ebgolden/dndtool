@@ -17,4 +17,11 @@ public class WorldDetailDataAccessImpl implements WorldDetailDataAccess {
         String latestJsonObject = dataOperator.getResponseJson();
         return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromLatestJsonObject(latestJsonObject);
     }
+
+    public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDao(WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao) {
+        String worldAndVisibilityJson = worldDetailsAndVisibilityDao.getWorldDetailsAndVisibilityJson();
+        dataOperator.sendRequestJson(worldAndVisibilityJson);
+        String updatedJsonObject = dataOperator.getResponseJson();
+        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromLatestJsonObject(updatedJsonObject);
+    }
 }

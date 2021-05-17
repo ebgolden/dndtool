@@ -29,7 +29,7 @@ public class CharacterDetailBusinessLogicConverterImpl implements CharacterDetai
                 .build();
     }
 
-    public CharacterDetailsVisibilityResponse getCharacterDetailsVisibilityResponseFromCharacterDetailsBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
+    public CharacterDetailsVisibilityResponse getCharacterDetailsVisibilityResponseFromCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
         String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
         return CharacterDetailsVisibilityResponse
                 .builder()
