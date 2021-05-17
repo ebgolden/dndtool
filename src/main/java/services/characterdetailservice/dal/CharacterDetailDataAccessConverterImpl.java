@@ -2,7 +2,7 @@ package services.characterdetailservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.CharacterObject;
+import objects.Character;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,7 +13,7 @@ import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
 
 public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDataAccessConverter {
     public CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo) {
-        CharacterObject character = characterAndPlayerBo.getCharacter();
+        Character character = characterAndPlayerBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson = "{}";
         try {
@@ -28,7 +28,7 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
     }
 
     public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
-        CharacterObject character = characterDetailsAndVisibilityBo.getCharacter();
+        Character character = characterDetailsAndVisibilityBo.getCharacter();
         String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson = "{}";
@@ -51,7 +51,7 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
                 .build();
     }
 
-    public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBoFromCharacterDetailsDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao) {
+    public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBoFromCharacterDetailsAndVisibilityDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao) {
         String characterDetailsAndVisibilityJson = characterDetailsAndVisibilityDao.getCharacterDetailsAndVisibilityJson();
         if (characterDetailsAndVisibilityJson == null)
             characterDetailsAndVisibilityJson = "{}";
@@ -63,15 +63,15 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
             e.printStackTrace();
         }
         String characterDetailsJson;
-        CharacterObject character = null;
+        Character character = null;
         if (jsonObject.get("characterDetails") != null) {
             characterDetailsJson = ((JSONObject) jsonObject.get("characterDetails")).toJSONString();
             ObjectMapper objectMapper = new ObjectMapper();
-            character = CharacterObject
+            character = Character
                     .builder()
                     .build();
             try {
-                character = objectMapper.readValue(characterDetailsJson, CharacterObject.class);
+                character = objectMapper.readValue(characterDetailsJson, Character.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

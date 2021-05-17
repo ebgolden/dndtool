@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import objects.CharacterObject;
+import objects.Character;
 import objects.DataOperator;
 import objects.DungeonMaster;
 import objects.Player;
@@ -82,7 +82,7 @@ public class UpdateCharacterDetailsVisibilityTest {
         String characterJson;
         String characterId = "1";
         try {
-            characterJson = objectMapper.writeValueAsString(CharacterObject
+            characterJson = objectMapper.writeValueAsString(Character
                     .builder()
                     .id(characterId)
                     .playerId(characterPlayerId)
@@ -113,7 +113,7 @@ public class UpdateCharacterDetailsVisibilityTest {
                 .build();
         CharacterDetailsVisibilityRequest characterDetailsVisibilityRequest = CharacterDetailsVisibilityRequest
                 .builder()
-                .character(CharacterObject
+                .character(Character
                         .builder()
                         .build())
                 .visibilityJson(visibilityJson)

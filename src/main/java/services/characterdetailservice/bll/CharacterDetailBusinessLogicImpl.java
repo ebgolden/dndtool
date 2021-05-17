@@ -3,7 +3,7 @@ package services.characterdetailservice.bll;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import objects.CharacterObject;
+import objects.Character;
 import objects.DungeonMaster;
 import objects.Player;
 import org.json.simple.JSONObject;
@@ -28,11 +28,11 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
     public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBo(CharacterAndPlayerBo characterAndPlayerBo) {
         CharacterDao characterDao = characterDetailDataAccessConverter.getCharacterDaoFromCharacterAndPlayerBo(characterAndPlayerBo);
         CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao = characterDetailDataAccess.getCharacterDetailsAndVisibilityDao(characterDao);
-        CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityBoFromCharacterDetailsDao(characterDetailsAndVisibilityDao);
+        CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityBoFromCharacterDetailsAndVisibilityDao(characterDetailsAndVisibilityDao);
         Player player = characterAndPlayerBo.getPlayer();
         if (characterDetailsAndVisibilityBo.getCharacter() == null)
             return characterDetailsAndVisibilityBo;
-        return filterCharacterDetailsBo(characterDetailsAndVisibilityBo, player);
+        return filterCharacterDetailsAndVisibilityBo(characterDetailsAndVisibilityBo, player);
     }
 
     public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityAndPlayerBo characterDetailsAndVisibilityAndPlayerBo) {
@@ -40,15 +40,15 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
         CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo = characterDetailBusinessLogicConverter.getCharacterDetailsAndVisibilityBoFromCharacterDetailsAndVisibilityAndPlayerBo(filteredCharacterDetailsAndVisibilityAndPlayerBo);
         CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao = characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityBo(characterDetailsAndVisibilityBo);
         characterDetailsAndVisibilityDao = characterDetailDataAccess.getCharacterDetailsAndVisibilityDao(characterDetailsAndVisibilityDao);
-        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityBoFromCharacterDetailsDao(characterDetailsAndVisibilityDao);
+        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityBoFromCharacterDetailsAndVisibilityDao(characterDetailsAndVisibilityDao);
     }
 
-    private CharacterDetailsAndVisibilityBo filterCharacterDetailsBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo, Player player) {
-        CharacterObject character = characterDetailsAndVisibilityBo.getCharacter();
+    private CharacterDetailsAndVisibilityBo filterCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo, Player player) {
+        Character character = characterDetailsAndVisibilityBo.getCharacter();
         String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
-        CharacterObject filteredCharacter = character;
+        Character filteredCharacter = character;
         if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
             ObjectMapper objectMapper = new ObjectMapper();
             String characterJson = "{}";
@@ -77,7 +77,7 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
             JSONObject filteredCharacterJsonObject = characterJsonObject;
             String filteredCharacterJson = filteredCharacterJsonObject.toJSONString();
             try {
-                filteredCharacter = objectMapper.readValue(filteredCharacterJson, CharacterObject.class);
+                filteredCharacter = objectMapper.readValue(filteredCharacterJson, Character.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -90,7 +90,7 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
     }
 
     private CharacterDetailsAndVisibilityAndPlayerBo filterCharacterDetailsAndVisibilityAndPlayerBo(CharacterDetailsAndVisibilityAndPlayerBo characterDetailsAndVisibilityAndPlayerBo) {
-        CharacterObject character = characterDetailsAndVisibilityAndPlayerBo.getCharacter();
+        Character character = characterDetailsAndVisibilityAndPlayerBo.getCharacter();
         String visibilityJson = characterDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
         Player player = characterDetailsAndVisibilityAndPlayerBo.getPlayer();
         String playerId = player.getId();

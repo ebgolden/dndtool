@@ -6,6 +6,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import objects.*;
+import objects.Character;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,7 +89,7 @@ public class GetActionsTest {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
         ActionsRequest actionsRequest = ActionsRequest
                 .builder()
-                .character(CharacterObject
+                .character(Character
                         .builder()
                         .build())
                 .build();

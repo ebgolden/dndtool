@@ -2,11 +2,11 @@ package services.characterdetailservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.CharacterObject;
+import objects.Character;
 
 @Builder
 @Value
 public class CharacterDetailsAndVisibilityBo {
-    CharacterObject character;
+    Character character;
     String visibilityJson;
 }

@@ -3,7 +3,7 @@ package services.actionservice.dal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Action;
-import objects.CharacterObject;
+import objects.Character;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +15,7 @@ import services.actionservice.dal.dao.CharacterDao;
 
 public class ActionDataAccessConverterImpl implements ActionDataAccessConverter {
     public CharacterDao getCharacterDaoFromCharacterBo(CharacterBo characterBo) {
-        CharacterObject character = characterBo.getCharacter();
+        Character character = characterBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson = "{}";
         try {

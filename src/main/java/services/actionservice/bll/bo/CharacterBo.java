@@ -2,10 +2,10 @@ package services.actionservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.CharacterObject;
+import objects.Character;
 
 @Builder
 @Value
 public class CharacterBo {
-    CharacterObject character;
+    Character character;
 }

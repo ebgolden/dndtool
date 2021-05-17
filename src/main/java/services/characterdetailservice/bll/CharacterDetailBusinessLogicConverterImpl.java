@@ -1,6 +1,6 @@
 package services.characterdetailservice.bll;
 
-import objects.CharacterObject;
+import objects.Character;
 import objects.Player;
 import services.characterdetailservice.CharacterDetailsRequest;
 import services.characterdetailservice.CharacterDetailsResponse;
@@ -12,7 +12,7 @@ import services.characterdetailservice.bll.bo.CharacterDetailsAndVisibilityBo;
 
 public class CharacterDetailBusinessLogicConverterImpl implements CharacterDetailBusinessLogicConverter {
     public CharacterAndPlayerBo getCharacterAndPlayerBoFromCharacterDetailsRequest(CharacterDetailsRequest characterDetailsRequest) {
-        CharacterObject character = characterDetailsRequest.getCharacter();
+        Character character = characterDetailsRequest.getCharacter();
         Player player = characterDetailsRequest.getPlayer();
         return CharacterAndPlayerBo
                 .builder()
@@ -22,7 +22,7 @@ public class CharacterDetailBusinessLogicConverterImpl implements CharacterDetai
     }
 
     public CharacterDetailsResponse getCharacterDetailsResponseFromCharacterDetailsBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
-        CharacterObject character = characterDetailsAndVisibilityBo.getCharacter();
+        Character character = characterDetailsAndVisibilityBo.getCharacter();
         return CharacterDetailsResponse
                 .builder()
                 .character(character)
@@ -38,19 +38,19 @@ public class CharacterDetailBusinessLogicConverterImpl implements CharacterDetai
     }
 
     public CharacterDetailsAndVisibilityAndPlayerBo getCharacterDetailsAndVisibilityAndPlayerBoFromCharacterDetailsVisibilityRequest(CharacterDetailsVisibilityRequest characterDetailsVisibilityRequest) {
-        CharacterObject characterObject = characterDetailsVisibilityRequest.getCharacter();
+        Character character = characterDetailsVisibilityRequest.getCharacter();
         String visibilityJson = characterDetailsVisibilityRequest.getVisibilityJson();
         Player player = characterDetailsVisibilityRequest.getPlayer();
         return CharacterDetailsAndVisibilityAndPlayerBo
                 .builder()
-                .character(characterObject)
+                .character(character)
                 .visibilityJson(visibilityJson)
                 .player(player)
                 .build();
     }
 
     public CharacterDetailsAndVisibilityBo getCharacterDetailsAndVisibilityBoFromCharacterDetailsAndVisibilityAndPlayerBo(CharacterDetailsAndVisibilityAndPlayerBo characterDetailsAndVisibilityAndPlayerBo) {
-        CharacterObject character = characterDetailsAndVisibilityAndPlayerBo.getCharacter();
+        Character character = characterDetailsAndVisibilityAndPlayerBo.getCharacter();
         String visibilityJson = characterDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
         return CharacterDetailsAndVisibilityBo
                 .builder()

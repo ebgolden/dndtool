@@ -2,11 +2,11 @@ package services.turnqueueservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.CharacterObject;
+import objects.Character;
 
 @Builder
 @Value
 public class TurnQueueBo {
-    CharacterObject[] characters;
+    Character[] characters;
     int currentTurnIndex;
 }

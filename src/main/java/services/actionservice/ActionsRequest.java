@@ -2,10 +2,10 @@ package services.actionservice;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.CharacterObject;
+import objects.Character;
 
 @Builder
 @Value
 public class ActionsRequest {
-    CharacterObject character;
+    Character character;
 }

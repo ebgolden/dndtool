@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class CharacterObject {
+public class Character {
     String id;
     String playerId;
 }

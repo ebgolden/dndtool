@@ -6,6 +6,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import objects.*;
+import objects.Character;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,7 +108,7 @@ public class GetCharacterDetailsTest {
         String characterJson;
         String characterId = "1";
         try {
-            characterJson = objectMapper.writeValueAsString(CharacterObject
+            characterJson = objectMapper.writeValueAsString(Character
                     .builder()
                     .id(characterId)
                     .playerId(characterPlayerId)
@@ -137,7 +138,7 @@ public class GetCharacterDetailsTest {
                 .build();
         CharacterDetailsRequest characterDetailsRequest = CharacterDetailsRequest
                 .builder()
-                .character(CharacterObject
+                .character(Character
                         .builder()
                         .build())
                 .player(player)

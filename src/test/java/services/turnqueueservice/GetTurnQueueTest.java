@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import objects.CharacterObject;
+import objects.Character;
 import objects.DataOperator;
 import objects.Encounter;
 import objects.Party;
@@ -84,7 +84,7 @@ public class GetTurnQueueTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
         try {
-            characterJson = objectMapper.writeValueAsString(CharacterObject
+            characterJson = objectMapper.writeValueAsString(Character
                     .builder()
                     .build());
         } catch (JsonProcessingException e) {

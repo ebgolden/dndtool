@@ -2,12 +2,12 @@ package services.characterdetailservice;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.CharacterObject;
+import objects.Character;
 import objects.Player;
 
 @Builder
 @Value
 public class CharacterDetailsRequest {
-    CharacterObject character;
+    Character character;
     Player player;
 }

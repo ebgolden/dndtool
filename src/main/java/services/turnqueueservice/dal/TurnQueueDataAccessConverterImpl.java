@@ -2,7 +2,7 @@ package services.turnqueueservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.CharacterObject;
+import objects.Character;
 import objects.Encounter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,12 +44,12 @@ public class TurnQueueDataAccessConverterImpl implements TurnQueueDataAccessConv
         int numberOfCharacters = 0;
         if (jsonArray != null)
             numberOfCharacters = jsonArray.size();
-        CharacterObject[] characters = new CharacterObject[numberOfCharacters];
+        Character[] characters = new Character[numberOfCharacters];
         ObjectMapper objectMapper = new ObjectMapper();
         for (int characterIndex = 0; characterIndex < numberOfCharacters; ++characterIndex) {
             String characterJson = ((JSONObject)jsonArray.get(characterIndex)).toJSONString();
             try {
-                characters[characterIndex] = objectMapper.readValue(characterJson, CharacterObject.class);
+                characters[characterIndex] = objectMapper.readValue(characterJson, Character.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
