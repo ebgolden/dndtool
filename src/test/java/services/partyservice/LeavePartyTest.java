@@ -51,9 +51,10 @@ public class LeavePartyTest {
 
     @Test
     public void shouldReturnNotLeftPartyWhileOtherPlayer() {
+        String characterPlayerId = "1";
         String playerId = "2";
         String characterId = "0";
-        String responseJson = createMockResponseJsonWithCharacterInParty(characterId, playerId);
+        String responseJson = createMockResponseJsonWithCharacterInParty(characterId, characterPlayerId);
         LeavePartyResponse leavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(responseJson, playerId, true);
         Assertions.assertFalse(leavePartyResponse.leftParty, "Left party.");
     }

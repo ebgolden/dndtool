@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Character;
 import objects.Party;
+import services.partyservice.bll.bo.PartyAndCharacterAndPlayerAndAcceptedByPartyBo;
 import services.partyservice.bll.bo.PartyBo;
 import services.partyservice.bll.bo.PartyAndCharacterAndPlayerBo;
 import services.partyservice.dal.dao.PartyAndCharacterDao;
@@ -13,6 +14,16 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
     public PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {
         Party party = partyAndCharacterAndPlayerBo.getParty();
         Character character = partyAndCharacterAndPlayerBo.getCharacter();
+        return getPartyAndCharacterDaoFromPartyAndCharacter(party, character);
+    }
+
+    public PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerAndAcceptedByPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo) {
+        Party party = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getParty();
+        Character character = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getCharacter();
+        return getPartyAndCharacterDaoFromPartyAndCharacter(party, character);
+    }
+
+    private PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacter(Party party, Character character) {
         ObjectMapper objectMapper = new ObjectMapper();
         String partyJson = "{}";
         String characterJson = "{}";

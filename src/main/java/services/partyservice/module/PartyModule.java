@@ -1,6 +1,8 @@
 package services.partyservice.module;
 
 import com.google.inject.AbstractModule;
+import services.partyservice.JoinParty;
+import services.partyservice.JoinPartyImpl;
 import services.partyservice.LeaveParty;
 import services.partyservice.LeavePartyImpl;
 import services.partyservice.bll.PartyBusinessLogic;
@@ -16,6 +18,7 @@ public class PartyModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(LeaveParty.class).to(LeavePartyImpl.class);
+        bind(JoinParty.class).to(JoinPartyImpl.class);
         bind(PartyBusinessLogicConverter.class).to(PartyBusinessLogicConverterImpl.class);
         bind(PartyBusinessLogic.class).to(PartyBusinessLogicImpl.class);
         bind(PartyDataAccessConverter.class).to(PartyDataAccessConverterImpl.class);
