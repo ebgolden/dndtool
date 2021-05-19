@@ -9,4 +9,5 @@ import lombok.*;
 public class Party {
     Encounter currentEncounter;
     Character[] characters;
+    Event[] history;
 }

@@ -6,8 +6,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class Character {
+public class Class {
     String id;
-    String playerId;
-    Event[] history;
 }
