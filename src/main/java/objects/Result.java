@@ -3,9 +3,9 @@ package objects;
 import lombok.*;
 
 @Builder
-@Data
+@Value
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class Action {
+public class Result {
     String id;
 }
