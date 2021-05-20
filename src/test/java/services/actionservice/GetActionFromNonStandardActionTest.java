@@ -38,7 +38,7 @@ public class GetActionFromNonStandardActionTest {
         String playerId = "1";
         String responseJson = createMockResponseJson();
         ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, playerId, true);
-        Assertions.assertNotEquals(null, actionFromNonStandardActionResponse.getAction(), "Action null.");
+        Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
     @Test
@@ -47,7 +47,7 @@ public class GetActionFromNonStandardActionTest {
         String characterPlayerId = "1";
         String responseJson = createMockResponseJson();
         ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, characterPlayerId, false);
-        Assertions.assertNotEquals(null, actionFromNonStandardActionResponse.getAction(), "Action null.");
+        Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
     @Test

@@ -14,13 +14,17 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
                 .build();
     }
 
-    public ActionAndDiceRollsBo getActionAndDiceRollsBoFromTakeActionRequest(TakeActionRequest takeActionRequest) {
+    public ActionAndDiceRollsAndCharacterAndPlayerBo getActionAndDiceRollsAndCharacterAndPlayerBoFromTakeActionRequest(TakeActionRequest takeActionRequest) {
         Action action = takeActionRequest.getAction();
         int[] diceRolls = takeActionRequest.getDiceRolls();
-        return ActionAndDiceRollsBo
+        Character character = takeActionRequest.getCharacter();
+        Player player = takeActionRequest.getPlayer();
+        return ActionAndDiceRollsAndCharacterAndPlayerBo
                 .builder()
                 .action(action)
                 .diceRolls(diceRolls)
+                .character(character)
+                .player(player)
                 .build();
     }
 

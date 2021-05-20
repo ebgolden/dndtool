@@ -29,29 +29,34 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
-    public ActionAndDiceRollsDao getActionAndDiceRollsDaoFromActionAndDiceRollsBo(ActionAndDiceRollsBo actionAndDiceRollsBo) {
-        Action action = actionAndDiceRollsBo.getAction();
-        int[] diceRolls = actionAndDiceRollsBo.getDiceRolls();
+    public ActionAndDiceRollsAndCharacterDao getActionAndDiceRollsAndCharacterDaoFromActionAndDiceRollsBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo) {
+        Action action = actionAndDiceRollsAndCharacterAndPlayerBo.getAction();
+        int[] diceRolls = actionAndDiceRollsAndCharacterAndPlayerBo.getDiceRolls();
+        Character character = actionAndDiceRollsAndCharacterAndPlayerBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson = "{}";
         String diceRollsJson = "{}";
+        String characterJson = "{}";
         try {
             actionJson = objectMapper.writeValueAsString(action);
             diceRollsJson = objectMapper.writeValueAsString(diceRolls);
+            characterJson = objectMapper.writeValueAsString(character);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        String actionAndDiceRollsJson = "{}";
-        if (!actionJson.equals("{}") && !actionJson.equals("null") && !diceRollsJson.equals("{}") && !diceRollsJson.equals("null"))
-            actionAndDiceRollsJson = "{" +
+        String actionAndDiceRollsAndCharacterJson = "{}";
+        if (!actionJson.equals("{}") && !actionJson.equals("null") && !diceRollsJson.equals("{}") && !diceRollsJson.equals("null") && !characterJson.equals("{}") && !characterJson.equals("null"))
+            actionAndDiceRollsAndCharacterJson = "{" +
                     "\"action\":" +
                     actionJson +
                     ",\"diceRolls\":" +
                     diceRollsJson +
+                    ",\"character\":" +
+                    characterJson +
                     "}";
-        return ActionAndDiceRollsDao
+        return ActionAndDiceRollsAndCharacterDao
                 .builder()
-                .actionAndDiceRollsJson(actionAndDiceRollsJson)
+                .actionAndDiceRollsAndCharacterJson(actionAndDiceRollsAndCharacterJson)
                 .build();
     }
 

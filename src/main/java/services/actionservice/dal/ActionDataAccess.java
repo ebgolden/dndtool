@@ -5,7 +5,7 @@ import services.actionservice.dal.dao.*;
 public interface ActionDataAccess {
     ActionsDao getActionsDao(CharacterDao characterDao);
 
-    ResultDao getResultDao(ActionAndDiceRollsDao actionAndDiceRollsDao);
+    ResultDao getResultDao(ActionAndDiceRollsAndCharacterDao actionAndDiceRollsAndCharacterDao);
 
     ActionDao getActionDao(NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao);
 }

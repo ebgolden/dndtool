@@ -37,7 +37,7 @@ public class GetClassDetailsTest {
     public void shouldReturnClass() {
         String responseJson = createMockResponseJson();
         ClassDetailsResponse classDetailsResponse = mockJsonResponseAndReturnClassDetailsResponse(responseJson);
-        Assertions.assertNotEquals(null, classDetailsResponse.getCClass(), "Class null.");
+        Assertions.assertNotNull(classDetailsResponse.getCClass(), "Class null.");
     }
 
     @Test

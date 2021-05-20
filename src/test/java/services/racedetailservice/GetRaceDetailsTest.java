@@ -37,7 +37,7 @@ public class GetRaceDetailsTest {
     public void shouldReturnRace() {
         String responseJson = createMockResponseJson();
         RaceDetailsResponse raceDetailsResponse = mockJsonResponseAndReturnRaceDetailsResponse(responseJson);
-        Assertions.assertNotEquals(null, raceDetailsResponse.getRace(), "Race null.");
+        Assertions.assertNotNull(raceDetailsResponse.getRace(), "Race null.");
     }
 
     @Test

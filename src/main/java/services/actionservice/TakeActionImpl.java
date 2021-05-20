@@ -3,7 +3,7 @@ package services.actionservice;
 import com.google.inject.Inject;
 import services.actionservice.bll.ActionBusinessLogic;
 import services.actionservice.bll.ActionBusinessLogicConverter;
-import services.actionservice.bll.bo.ActionAndDiceRollsBo;
+import services.actionservice.bll.bo.ActionAndDiceRollsAndCharacterAndPlayerBo;
 import services.actionservice.bll.bo.ResultBo;
 
 public class TakeActionImpl implements TakeAction {
@@ -13,8 +13,8 @@ public class TakeActionImpl implements TakeAction {
     private ActionBusinessLogic actionBusinessLogic;
 
     public TakeActionResponse getTakeActionResponse(TakeActionRequest takeActionRequest) {
-        ActionAndDiceRollsBo actionAndDiceRollsBo = actionBusinessLogicConverter.getActionAndDiceRollsBoFromTakeActionRequest(takeActionRequest);
-        ResultBo resultBo = actionBusinessLogic.getResultBo(actionAndDiceRollsBo);
+        ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo = actionBusinessLogicConverter.getActionAndDiceRollsAndCharacterAndPlayerBoFromTakeActionRequest(takeActionRequest);
+        ResultBo resultBo = actionBusinessLogic.getResultBo(actionAndDiceRollsAndCharacterAndPlayerBo);
         return actionBusinessLogicConverter.getTakeActionResponseFromResultBo(resultBo);
     }
 }
