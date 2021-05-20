@@ -35,71 +35,69 @@ public class GetCharacterDetailsTest {
 
     @Test
     public void shouldReturnCharacterWithIdWhilePlayer() {
-        String characterPlayerId = "0";
-        String playerId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, true);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Wrong amount of characters and/or wrong visibility.");
+        String playerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, true);
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnCharacterWithIdWhileDM() {
-        String characterPlayerId = "0";
-        String playerId = "0";
+        String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, true);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, false);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Wrong amount of characters and/or wrong visibility.");
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnCharacterWithIdWhileDifferentPlayer() {
+        String playerId = "2";
         String characterPlayerId = "1";
-        String playerId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, true);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, false);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Wrong amount of characters and/or wrong visibility.");
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnCharacterWithIdWhilePlayerWhileVisibilityFalse() {
-        String characterPlayerId = "0";
-        String playerId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Wrong amount of characters and/or wrong visibility.");
+        String playerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, false);
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnCharacterWithIdWhileDMWhileVisibilityFalse() {
-        String characterPlayerId = "0";
-        String playerId = "0";
+        String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, false);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Wrong amount of characters and/or wrong visibility.");
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnCharacterWithoutIdWhileDifferentPlayerWhileVisibilityFalse() {
+        String playerId = "2";
         String characterPlayerId = "1";
-        String playerId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Wrong amount of characters and/or wrong visibility.");
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Character null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnNoCharacterWhenEmptyJson() {
         String playerId = "0";
         String responseJson = "{}";
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
-        Assertions.assertNull(characterDetailsResponse.getCharacter(), "Wrong amount of characters.");
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        Assertions.assertNull(characterDetailsResponse.getCharacter(), "Character not null.");
     }
 
     @Test
     public void shouldReturnNoCharacterWhenNullJson() {
-        String playerId = "0";
-        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, true);
-        Assertions.assertNull(characterDetailsResponse.getCharacter(), "Wrong amount of characters.");
+        String playerId = "1";
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, playerId, true);
+        Assertions.assertNull(characterDetailsResponse.getCharacter(), "Character not null.");
     }
 
     private String createMockResponseJsonWithVisibilityOfId(String characterPlayerId, boolean idVisibility) {
@@ -124,7 +122,7 @@ public class GetCharacterDetailsTest {
         return responseJson.toString();
     }
 
-    private CharacterDetailsResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, boolean isPlayer) {
+    private CharacterDetailsResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
         Player player;
         if (isPlayer)
@@ -140,6 +138,7 @@ public class GetCharacterDetailsTest {
                 .builder()
                 .character(Character
                         .builder()
+                        .playerId(characterPlayerId)
                         .build())
                 .player(player)
                 .build();

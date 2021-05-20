@@ -37,20 +37,20 @@ public class GetClassDetailsTest {
     public void shouldReturnClass() {
         String responseJson = createMockResponseJson();
         ClassDetailsResponse classDetailsResponse = mockJsonResponseAndReturnClassDetailsResponse(responseJson);
-        Assertions.assertNotEquals(null, classDetailsResponse.getCClass(), "Wrong amount of classes.");
+        Assertions.assertNotEquals(null, classDetailsResponse.getCClass(), "Class null.");
     }
 
     @Test
     public void shouldReturnNoClassWhenEmptyJson() {
         String responseJson = "{}";
         ClassDetailsResponse classDetailsResponse = mockJsonResponseAndReturnClassDetailsResponse(responseJson);
-        Assertions.assertNull(classDetailsResponse.getCClass(), "Wrong amount of classes.");
+        Assertions.assertNull(classDetailsResponse.getCClass(), "Class not null.");
     }
 
     @Test
     public void shouldReturnNoClassWhenNullJson() {
         ClassDetailsResponse classDetailsResponse = mockJsonResponseAndReturnClassDetailsResponse(null);
-        Assertions.assertNull(classDetailsResponse.getCClass(), "Wrong amount of classes.");
+        Assertions.assertNull(classDetailsResponse.getCClass(), "Class not null.");
     }
 
     private String createMockResponseJson() {

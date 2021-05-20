@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.actionservice.module.ActionModule;
-
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +46,7 @@ public class GetActionsTest {
         int actionCount = 0;
         String responseJson = createMockResponseJson(actionCount);
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
-        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
@@ -55,14 +54,14 @@ public class GetActionsTest {
         int actionCount = 0;
         String responseJson = "{}";
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
-        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
     public void shouldReturnNoActionsWhenNullJson() {
         int actionCount = 0;
         ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(null);
-        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     private String createMockResponseJson(int actionCount) {

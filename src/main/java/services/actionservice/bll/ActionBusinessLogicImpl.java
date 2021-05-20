@@ -1,16 +1,14 @@
 package services.actionservice.bll;
 
 import com.google.inject.Inject;
-import services.actionservice.bll.bo.ActionAndDiceRollsBo;
-import services.actionservice.bll.bo.ActionsBo;
-import services.actionservice.bll.bo.CharacterBo;
-import services.actionservice.bll.bo.ResultBo;
+import objects.Character;
+import objects.DungeonMaster;
+import objects.NonStandardAction;
+import objects.Player;
+import services.actionservice.bll.bo.*;
 import services.actionservice.dal.ActionDataAccess;
 import services.actionservice.dal.ActionDataAccessConverter;
-import services.actionservice.dal.dao.ActionAndDiceRollsDao;
-import services.actionservice.dal.dao.ActionsDao;
-import services.actionservice.dal.dao.CharacterDao;
-import services.actionservice.dal.dao.ResultDao;
+import services.actionservice.dal.dao.*;
 
 public class ActionBusinessLogicImpl implements ActionBusinessLogic {
     @Inject
@@ -28,5 +26,30 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
         ActionAndDiceRollsDao actionAndDiceRollsDao = actionDataAccessConverter.getActionAndDiceRollsDaoFromActionAndDiceRollsBo(actionAndDiceRollsBo);
         ResultDao resultDao = actionDataAccess.getResultDao(actionAndDiceRollsDao);
         return actionDataAccessConverter.getResultBoFromResultDao(resultDao);
+    }
+
+    public ActionBo getActionBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
+        NonStandardActionAndCharacterAndPlayerBo filteredNonStandardActionAndCharacterAndPlayerBo = filterNonStandardActionAndCharacterAndPlayerBo(nonStandardActionAndCharacterAndPlayerBo);
+        NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao = actionDataAccessConverter.getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerBo(filteredNonStandardActionAndCharacterAndPlayerBo);
+        ActionDao actionDao = actionDataAccess.getActionDao(nonStandardActionAndCharacterDao);
+        return actionDataAccessConverter.getActionBoFromActionDao(actionDao);
+    }
+
+    private NonStandardActionAndCharacterAndPlayerBo filterNonStandardActionAndCharacterAndPlayerBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
+        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerBo.getNonStandardAction();
+        Character character = nonStandardActionAndCharacterAndPlayerBo.getCharacter();
+        Player player = nonStandardActionAndCharacterAndPlayerBo.getPlayer();
+        String playerId = player.getId();
+        String characterPlayerId = character.getPlayerId();
+        if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
+            nonStandardAction = null;
+            character = null;
+        }
+        return NonStandardActionAndCharacterAndPlayerBo
+                .builder()
+                .nonStandardAction(nonStandardAction)
+                .character(character)
+                .player(player)
+                .build();
     }
 }

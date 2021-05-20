@@ -36,20 +36,20 @@ public class TakeActionTest {
     public void shouldReturnResult() {
         String responseJson = createMockResponseJson();
         TakeActionResponse takeActionResponse = mockJsonResponseAndReturnTakeActionResponse(responseJson);
-        Assertions.assertNotEquals(null, takeActionResponse.getResult(), "Wrong amount of results.");
+        Assertions.assertNotEquals(null, takeActionResponse.getResult(), "Result null.");
     }
 
     @Test
     public void shouldReturnNoResultWhenEmptyJson() {
         String responseJson = "{}";
         TakeActionResponse takeActionResponse = mockJsonResponseAndReturnTakeActionResponse(responseJson);
-        Assertions.assertNull(takeActionResponse.getResult(), "Wrong amount of results.");
+        Assertions.assertNull(takeActionResponse.getResult(), "Result not null.");
     }
 
     @Test
     public void shouldReturnNoResultWhenNullJson() {
         TakeActionResponse takeActionResponse = mockJsonResponseAndReturnTakeActionResponse(null);
-        Assertions.assertNull(takeActionResponse.getResult(), "Wrong amount of results.");
+        Assertions.assertNull(takeActionResponse.getResult(), "Result not null.");
     }
 
     private String createMockResponseJson() {

@@ -6,8 +6,8 @@ public interface TakeAction {
      * Accepts a Action object and an array of dice rolls in a
      * TakeActionRequest.
      * @param takeActionRequest TakeActionRequest containing
-     *                            Action object and array of
-     *                            dice rolls
+     *                          Action object and array of
+     *                          dice rolls
      * @return TakeActionResponse containing Result object
      */
     TakeActionResponse getTakeActionResponse(TakeActionRequest takeActionRequest);

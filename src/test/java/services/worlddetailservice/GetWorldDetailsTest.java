@@ -37,7 +37,7 @@ public class GetWorldDetailsTest {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, true);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
-        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "Wrong amount of worlds and/or wrong visibility.");
+        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
 
     @Test
@@ -45,7 +45,7 @@ public class GetWorldDetailsTest {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, true);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
-        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "Wrong amount of worlds and/or wrong visibility.");
+        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
 
     @Test
@@ -53,7 +53,7 @@ public class GetWorldDetailsTest {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, false);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
-        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "Wrong amount of worlds and/or wrong visibility.");
+        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
 
     @Test
@@ -61,20 +61,20 @@ public class GetWorldDetailsTest {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, false);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
-        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() == null)), "Wrong amount of worlds and/or wrong visibility.");
+        Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() == null)), "World null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnNoWorldWhenEmptyJson() {
         String responseJson = "{}";
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
-        Assertions.assertNull(worldDetailsResponse.getWorld(), "Wrong amount of worlds.");
+        Assertions.assertNull(worldDetailsResponse.getWorld(), "World not null.");
     }
 
     @Test
     public void shouldReturnNoWorldWhenNullJson() {
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(null, true);
-        Assertions.assertNull(worldDetailsResponse.getWorld(), "Wrong amount of worlds.");
+        Assertions.assertNull(worldDetailsResponse.getWorld(), "World not null.");
     }
 
     private String createMockResponseJsonWithVisibilityOfId(String worldId, boolean idVisibility) {

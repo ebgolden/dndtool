@@ -4,19 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Action;
 import objects.Character;
+import objects.NonStandardAction;
 import objects.Result;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import services.actionservice.bll.bo.ActionAndDiceRollsBo;
-import services.actionservice.bll.bo.ActionsBo;
-import services.actionservice.bll.bo.CharacterBo;
-import services.actionservice.bll.bo.ResultBo;
-import services.actionservice.dal.dao.ActionAndDiceRollsDao;
-import services.actionservice.dal.dao.ActionsDao;
-import services.actionservice.dal.dao.CharacterDao;
-import services.actionservice.dal.dao.ResultDao;
+import services.actionservice.bll.bo.*;
+import services.actionservice.dal.dao.*;
 
 public class ActionDataAccessConverterImpl implements ActionDataAccessConverter {
     public CharacterDao getCharacterDaoFromCharacterBo(CharacterBo characterBo) {
@@ -57,6 +52,32 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
         return ActionAndDiceRollsDao
                 .builder()
                 .actionAndDiceRollsJson(actionAndDiceRollsJson)
+                .build();
+    }
+
+    public NonStandardActionAndCharacterDao getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
+        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerBo.getNonStandardAction();
+        Character character = nonStandardActionAndCharacterAndPlayerBo.getCharacter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String nonStandardActionJson = "{}";
+        String characterJson = "{}";
+        try {
+            nonStandardActionJson = objectMapper.writeValueAsString(nonStandardAction);
+            characterJson = objectMapper.writeValueAsString(character);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String nonStandardActionAndCharacterJson = "{}";
+        if (!nonStandardActionJson.equals("{}") && !nonStandardActionJson.equals("null") && !characterJson.equals("{}") && !characterJson.equals("null"))
+            nonStandardActionAndCharacterJson = "{" +
+                    "\"nonStandardAction\":" +
+                    nonStandardActionJson +
+                    ",\"character\":" +
+                    characterJson +
+                    "}";
+        return NonStandardActionAndCharacterDao
+                .builder()
+                .nonStandardActionAndCharacterJson(nonStandardActionAndCharacterJson)
                 .build();
     }
 
@@ -113,6 +134,28 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
+    public ActionBo getActionBoFromActionDao(ActionDao actionDao) {
+        String actionJson = actionDao.getActionJson();
+        if (actionJson == null)
+            actionJson = "{}";
+        Action action = null;
+        if (!actionJson.equals("{}")) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            action = Action
+                    .builder()
+                    .build();
+            try {
+                action = objectMapper.readValue(actionJson, Action.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return ActionBo
+                .builder()
+                .action(action)
+                .build();
+    }
+
     public ActionsDao getActionsDaoFromLatestObjectJson(String latestObjectJson) {
         return ActionsDao
                 .builder()
@@ -124,6 +167,13 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
         return ResultDao
                 .builder()
                 .resultJson(resultObjectJson)
+                .build();
+    }
+
+    public ActionDao getActionDaoFromActionObjectJson(String actionObjectJson) {
+        return ActionDao
+                .builder()
+                .actionJson(actionObjectJson)
                 .build();
     }
 }

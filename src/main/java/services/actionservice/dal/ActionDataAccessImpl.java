@@ -2,10 +2,7 @@ package services.actionservice.dal;
 
 import com.google.inject.Inject;
 import objects.DataOperator;
-import services.actionservice.dal.dao.ActionAndDiceRollsDao;
-import services.actionservice.dal.dao.ActionsDao;
-import services.actionservice.dal.dao.CharacterDao;
-import services.actionservice.dal.dao.ResultDao;
+import services.actionservice.dal.dao.*;
 
 public class ActionDataAccessImpl implements ActionDataAccess {
     @Inject
@@ -25,5 +22,12 @@ public class ActionDataAccessImpl implements ActionDataAccess {
         dataOperator.sendRequestJson(actionAndDiceRollsJson);
         String resultObjectJson = dataOperator.getResponseJson();
         return actionDataAccessConverter.getResultDaoFromResultObjectJson(resultObjectJson);
+    }
+
+    public ActionDao getActionDao(NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao) {
+        String nonStandardActionAndCharacterJson = nonStandardActionAndCharacterDao.getNonStandardActionAndCharacterJson();
+        dataOperator.sendRequestJson(nonStandardActionAndCharacterJson);
+        String actionObjectJson = dataOperator.getResponseJson();
+        return actionDataAccessConverter.getActionDaoFromActionObjectJson(actionObjectJson);
     }
 }

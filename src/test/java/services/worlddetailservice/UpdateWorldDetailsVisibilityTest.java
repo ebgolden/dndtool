@@ -37,7 +37,7 @@ public class UpdateWorldDetailsVisibilityTest {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId);
         WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
-        Assertions.assertNotEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json null.");
+        Assertions.assertNotEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
     }
 
     @Test

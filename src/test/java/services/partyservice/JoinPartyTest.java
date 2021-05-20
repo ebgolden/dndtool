@@ -44,15 +44,16 @@ public class JoinPartyTest {
     @Test
     public void shouldReturnJoinedPartyWhileDM() {
         String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithEmptyParty();
-        JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, playerId, false, true);
+        JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, characterPlayerId, false, true);
         Assertions.assertTrue(joinPartyResponse.joinedParty, "Did not join party.");
     }
 
     @Test
     public void shouldReturnNotJoinedPartyWhileOtherPlayer() {
-        String characterPlayerId = "1";
         String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithCharacterArrayInParty();
         JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, characterPlayerId, true, true);
         Assertions.assertFalse(joinPartyResponse.joinedParty, "Joined party.");
@@ -69,22 +70,23 @@ public class JoinPartyTest {
     @Test
     public void shouldReturnNotJoinedPartyWhileDMNotAccepted() {
         String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithEmptyParty();
-        JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, playerId, false, false);
+        JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, characterPlayerId, false, false);
         Assertions.assertFalse(joinPartyResponse.joinedParty, "Joined party.");
     }
 
     @Test
     public void shouldReturnNotJoinedPartyWhileOtherPlayerNotAccepted() {
-        String characterPlayerId = "1";
         String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithCharacterArrayInParty();
         JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, characterPlayerId, true, false);
         Assertions.assertFalse(joinPartyResponse.joinedParty, "Joined party.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenEmptyJson() {
+    public void shouldReturnNotJoinedPartyWhenEmptyJson() {
         String playerId = "1";
         String responseJson = "{}";
         JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(responseJson, playerId, playerId, false, true);
@@ -92,7 +94,7 @@ public class JoinPartyTest {
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenNullJson() {
+    public void shouldReturnNotJoinedPartyWhenNullJson() {
         String playerId = "1";
         JoinPartyResponse joinPartyResponse = mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(null, playerId, playerId, false, true);
         Assertions.assertFalse(joinPartyResponse.joinedParty, "Joined party.");

@@ -37,20 +37,20 @@ public class GetRaceDetailsTest {
     public void shouldReturnRace() {
         String responseJson = createMockResponseJson();
         RaceDetailsResponse raceDetailsResponse = mockJsonResponseAndReturnRaceDetailsResponse(responseJson);
-        Assertions.assertNotEquals(null, raceDetailsResponse.getRace(), "Wrong amount of races.");
+        Assertions.assertNotEquals(null, raceDetailsResponse.getRace(), "Race null.");
     }
 
     @Test
     public void shouldReturnNoRaceWhenEmptyJson() {
         String responseJson = "{}";
         RaceDetailsResponse raceDetailsResponse = mockJsonResponseAndReturnRaceDetailsResponse(responseJson);
-        Assertions.assertNull(raceDetailsResponse.getRace(), "Wrong amount of races.");
+        Assertions.assertNull(raceDetailsResponse.getRace(), "Race not null.");
     }
 
     @Test
     public void shouldReturnNoRaceWhenNullJson() {
         RaceDetailsResponse raceDetailsResponse = mockJsonResponseAndReturnRaceDetailsResponse(null);
-        Assertions.assertNull(raceDetailsResponse.getRace(), "Wrong amount of races.");
+        Assertions.assertNull(raceDetailsResponse.getRace(), "Race not null.");
     }
 
     private String createMockResponseJson() {

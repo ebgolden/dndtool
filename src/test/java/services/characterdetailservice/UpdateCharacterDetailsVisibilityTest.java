@@ -37,42 +37,42 @@ public class UpdateCharacterDetailsVisibilityTest {
 
     @Test
     public void shouldReturnVisibilityJsonWithIdWhilePlayer() {
-        String characterPlayerId = "0";
-        String playerId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId);
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
-        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json null.");
+        String playerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
     }
 
     @Test
     public void shouldReturnVisibilityJsonWithIdWhileDM() {
-        String characterPlayerId = "0";
-        String playerId = "0";
+        String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId);
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, false);
-        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json null.");
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
+        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
     }
 
     @Test
     public void shouldReturnEmptyVisibilityJsonWhileDifferentPlayer() {
-        String playerId = "0";
+        String playerId = "2";
+        String characterPlayerId = "1";
         String responseJson = "{}";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
         Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
     }
 
     @Test
     public void shouldReturnEmptyJsonWhenEmptyJson() {
-        String playerId = "0";
+        String playerId = "1";
         String responseJson = "{}";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
         Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
     }
 
     @Test
     public void shouldReturnEmptyJsonWhenNullJson() {
-        String playerId = "0";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, true);
+        String playerId = "1";
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, playerId, true);
         Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
     }
 
@@ -98,7 +98,7 @@ public class UpdateCharacterDetailsVisibilityTest {
         return responseJson.toString();
     }
 
-    private CharacterDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, boolean isPlayer) {
+    private CharacterDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
         String visibilityJson = "{\"id\":" + true + "}";
         Player player;
@@ -115,6 +115,7 @@ public class UpdateCharacterDetailsVisibilityTest {
                 .builder()
                 .character(Character
                         .builder()
+                        .playerId(characterPlayerId)
                         .build())
                 .visibilityJson(visibilityJson)
                 .player(player)

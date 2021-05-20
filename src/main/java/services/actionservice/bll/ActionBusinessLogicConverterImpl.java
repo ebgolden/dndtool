@@ -1,16 +1,9 @@
 package services.actionservice.bll;
 
-import objects.Action;
+import objects.*;
 import objects.Character;
-import objects.Result;
-import services.actionservice.ActionsRequest;
-import services.actionservice.ActionsResponse;
-import services.actionservice.TakeActionRequest;
-import services.actionservice.TakeActionResponse;
-import services.actionservice.bll.bo.ActionAndDiceRollsBo;
-import services.actionservice.bll.bo.ActionsBo;
-import services.actionservice.bll.bo.CharacterBo;
-import services.actionservice.bll.bo.ResultBo;
+import services.actionservice.*;
+import services.actionservice.bll.bo.*;
 
 public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConverter {
     public CharacterBo getCharacterBoFromActionsRequest(ActionsRequest actionsRequest) {
@@ -31,6 +24,18 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
                 .build();
     }
 
+    public NonStandardActionAndCharacterAndPlayerBo getNonStandardActionAndCharacterAndPlayerBoFromActionFromNonStandardActionRequest(ActionFromNonStandardActionRequest actionFromNonStandardActionRequest) {
+        NonStandardAction nonStandardAction = actionFromNonStandardActionRequest.getNonStandardAction();
+        Character character = actionFromNonStandardActionRequest.getCharacter();
+        Player player = actionFromNonStandardActionRequest.getPlayer();
+        return NonStandardActionAndCharacterAndPlayerBo
+                .builder()
+                .nonStandardAction(nonStandardAction)
+                .character(character)
+                .player(player)
+                .build();
+    }
+
     public ActionsResponse getActionsResponseFromActionsBo(ActionsBo actionsBo) {
         Action[] actions = actionsBo.getActions();
         return ActionsResponse
@@ -44,6 +49,14 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
         return TakeActionResponse
                 .builder()
                 .result(result)
+                .build();
+    }
+
+    public ActionFromNonStandardActionResponse getActionFromNonStandardActionResponseFromActionBo(ActionBo actionBo) {
+        Action action = actionBo.getAction();
+        return ActionFromNonStandardActionResponse
+                .builder()
+                .action(action)
                 .build();
     }
 }
