@@ -4,7 +4,7 @@ import services.actionservice.*;
 import services.actionservice.bll.bo.*;
 
 public interface ActionBusinessLogicConverter {
-    CharacterBo getCharacterBoFromActionsRequest(ActionsRequest actionsRequest);
+    CharacterAndPlayerBo getCharacterAndPlayerBoFromActionsRequest(ActionsRequest actionsRequest);
 
     ActionAndDiceRollsAndCharacterAndPlayerBo getActionAndDiceRollsAndCharacterAndPlayerBoFromTakeActionRequest(TakeActionRequest takeActionRequest);
 

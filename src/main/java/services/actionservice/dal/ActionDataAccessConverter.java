@@ -4,7 +4,7 @@ import services.actionservice.bll.bo.*;
 import services.actionservice.dal.dao.*;
 
 public interface ActionDataAccessConverter {
-    CharacterDao getCharacterDaoFromCharacterBo(CharacterBo characterBo);
+    CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo);
 
     ActionAndDiceRollsAndCharacterDao getActionAndDiceRollsAndCharacterDaoFromActionAndDiceRollsBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo);
 

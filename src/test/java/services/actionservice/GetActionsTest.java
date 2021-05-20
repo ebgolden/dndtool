@@ -34,33 +34,57 @@ public class GetActionsTest {
     }
 
     @Test
-    public void shouldReturnThreeActions() {
+    public void shouldReturnThreeActionsWhilePlayer() {
+        String playerId = "1";
         int actionCount = 3;
         String responseJson = createMockResponseJson(actionCount);
-        ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
     @Test
+    public void shouldReturnThreeActionsWhileDM() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        int actionCount = 3;
+        String responseJson = createMockResponseJson(actionCount);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, characterPlayerId, false);
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
+    }
+
+    @Test
+    public void shouldReturnNoActionsWhileDifferentPlayer() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        int actionCount = 0;
+        String responseJson = "{}";
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, characterPlayerId, true);
+        Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
+    }
+
+    @Test
     public void shouldReturnNoActions() {
+        String playerId = "1";
         int actionCount = 0;
         String responseJson = createMockResponseJson(actionCount);
-        ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
     public void shouldReturnNoActionsWhenEmptyJson() {
+        String playerId = "1";
         int actionCount = 0;
         String responseJson = "{}";
-        ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(responseJson);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
     public void shouldReturnNoActionsWhenNullJson() {
+        String playerId = "1";
         int actionCount = 0;
-        ActionsResponse actionsResponse = mockJsonResponseAndReturnActionsResponse(null);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(null, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
@@ -84,13 +108,25 @@ public class GetActionsTest {
         return responseJson.toString();
     }
 
-    private ActionsResponse mockJsonResponseAndReturnActionsResponse(String responseJson) {
+    private ActionsResponse mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+        Player player;
+        if (isPlayer)
+            player = Player
+                    .builder()
+                    .id(playerId)
+                    .build();
+        else player = DungeonMaster
+                .builder()
+                .id(playerId)
+                .build();
         ActionsRequest actionsRequest = ActionsRequest
                 .builder()
                 .character(Character
                         .builder()
+                        .playerId(characterPlayerId)
                         .build())
+                .player(player)
                 .build();
         return getActions.getActionsResponse(actionsRequest);
     }

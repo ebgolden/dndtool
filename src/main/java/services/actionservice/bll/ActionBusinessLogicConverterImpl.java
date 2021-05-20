@@ -6,11 +6,13 @@ import services.actionservice.*;
 import services.actionservice.bll.bo.*;
 
 public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConverter {
-    public CharacterBo getCharacterBoFromActionsRequest(ActionsRequest actionsRequest) {
+    public CharacterAndPlayerBo getCharacterAndPlayerBoFromActionsRequest(ActionsRequest actionsRequest) {
         Character character = actionsRequest.getCharacter();
-        return CharacterBo
+        Player player = actionsRequest.getPlayer();
+        return CharacterAndPlayerBo
                 .builder()
                 .character(character)
+                .player(player)
                 .build();
     }
 

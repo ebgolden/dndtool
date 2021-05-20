@@ -14,8 +14,8 @@ import services.actionservice.bll.bo.*;
 import services.actionservice.dal.dao.*;
 
 public class ActionDataAccessConverterImpl implements ActionDataAccessConverter {
-    public CharacterDao getCharacterDaoFromCharacterBo(CharacterBo characterBo) {
-        Character character = characterBo.getCharacter();
+    public CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo) {
+        Character character = characterAndPlayerBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson = "{}";
         try {

@@ -14,8 +14,9 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
     @Inject
     private ActionDataAccess actionDataAccess;
 
-    public ActionsBo getActionsBo(CharacterBo characterBo) {
-        CharacterDao characterDao = actionDataAccessConverter.getCharacterDaoFromCharacterBo(characterBo);
+    public ActionsBo getActionsBo(CharacterAndPlayerBo characterAndPlayerBo) {
+        CharacterAndPlayerBo filteredCharacterAndPlayerBo = filterCharacterAndPlayerBo(characterAndPlayerBo);
+        CharacterDao characterDao = actionDataAccessConverter.getCharacterDaoFromCharacterAndPlayerBo(filteredCharacterAndPlayerBo);
         ActionsDao actionsDao = actionDataAccess.getActionsDao(characterDao);
         return actionDataAccessConverter.getActionsBoFromActionsDao(actionsDao);
     }
@@ -32,6 +33,20 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
         NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao = actionDataAccessConverter.getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerBo(filteredNonStandardActionAndCharacterAndPlayerBo);
         ActionDao actionDao = actionDataAccess.getActionDao(nonStandardActionAndCharacterDao);
         return actionDataAccessConverter.getActionBoFromActionDao(actionDao);
+    }
+
+    private CharacterAndPlayerBo filterCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo) {
+        Character character = characterAndPlayerBo.getCharacter();
+        Player player = characterAndPlayerBo.getPlayer();
+        String playerId = player.getId();
+        String characterPlayerId = character.getPlayerId();
+        if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class))
+            character = null;
+        return CharacterAndPlayerBo
+                .builder()
+                .character(character)
+                .player(player)
+                .build();
     }
 
     private ActionAndDiceRollsAndCharacterAndPlayerBo filterActionAndDiceRollsAndCharacterAndPlayerBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo) {

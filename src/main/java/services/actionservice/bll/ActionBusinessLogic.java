@@ -3,7 +3,7 @@ package services.actionservice.bll;
 import services.actionservice.bll.bo.*;
 
 public interface ActionBusinessLogic {
-    ActionsBo getActionsBo(CharacterBo characterBo);
+    ActionsBo getActionsBo(CharacterAndPlayerBo characterAndPlayerBo);
 
     ResultBo getResultBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo);
 
