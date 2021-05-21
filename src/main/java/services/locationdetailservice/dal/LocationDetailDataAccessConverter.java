@@ -8,7 +8,9 @@ import services.locationdetailservice.dal.dao.LocationDetailsAndVisibilityDao;
 public interface LocationDetailDataAccessConverter {
     LocationDao getLocationDaoFromLocationAndPlayerBo(LocationAndPlayerBo locationAndPlayerBo);
 
+    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo);
+
     LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityDao(LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao);
 
-    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromUpdatedJsonObject(String updatedJsonObject);
+    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
 }

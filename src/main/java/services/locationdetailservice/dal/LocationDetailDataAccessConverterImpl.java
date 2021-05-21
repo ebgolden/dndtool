@@ -27,6 +27,30 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
                 .build();
     }
 
+    public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo) {
+        Location location = locationDetailsAndVisibilityBo.getLocation();
+        String visibilityJson = locationDetailsAndVisibilityBo.getVisibilityJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String locationJson = "{}";
+        try {
+            locationJson = objectMapper.writeValueAsString(location);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String locationDetailsAndVisibilityJson = "{}";
+        if ((!locationJson.equals("{}") && (!locationJson.equals("null"))) || !visibilityJson.equals("{}"))
+            locationDetailsAndVisibilityJson = "{" +
+                    "locationDetails:" +
+                    locationJson +
+                    ",visibility:" +
+                    visibilityJson +
+                    "}";
+        return LocationDetailsAndVisibilityDao
+                .builder()
+                .locationDetailsAndVisibilityJson(locationDetailsAndVisibilityJson)
+                .build();
+    }
+
     public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityDao(LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao) {
         String locationDetailsAndVisibilityJson = locationDetailsAndVisibilityDao.getLocationDetailsAndVisibilityJson();
         if (locationDetailsAndVisibilityJson == null)
@@ -62,10 +86,10 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
                 .build();
     }
 
-    public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromUpdatedJsonObject(String updatedJsonObject) {
+    public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
         return LocationDetailsAndVisibilityDao
                 .builder()
-                .locationDetailsAndVisibilityJson(updatedJsonObject)
+                .locationDetailsAndVisibilityJson(latestJsonObject)
                 .build();
     }
 }

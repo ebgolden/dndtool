@@ -3,6 +3,8 @@ package services.locationdetailservice.module;
 import com.google.inject.AbstractModule;
 import services.locationdetailservice.GetLocationDetails;
 import services.locationdetailservice.GetLocationDetailsImpl;
+import services.locationdetailservice.UpdateLocationDetailsVisibility;
+import services.locationdetailservice.UpdateLocationDetailsVisibilityImpl;
 import services.locationdetailservice.bll.LocationDetailBusinessLogic;
 import services.locationdetailservice.bll.LocationDetailBusinessLogicConverter;
 import services.locationdetailservice.bll.LocationDetailBusinessLogicConverterImpl;
@@ -16,6 +18,7 @@ public class LocationDetailModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(GetLocationDetails.class).to(GetLocationDetailsImpl.class);
+        bind(UpdateLocationDetailsVisibility.class).to(UpdateLocationDetailsVisibilityImpl.class);
         bind(LocationDetailBusinessLogicConverter.class).to(LocationDetailBusinessLogicConverterImpl.class);
         bind(LocationDetailBusinessLogic.class).to(LocationDetailBusinessLogicImpl.class);
         bind(LocationDetailDataAccessConverter.class).to(LocationDetailDataAccessConverterImpl.class);

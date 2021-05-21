@@ -5,4 +5,6 @@ import services.locationdetailservice.dal.dao.LocationDetailsAndVisibilityDao;
 
 public interface LocationDetailDataAccess {
     LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDao(LocationDao locationDao);
+
+    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDao(LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao);
 }

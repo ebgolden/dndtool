@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
+import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndPlayerBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
 import services.locationdetailservice.dal.LocationDetailDataAccess;
 import services.locationdetailservice.dal.LocationDetailDataAccessConverter;
@@ -21,6 +22,8 @@ public class LocationDetailBusinessLogicImpl implements LocationDetailBusinessLo
     private LocationDetailDataAccessConverter locationDetailDataAccessConverter;
     @Inject
     private LocationDetailDataAccess locationDetailDataAccess;
+    @Inject
+    private LocationDetailBusinessLogicConverter locationDetailBusinessLogicConverter;
 
     public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBo(LocationAndPlayerBo locationAndPlayerBo) {
         LocationDao locationDao = locationDetailDataAccessConverter.getLocationDaoFromLocationAndPlayerBo(locationAndPlayerBo);
@@ -30,6 +33,14 @@ public class LocationDetailBusinessLogicImpl implements LocationDetailBusinessLo
         if (locationDetailsAndVisibilityBo.getLocation() == null)
             return locationDetailsAndVisibilityBo;
         return filterLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityBo, player);
+    }
+
+    public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
+        LocationDetailsAndVisibilityAndPlayerBo filteredLocationDetailsAndVisibilityAndPlayerBo = filterLocationDetailsAndVisibilityAndPlayerBo(locationDetailsAndVisibilityAndPlayerBo);
+        LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo = locationDetailBusinessLogicConverter.getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndPlayerBo(filteredLocationDetailsAndVisibilityAndPlayerBo);
+        LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao = locationDetailDataAccessConverter.getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityBo);
+        locationDetailsAndVisibilityDao = locationDetailDataAccess.getLocationDetailsAndVisibilityDao(locationDetailsAndVisibilityDao);
+        return locationDetailDataAccessConverter.getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityDao(locationDetailsAndVisibilityDao);
     }
 
     private LocationDetailsAndVisibilityBo filterLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo, Player player) {
@@ -73,6 +84,22 @@ public class LocationDetailBusinessLogicImpl implements LocationDetailBusinessLo
                 .builder()
                 .location(filteredLocation)
                 .visibilityJson(visibilityJson)
+                .build();
+    }
+
+    private LocationDetailsAndVisibilityAndPlayerBo filterLocationDetailsAndVisibilityAndPlayerBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
+        Location location = locationDetailsAndVisibilityAndPlayerBo.getLocation();
+        String visibilityJson = locationDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Player player = locationDetailsAndVisibilityAndPlayerBo.getPlayer();
+        if (player.getClass() != DungeonMaster.class) {
+            visibilityJson = "{}";
+            location = null;
+        }
+        return LocationDetailsAndVisibilityAndPlayerBo
+                .builder()
+                .location(location)
+                .visibilityJson(visibilityJson)
+                .player(player)
                 .build();
     }
 }
