@@ -1,6 +1,7 @@
 package services.worlddetailservice.bll;
 
 import objects.Player;
+import objects.Visibility;
 import objects.World;
 import services.worlddetailservice.WorldDetailsRequest;
 import services.worlddetailservice.WorldDetailsResponse;
@@ -9,6 +10,7 @@ import services.worlddetailservice.WorldDetailsVisibilityResponse;
 import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndPlayerBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
+import java.util.Map;
 
 public class WorldDetailBusinessLogicConverterImpl implements WorldDetailBusinessLogicConverter {
     public WorldAndPlayerBo getWorldAndPlayerBoFromWorldDetailsRequest(WorldDetailsRequest worldDetailsRequest) {
@@ -30,32 +32,32 @@ public class WorldDetailBusinessLogicConverterImpl implements WorldDetailBusines
     }
 
     public WorldDetailsVisibilityResponse getWorldDetailsVisibilityResponseFromWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo) {
-        String visibilityJson = worldDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityBo.getVisibilityMap();
         return WorldDetailsVisibilityResponse
                 .builder()
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 
     public WorldDetailsAndVisibilityAndPlayerBo getWorldDetailsAndVisibilityAndPlayerBoFromWorldDetailsVisibilityRequest(WorldDetailsVisibilityRequest worldDetailsVisibilityRequest) {
         World world = worldDetailsVisibilityRequest.getWorld();
-        String visibilityJson = worldDetailsVisibilityRequest.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsVisibilityRequest.getVisibilityMap();
         Player player = worldDetailsVisibilityRequest.getPlayer();
         return WorldDetailsAndVisibilityAndPlayerBo
                 .builder()
                 .world(world)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .player(player)
                 .build();
     }
 
     public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
         World world = worldDetailsAndVisibilityAndPlayerBo.getWorld();
-        String visibilityJson = worldDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
         return WorldDetailsAndVisibilityBo
                 .builder()
                 .world(world)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 }

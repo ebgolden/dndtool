@@ -2,6 +2,7 @@ package services.locationdetailservice.bll;
 
 import objects.Location;
 import objects.Player;
+import objects.Visibility;
 import services.locationdetailservice.LocationDetailsRequest;
 import services.locationdetailservice.LocationDetailsResponse;
 import services.locationdetailservice.LocationDetailsVisibilityRequest;
@@ -9,6 +10,7 @@ import services.locationdetailservice.LocationDetailsVisibilityResponse;
 import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndPlayerBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
+import java.util.Map;
 
 public class LocationDetailBusinessLogicConverterImpl implements LocationDetailBusinessLogicConverter {
     public LocationAndPlayerBo getLocationAndPlayerBoFromLocationDetailsRequest(LocationDetailsRequest locationDetailsRequest) {
@@ -23,12 +25,12 @@ public class LocationDetailBusinessLogicConverterImpl implements LocationDetailB
 
     public LocationDetailsAndVisibilityAndPlayerBo getLocationDetailsAndVisibilityAndPlayerBoFromLocationDetailsVisibilityRequest(LocationDetailsVisibilityRequest locationDetailsVisibilityRequest) {
         Location location = locationDetailsVisibilityRequest.getLocation();
-        String visibilityJson = locationDetailsVisibilityRequest.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = locationDetailsVisibilityRequest.getVisibilityMap();
         Player player = locationDetailsVisibilityRequest.getPlayer();
         return LocationDetailsAndVisibilityAndPlayerBo
                 .builder()
                 .location(location)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .player(player)
                 .build();
     }
@@ -42,20 +44,20 @@ public class LocationDetailBusinessLogicConverterImpl implements LocationDetailB
     }
 
     public LocationDetailsVisibilityResponse getLocationDetailsVisibilityResponseFromLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo) {
-        String visibilityJson = locationDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityBo.getVisibilityMap();
         return LocationDetailsVisibilityResponse
                 .builder()
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 
     public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndPlayerBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
         Location location = locationDetailsAndVisibilityAndPlayerBo.getLocation();
-        String visibilityJson = locationDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
         return LocationDetailsAndVisibilityBo
                 .builder()
                 .location(location)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 }

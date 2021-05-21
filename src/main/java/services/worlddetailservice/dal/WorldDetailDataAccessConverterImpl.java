@@ -2,6 +2,7 @@ package services.worlddetailservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import objects.Visibility;
 import objects.World;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,6 +11,8 @@ import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
 import services.worlddetailservice.dal.dao.WorldDao;
 import services.worlddetailservice.dal.dao.WorldDetailsAndVisibilityDao;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccessConverter {
     public WorldDao getWorldDaoFromWorldAndPlayerBo(WorldAndPlayerBo worldAndPlayerBo) {
@@ -29,16 +32,18 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
 
     public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo) {
         World world = worldDetailsAndVisibilityBo.getWorld();
-        String visibilityJson = worldDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityBo.getVisibilityMap();
         ObjectMapper objectMapper = new ObjectMapper();
         String worldJson = "{}";
+        String visibilityJson = "{}";
         try {
             worldJson = objectMapper.writeValueAsString(world);
+            visibilityJson = objectMapper.writeValueAsString(visibilityMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         String worldDetailsAndVisibilityJson = "{}";
-        if ((!worldJson.equals("{}") && (!worldJson.equals("null"))) || !visibilityJson.equals("{}"))
+        if ((!worldJson.equals("{}") && (!worldJson.equals("null"))) || (!visibilityJson.equals("{}") && (!visibilityJson.equals("null"))))
             worldDetailsAndVisibilityJson = "{" +
                     "worldDetails:" +
                     worldJson +
@@ -62,11 +67,11 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        ObjectMapper objectMapper = new ObjectMapper();
         String worldDetailsJson;
         World world = null;
         if (jsonObject.get("worldDetails") != null) {
             worldDetailsJson = ((JSONObject) jsonObject.get("worldDetails")).toJSONString();
-            ObjectMapper objectMapper = new ObjectMapper();
             world = World
                     .builder()
                     .build();
@@ -76,13 +81,21 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
                 e.printStackTrace();
             }
         }
-        String visibilityJson = "{}";
-        if (jsonObject.get("visibility") != null)
+        String visibilityJson;
+        Map<String, Visibility> visibilityMap = null;
+        if (jsonObject.get("visibility") != null) {
             visibilityJson = ((JSONObject)jsonObject.get("visibility")).toJSONString();
+            visibilityMap = new HashMap<>();
+            try {
+                visibilityMap = objectMapper.readValue(visibilityJson, Map.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
         return WorldDetailsAndVisibilityBo
                 .builder()
                 .world(world)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 

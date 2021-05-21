@@ -35,7 +35,7 @@ public class GetWorldDetailsTest {
     @Test
     public void shouldReturnWorldWithIdWhilePlayer() {
         String worldId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, Visibility.EVERYONE);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
         Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
@@ -43,7 +43,7 @@ public class GetWorldDetailsTest {
     @Test
     public void shouldReturnWorldWithIdWhileDM() {
         String worldId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, Visibility.EVERYONE);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
         Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
@@ -51,7 +51,7 @@ public class GetWorldDetailsTest {
     @Test
     public void shouldReturnWorldWithIdWhileDMWhileVisibilityFalse() {
         String worldId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, Visibility.DUNGEON_MASTER);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
         Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() != null)), "World null and/or wrong visibility.");
     }
@@ -59,7 +59,7 @@ public class GetWorldDetailsTest {
     @Test
     public void shouldReturnWorldWithoutIdWhilePlayerWhileVisibilityFalse() {
         String worldId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(worldId, Visibility.DUNGEON_MASTER);
         WorldDetailsResponse worldDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
         Assertions.assertTrue(((worldDetailsResponse.getWorld() != null) && (worldDetailsResponse.getWorld().getId() == null)), "World null and/or wrong visibility.");
     }
@@ -77,22 +77,25 @@ public class GetWorldDetailsTest {
         Assertions.assertNull(worldDetailsResponse.getWorld(), "World not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String worldId, boolean idVisibility) {
+    private String createMockResponseJsonWithVisibilityOfId(String worldId, Visibility idVisibility) {
         StringBuilder responseJson = new StringBuilder("{\"worldDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String worldJson;
+        String visibilityJson;
         try {
             worldJson = objectMapper.writeValueAsString(World
                     .builder()
                     .id(worldId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(idVisibility);
         } catch (JsonProcessingException e) {
             worldJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(worldJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(idVisibility)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }

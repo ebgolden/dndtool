@@ -3,6 +3,7 @@ package services.locationdetailservice.dal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Location;
+import objects.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -10,6 +11,8 @@ import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
 import services.locationdetailservice.dal.dao.LocationDao;
 import services.locationdetailservice.dal.dao.LocationDetailsAndVisibilityDao;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LocationDetailDataAccessConverterImpl implements LocationDetailDataAccessConverter {
     public LocationDao getLocationDaoFromLocationAndPlayerBo(LocationAndPlayerBo locationAndPlayerBo) {
@@ -29,16 +32,18 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
 
     public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo) {
         Location location = locationDetailsAndVisibilityBo.getLocation();
-        String visibilityJson = locationDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityBo.getVisibilityMap();
         ObjectMapper objectMapper = new ObjectMapper();
         String locationJson = "{}";
+        String visibilityJson = "{}";
         try {
             locationJson = objectMapper.writeValueAsString(location);
+            visibilityJson = objectMapper.writeValueAsString(visibilityMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         String locationDetailsAndVisibilityJson = "{}";
-        if ((!locationJson.equals("{}") && (!locationJson.equals("null"))) || !visibilityJson.equals("{}"))
+        if ((!locationJson.equals("{}") && (!locationJson.equals("null"))) || (!visibilityJson.equals("{}") && (!visibilityJson.equals("null"))))
             locationDetailsAndVisibilityJson = "{" +
                     "locationDetails:" +
                     locationJson +
@@ -62,11 +67,11 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        ObjectMapper objectMapper = new ObjectMapper();
         String locationDetailsJson;
         Location location = null;
         if (jsonObject.get("locationDetails") != null) {
             locationDetailsJson = ((JSONObject) jsonObject.get("locationDetails")).toJSONString();
-            ObjectMapper objectMapper = new ObjectMapper();
             location = Location
                     .builder()
                     .build();
@@ -76,13 +81,21 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
                 e.printStackTrace();
             }
         }
-        String visibilityJson = "{}";
-        if (jsonObject.get("visibility") != null)
+        String visibilityJson;
+        Map<String, Visibility> visibilityMap = null;
+        if (jsonObject.get("visibility") != null) {
             visibilityJson = ((JSONObject)jsonObject.get("visibility")).toJSONString();
+            visibilityMap = new HashMap<>();
+            try {
+                visibilityMap = objectMapper.readValue(visibilityJson, Map.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
         return LocationDetailsAndVisibilityBo
                 .builder()
                 .location(location)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 

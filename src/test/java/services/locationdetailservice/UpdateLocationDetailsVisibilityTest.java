@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.locationdetailservice.module.LocationDetailModule;
+import java.util.HashMap;
+import java.util.Map;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,56 +35,58 @@ public class UpdateLocationDetailsVisibilityTest {
     }
 
     @Test
-    public void shouldReturnVisibilityJsonWithIdWhileDM() {
+    public void shouldReturnVisibilityMapWithIdWhileDM() {
         String locationId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(locationId);
         LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, false);
-        Assertions.assertNotEquals("{}", locationDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
+        Assertions.assertNotNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityJsonWhilePlayer() {
+    public void shouldReturnEmptyVisibilityMapWhilePlayer() {
         String responseJson = "{}";
         LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, true);
-        Assertions.assertEquals("{}", locationDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenEmptyJson() {
+    public void shouldReturnEmptyMapWhenEmptyJson() {
         String responseJson = "{}";
         LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, false);
-        Assertions.assertEquals("{}", locationDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenNullJson() {
+    public void shouldReturnEmptyMapWhenNullJson() {
         LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(null, false);
-        Assertions.assertEquals("{}", locationDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     private String createMockResponseJsonWithVisibilityOfId(String locationId) {
         StringBuilder responseJson = new StringBuilder("{\"locationDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String locationJson;
+        String visibilityJson;
         try {
             locationJson = objectMapper.writeValueAsString(Location
                     .builder()
                     .id(locationId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(Visibility.PLAYER);
         } catch (JsonProcessingException e) {
             locationJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(locationJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(true)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }
 
     private LocationDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(String responseJson, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
-        String visibilityJson = "{\"id\":" + true + "}";
         Player player;
         if (isPlayer)
             player = Player
@@ -91,12 +95,14 @@ public class UpdateLocationDetailsVisibilityTest {
         else player = DungeonMaster
                 .builder()
                 .build();
+        Map<String, Visibility> visibilityMap = new HashMap<>();
+        visibilityMap.put("id", Visibility.EVERYONE);
         LocationDetailsVisibilityRequest locationDetailsVisibilityRequest = LocationDetailsVisibilityRequest
                 .builder()
                 .location(Location
                         .builder()
                         .build())
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .player(player)
                 .build();
         return updateLocationDetailsVisibility.getLocationDetailsVisibilityResponse(locationDetailsVisibilityRequest);

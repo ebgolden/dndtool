@@ -3,6 +3,7 @@ package services.characterdetailservice.dal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Character;
+import objects.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -10,6 +11,8 @@ import services.characterdetailservice.bll.bo.CharacterAndPlayerBo;
 import services.characterdetailservice.bll.bo.CharacterDetailsAndVisibilityBo;
 import services.characterdetailservice.dal.dao.CharacterDao;
 import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDataAccessConverter {
     public CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo) {
@@ -29,16 +32,18 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
 
     public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo) {
         Character character = characterDetailsAndVisibilityBo.getCharacter();
-        String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = characterDetailsAndVisibilityBo.getVisibilityMap();
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson = "{}";
+        String visibilityJson = "{}";
         try {
             characterJson = objectMapper.writeValueAsString(character);
+            visibilityJson = objectMapper.writeValueAsString(visibilityMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         String characterDetailsAndVisibilityJson = "{}";
-        if ((!characterJson.equals("{}") && (!characterJson.equals("null"))) || !visibilityJson.equals("{}"))
+        if ((!characterJson.equals("{}") && (!characterJson.equals("null"))) || (!visibilityJson.equals("{}") && (!visibilityJson.equals("null"))))
             characterDetailsAndVisibilityJson = "{" +
                     "characterDetails:" +
                     characterJson +
@@ -62,11 +67,11 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        ObjectMapper objectMapper = new ObjectMapper();
         String characterDetailsJson;
         Character character = null;
         if (jsonObject.get("characterDetails") != null) {
             characterDetailsJson = ((JSONObject) jsonObject.get("characterDetails")).toJSONString();
-            ObjectMapper objectMapper = new ObjectMapper();
             character = Character
                     .builder()
                     .build();
@@ -76,13 +81,21 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
                 e.printStackTrace();
             }
         }
-        String visibilityJson = "{}";
-        if (jsonObject.get("visibility") != null)
+        String visibilityJson;
+        Map<String, Visibility> visibilityMap = null;
+        if (jsonObject.get("visibility") != null) {
             visibilityJson = ((JSONObject)jsonObject.get("visibility")).toJSONString();
+            visibilityMap = new HashMap<>();
+            try {
+                visibilityMap = objectMapper.readValue(visibilityJson, Map.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
         return CharacterDetailsAndVisibilityBo
                 .builder()
                 .character(character)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 

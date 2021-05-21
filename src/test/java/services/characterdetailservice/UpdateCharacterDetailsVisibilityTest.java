@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import objects.*;
 import objects.Character;
-import objects.DataOperator;
-import objects.DungeonMaster;
-import objects.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.characterdetailservice.module.CharacterDetailModule;
+import java.util.HashMap;
+import java.util.Map;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,50 +36,51 @@ public class UpdateCharacterDetailsVisibilityTest {
     }
 
     @Test
-    public void shouldReturnVisibilityJsonWithIdWhilePlayer() {
+    public void shouldReturnVisibilityMapWithIdWhilePlayer() {
         String playerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(playerId);
         CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
-        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
+        Assertions.assertNotNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnVisibilityJsonWithIdWhileDM() {
+    public void shouldReturnVisibilityMapWithIdWhileDM() {
         String playerId = "2";
         String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId);
         CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
-        Assertions.assertNotEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
+        Assertions.assertNotNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityJsonWhileDifferentPlayer() {
+    public void shouldReturnEmptyVisibilityMapWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         String responseJson = "{}";
         CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
-        Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenEmptyJson() {
+    public void shouldReturnEmptyVisibilityMapWhenEmptyJson() {
         String playerId = "1";
         String responseJson = "{}";
         CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
-        Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenNullJson() {
+    public void shouldReturnEmptyVisibilityMapWhenNullJson() {
         String playerId = "1";
         CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, playerId, true);
-        Assertions.assertEquals("{}", characterDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     private String createMockResponseJsonWithVisibilityOfId(String characterPlayerId) {
         StringBuilder responseJson = new StringBuilder("{\"characterDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
+        String visibilityJson;
         String characterId = "1";
         try {
             characterJson = objectMapper.writeValueAsString(Character
@@ -87,20 +88,21 @@ public class UpdateCharacterDetailsVisibilityTest {
                     .id(characterId)
                     .playerId(characterPlayerId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(Visibility.PLAYER);
         } catch (JsonProcessingException e) {
             characterJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(characterJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(true)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }
 
     private CharacterDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
-        String visibilityJson = "{\"id\":" + true + "}";
         Player player;
         if (isPlayer)
             player = Player
@@ -111,13 +113,15 @@ public class UpdateCharacterDetailsVisibilityTest {
                 .builder()
                 .id(playerId)
                 .build();
+        Map<String, Visibility> visibilityMap = new HashMap<>();
+        visibilityMap.put("id", Visibility.EVERYONE);
         CharacterDetailsVisibilityRequest characterDetailsVisibilityRequest = CharacterDetailsVisibilityRequest
                 .builder()
                 .character(Character
                         .builder()
                         .playerId(characterPlayerId)
                         .build())
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .player(player)
                 .build();
         return updateCharacterDetailsVisibility.getCharacterDetailsVisibilityResponse(characterDetailsVisibilityRequest);

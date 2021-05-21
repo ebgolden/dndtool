@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.worlddetailservice.module.WorldDetailModule;
+import java.util.HashMap;
+import java.util.Map;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,56 +35,58 @@ public class UpdateWorldDetailsVisibilityTest {
     }
 
     @Test
-    public void shouldReturnVisibilityJsonWithIdWhileDM() {
+    public void shouldReturnVisibilityMapWithIdWhileDM() {
         String worldId = "0";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId);
         WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
-        Assertions.assertNotEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json empty.");
+        Assertions.assertNotNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityJsonWhilePlayer() {
+    public void shouldReturnEmptyVisibilityMapWhilePlayer() {
         String responseJson = "{}";
         WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
-        Assertions.assertEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenEmptyJson() {
+    public void shouldReturnEmptyVisibilityMapWhenEmptyJson() {
         String responseJson = "{}";
         WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
-        Assertions.assertEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyJsonWhenNullJson() {
+    public void shouldReturnEmptyVisibilityMapWhenNullJson() {
         WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(null, false);
-        Assertions.assertEquals("{}", worldDetailsVisibilityResponse.getVisibilityJson(), "Visibility json not empty.");
+        Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     private String createMockResponseJsonWithVisibilityOfId(String worldId) {
         StringBuilder responseJson = new StringBuilder("{\"worldDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String worldJson;
+        String visibilityJson;
         try {
             worldJson = objectMapper.writeValueAsString(World
                     .builder()
                     .id(worldId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(Visibility.PLAYER);
         } catch (JsonProcessingException e) {
             worldJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(worldJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(true)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }
 
     private WorldDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(String responseJson, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
-        String visibilityJson = "{\"id\":" + true + "}";
         Player player;
         if (isPlayer)
             player = Player
@@ -91,12 +95,14 @@ public class UpdateWorldDetailsVisibilityTest {
         else player = DungeonMaster
                 .builder()
                 .build();
+        Map<String, Visibility> visibilityMap = new HashMap<>();
+        visibilityMap.put("id", Visibility.EVERYONE);
         WorldDetailsVisibilityRequest worldDetailsVisibilityRequest = WorldDetailsVisibilityRequest
                 .builder()
                 .world(World
                         .builder()
                         .build())
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .player(player)
                 .build();
         return updateWorldDetailsVisibility.getWorldDetailsVisibilityResponse(worldDetailsVisibilityRequest);

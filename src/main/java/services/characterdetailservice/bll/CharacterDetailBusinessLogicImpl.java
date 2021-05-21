@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import objects.Character;
 import objects.DungeonMaster;
 import objects.Player;
+import objects.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,6 +17,7 @@ import services.characterdetailservice.dal.CharacterDetailDataAccess;
 import services.characterdetailservice.dal.CharacterDetailDataAccessConverter;
 import services.characterdetailservice.dal.dao.CharacterDao;
 import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
+import java.util.Map;
 
 public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusinessLogic {
     @Inject
@@ -45,15 +47,17 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
 
     private CharacterDetailsAndVisibilityBo filterCharacterDetailsAndVisibilityBo(CharacterDetailsAndVisibilityBo characterDetailsAndVisibilityBo, Player player) {
         Character character = characterDetailsAndVisibilityBo.getCharacter();
-        String visibilityJson = characterDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = characterDetailsAndVisibilityBo.getVisibilityMap();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
         Character filteredCharacter = character;
-        if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
+        if (player.getClass() != DungeonMaster.class) {
             ObjectMapper objectMapper = new ObjectMapper();
             String characterJson = "{}";
+            String visibilityJson = "{}";
             try {
                 characterJson = objectMapper.writeValueAsString(character);
+                visibilityJson = objectMapper.writeValueAsString(visibilityMap);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -71,7 +75,10 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
                     .keySet()
                     .toArray(visibilityKeys);
             for (String visibilityKey : visibilityKeys) {
-                if (characterJsonObject.containsKey(visibilityKey) && (!Boolean.parseBoolean(visibilityJsonObject.get(visibilityKey).toString())))
+                Visibility visibility = Visibility.valueOf(visibilityJsonObject.get(visibilityKey).toString().toUpperCase());
+                if (characterJsonObject.containsKey(visibilityKey) &&
+                        (((!playerId.equals(characterPlayerId)) && (visibility != Visibility.EVERYONE)) ||
+                        ((playerId.equals(characterPlayerId)) && (visibility == Visibility.DUNGEON_MASTER))))
                     characterJsonObject.remove(visibilityKey);
             }
             JSONObject filteredCharacterJsonObject = characterJsonObject;
@@ -85,25 +92,36 @@ public class CharacterDetailBusinessLogicImpl implements CharacterDetailBusiness
         return CharacterDetailsAndVisibilityBo
                 .builder()
                 .character(filteredCharacter)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 
     private CharacterDetailsAndVisibilityAndPlayerBo filterCharacterDetailsAndVisibilityAndPlayerBo(CharacterDetailsAndVisibilityAndPlayerBo characterDetailsAndVisibilityAndPlayerBo) {
         Character character = characterDetailsAndVisibilityAndPlayerBo.getCharacter();
-        String visibilityJson = characterDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = characterDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
         Player player = characterDetailsAndVisibilityAndPlayerBo.getPlayer();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
         if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
-            visibilityJson = "{}";
             character = null;
+            visibilityMap = null;
         }
+        Map<String, Visibility> filteredVisibilityMap = visibilityMap;
+        if (filteredVisibilityMap != null)
+            visibilityMap.keySet().forEach(key -> correctVisibility(player, characterPlayerId, filteredVisibilityMap, key));
         return CharacterDetailsAndVisibilityAndPlayerBo
                 .builder()
                 .character(character)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(filteredVisibilityMap)
                 .player(player)
                 .build();
+    }
+
+    private void correctVisibility(Player player, String characterPlayerId, Map<String, Visibility> visibilityMap, String key) {
+        String playerId = player.getId();
+        if ((player.getClass() != DungeonMaster.class) && (visibilityMap.get(key) == Visibility.DUNGEON_MASTER))
+            visibilityMap.replace(key, Visibility.PLAYER);
+        else if (playerId.equals(characterPlayerId) && (player.getClass() == DungeonMaster.class) && (visibilityMap.get(key) == Visibility.PLAYER))
+            visibilityMap.replace(key, Visibility.DUNGEON_MASTER);
     }
 }

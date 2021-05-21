@@ -34,55 +34,81 @@ public class GetCharacterDetailsTest {
     }
 
     @Test
-    public void shouldReturnCharacterWithIdWhilePlayer() {
+    public void shouldReturnCharacterWithIdWhilePlayerWhileVisibilityEveryone() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.EVERYONE);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
         Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnCharacterWithIdWhileDM() {
+    public void shouldReturnCharacterWithIdWhileDMWhileVisibilityEveryone() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.EVERYONE);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
         Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnCharacterWithIdWhileDifferentPlayer() {
+    public void shouldReturnCharacterWithIdWhileDifferentPlayerWhileVisibilityEveryone() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.EVERYONE);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
         Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnCharacterWithIdWhilePlayerWhileVisibilityFalse() {
+    public void shouldReturnCharacterWithIdWhilePlayerWhileVisibilityPlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.PLAYER);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
         Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnCharacterWithIdWhileDMWhileVisibilityFalse() {
+    public void shouldReturnCharacterWithIdWhileDMWhileVisibilityPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.PLAYER);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
         Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnCharacterWithoutIdWhileDifferentPlayerWhileVisibilityFalse() {
+    public void shouldReturnCharacterWithoutIdWhileDifferentPlayerWhileVisibilityPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.PLAYER);
         CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
-        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Character null and/or wrong visibility.");
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Character not null and/or wrong visibility.");
+    }
+
+    @Test
+    public void shouldReturnCharacterWithoutIdWhilePlayerWhileVisibilityDM() {
+        String playerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.DUNGEON_MASTER);
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Character not null and/or wrong visibility.");
+    }
+
+    @Test
+    public void shouldReturnCharacterWithIdWhileDMWhileVisibilityDM() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.DUNGEON_MASTER);
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() != null)), "Character null and/or wrong visibility.");
+    }
+
+    @Test
+    public void shouldReturnCharacterWithoutIdWhileDifferentPlayerWhileVisibilityDM() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId, Visibility.DUNGEON_MASTER);
+        CharacterDetailsResponse characterDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
+        Assertions.assertTrue(((characterDetailsResponse.getCharacter() != null) && (characterDetailsResponse.getCharacter().getId() == null)), "Character not null and/or wrong visibility.");
     }
 
     @Test
@@ -100,10 +126,11 @@ public class GetCharacterDetailsTest {
         Assertions.assertNull(characterDetailsResponse.getCharacter(), "Character not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String characterPlayerId, boolean idVisibility) {
+    private String createMockResponseJsonWithVisibilityOfId(String characterPlayerId, Visibility idVisibility) {
         StringBuilder responseJson = new StringBuilder("{\"characterDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
+        String visibilityJson;
         String characterId = "1";
         try {
             characterJson = objectMapper.writeValueAsString(Character
@@ -111,13 +138,15 @@ public class GetCharacterDetailsTest {
                     .id(characterId)
                     .playerId(characterPlayerId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(idVisibility);
         } catch (JsonProcessingException e) {
             characterJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(characterJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(idVisibility)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }

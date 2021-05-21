@@ -4,11 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 import objects.Location;
 import objects.Player;
+import objects.Visibility;
+import java.util.Map;
 
 @Builder
 @Data
 public class LocationDetailsAndVisibilityAndPlayerBo {
     Location location;
-    String visibilityJson;
+    Map<String, Visibility> visibilityMap;
     Player player;
 }

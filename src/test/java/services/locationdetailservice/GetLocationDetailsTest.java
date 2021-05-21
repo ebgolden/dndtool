@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import objects.DataOperator;
-import objects.DungeonMaster;
-import objects.Location;
-import objects.Player;
+import objects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +35,7 @@ public class GetLocationDetailsTest {
     @Test
     public void shouldReturnLocationWithIdWhilePlayer() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.EVERYONE);
         LocationDetailsResponse locationDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsResponse(responseJson, true);
         Assertions.assertTrue(((locationDetailsResponse.getLocation() != null) && (locationDetailsResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
@@ -46,7 +43,7 @@ public class GetLocationDetailsTest {
     @Test
     public void shouldReturnLocationWithIdWhileDM() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, true);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.EVERYONE);
         LocationDetailsResponse locationDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsResponse(responseJson, false);
         Assertions.assertTrue(((locationDetailsResponse.getLocation() != null) && (locationDetailsResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
@@ -54,7 +51,7 @@ public class GetLocationDetailsTest {
     @Test
     public void shouldReturnLocationWithIdWhileDMWhileVisibilityFalse() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
         LocationDetailsResponse locationDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsResponse(responseJson, false);
         Assertions.assertTrue(((locationDetailsResponse.getLocation() != null) && (locationDetailsResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
@@ -62,7 +59,7 @@ public class GetLocationDetailsTest {
     @Test
     public void shouldReturnLocationWithoutIdWhilePlayerWhileVisibilityFalse() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, false);
+        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
         LocationDetailsResponse locationDetailsResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsResponse(responseJson, true);
         Assertions.assertTrue(((locationDetailsResponse.getLocation() != null) && (locationDetailsResponse.getLocation().getId() == null)), "Location null and/or wrong visibility.");
     }
@@ -80,22 +77,25 @@ public class GetLocationDetailsTest {
         Assertions.assertNull(locationDetailsResponse.getLocation(), "Location not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String locationId, boolean idVisibility) {
+    private String createMockResponseJsonWithVisibilityOfId(String locationId, Visibility idVisibility) {
         StringBuilder responseJson = new StringBuilder("{\"locationDetails\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String locationJson;
+        String visibilityJson;
         try {
             locationJson = objectMapper.writeValueAsString(Location
                     .builder()
                     .id(locationId)
                     .build());
+            visibilityJson = objectMapper.writeValueAsString(idVisibility);
         } catch (JsonProcessingException e) {
             locationJson = "{}";
+            visibilityJson = "{}";
         }
         responseJson
                 .append(locationJson)
                 .append(",\"visibility\":{\"id\":")
-                .append(idVisibility)
+                .append(visibilityJson)
                 .append("}}");
         return responseJson.toString();
     }

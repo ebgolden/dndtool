@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import objects.DungeonMaster;
 import objects.Player;
+import objects.Visibility;
 import objects.World;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +17,7 @@ import services.worlddetailservice.dal.WorldDetailDataAccess;
 import services.worlddetailservice.dal.WorldDetailDataAccessConverter;
 import services.worlddetailservice.dal.dao.WorldDao;
 import services.worlddetailservice.dal.dao.WorldDetailsAndVisibilityDao;
+import java.util.Map;
 
 public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
     @Inject
@@ -45,13 +47,15 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
 
     private WorldDetailsAndVisibilityBo filterWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo, Player player) {
         World world = worldDetailsAndVisibilityBo.getWorld();
-        String visibilityJson = worldDetailsAndVisibilityBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityBo.getVisibilityMap();
         World filteredWorld = world;
         if (player.getClass() != DungeonMaster.class) {
             ObjectMapper objectMapper = new ObjectMapper();
             String worldJson = "{}";
+            String visibilityJson = "{}";
             try {
                 worldJson = objectMapper.writeValueAsString(world);
+                visibilityJson = objectMapper.writeValueAsString(visibilityMap);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -69,7 +73,8 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
                     .keySet()
                     .toArray(visibilityKeys);
             for (String visibilityKey : visibilityKeys) {
-                if (worldJsonObject.containsKey(visibilityKey) && (!Boolean.parseBoolean(visibilityJsonObject.get(visibilityKey).toString())))
+                Visibility visibility = Visibility.valueOf(visibilityJsonObject.get(visibilityKey).toString().toUpperCase());
+                if (worldJsonObject.containsKey(visibilityKey) && (visibility != Visibility.EVERYONE))
                     worldJsonObject.remove(visibilityKey);
             }
             JSONObject filteredWorldJsonObject = worldJsonObject;
@@ -83,24 +88,31 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
         return WorldDetailsAndVisibilityBo
                 .builder()
                 .world(filteredWorld)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 
     private WorldDetailsAndVisibilityAndPlayerBo filterWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
         World world = worldDetailsAndVisibilityAndPlayerBo.getWorld();
-        String visibilityJson = worldDetailsAndVisibilityAndPlayerBo.getVisibilityJson();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
         Player player = worldDetailsAndVisibilityAndPlayerBo.getPlayer();
         if (player.getClass() != DungeonMaster.class) {
-            visibilityJson = "{}";
             world = null;
+            visibilityMap = null;
         }
+        Map<String, Visibility> filteredVisibilityMap = visibilityMap;
+        if (filteredVisibilityMap != null)
+            visibilityMap.keySet().forEach(key -> correctVisibility(player, filteredVisibilityMap, key));
         return WorldDetailsAndVisibilityAndPlayerBo
                 .builder()
                 .world(world)
-                .visibilityJson(visibilityJson)
+                .visibilityMap(filteredVisibilityMap)
                 .player(player)
                 .build();
     }
 
+    private void correctVisibility(Player player, Map<String, Visibility> visibilityMap, String key) {
+        if ((player.getClass() == DungeonMaster.class) && (visibilityMap.get(key) == Visibility.PLAYER))
+            visibilityMap.replace(key, Visibility.DUNGEON_MASTER);
+    }
 }
