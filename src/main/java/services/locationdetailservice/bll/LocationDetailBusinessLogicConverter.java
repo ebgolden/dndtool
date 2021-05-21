@@ -1,0 +1,12 @@
+package services.locationdetailservice.bll;
+
+import services.locationdetailservice.LocationDetailsRequest;
+import services.locationdetailservice.LocationDetailsResponse;
+import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
+import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
+
+public interface LocationDetailBusinessLogicConverter {
+    LocationAndPlayerBo getLocationAndPlayerBoFromLocationDetailsRequest(LocationDetailsRequest locationDetailsRequest);
+
+    LocationDetailsResponse getLocationDetailsResponseFromLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo);
+}
