@@ -1,0 +1,21 @@
+package services.actiondetailservice.bll;
+
+import services.actiondetailservice.ActionDetailsRequest;
+import services.actiondetailservice.ActionDetailsResponse;
+import services.actiondetailservice.ActionDetailsVisibilityRequest;
+import services.actiondetailservice.ActionDetailsVisibilityResponse;
+import services.actiondetailservice.bll.bo.ActionAndPlayerBo;
+import services.actiondetailservice.bll.bo.ActionDetailsAndVisibilityAndPlayerBo;
+import services.actiondetailservice.bll.bo.ActionDetailsAndVisibilityBo;
+
+public interface ActionDetailBusinessLogicConverter {
+    ActionAndPlayerBo getActionAndPlayerBoFromActionDetailsRequest(ActionDetailsRequest actionDetailsRequest);
+
+    ActionDetailsAndVisibilityAndPlayerBo getActionDetailsAndVisibilityAndPlayerBoFromActionDetailsVisibilityRequest(ActionDetailsVisibilityRequest actionDetailsVisibilityRequest);
+
+    ActionDetailsResponse getActionDetailsResponseFromActionDetailsAndVisibilityBo(ActionDetailsAndVisibilityBo actionDetailsAndVisibilityBo);
+
+    ActionDetailsVisibilityResponse getActionDetailsVisibilityResponseFromActionDetailsAndVisibilityBo(ActionDetailsAndVisibilityBo actionDetailsAndVisibilityBo);
+
+    ActionDetailsAndVisibilityBo getActionDetailsAndVisibilityBoFromActionDetailsAndVisibilityAndPlayerBo(ActionDetailsAndVisibilityAndPlayerBo actionDetailsAndVisibilityAndPlayerBo);
+}

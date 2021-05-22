@@ -1,0 +1,11 @@
+package services.actiondetailservice.bll;
+
+import services.actiondetailservice.bll.bo.ActionAndPlayerBo;
+import services.actiondetailservice.bll.bo.ActionDetailsAndVisibilityAndPlayerBo;
+import services.actiondetailservice.bll.bo.ActionDetailsAndVisibilityBo;
+
+public interface ActionDetailBusinessLogic {
+    ActionDetailsAndVisibilityBo getActionDetailsAndVisibilityBo(ActionAndPlayerBo actionAndPlayerBo);
+
+    ActionDetailsAndVisibilityBo getActionDetailsAndVisibilityBo(ActionDetailsAndVisibilityAndPlayerBo actionDetailsAndVisibilityAndPlayerBo);
+}

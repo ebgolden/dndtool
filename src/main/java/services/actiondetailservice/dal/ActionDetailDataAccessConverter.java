@@ -1,0 +1,16 @@
+package services.actiondetailservice.dal;
+
+import services.actiondetailservice.bll.bo.ActionAndPlayerBo;
+import services.actiondetailservice.bll.bo.ActionDetailsAndVisibilityBo;
+import services.actiondetailservice.dal.dao.ActionDao;
+import services.actiondetailservice.dal.dao.ActionDetailsAndVisibilityDao;
+
+public interface ActionDetailDataAccessConverter {
+    ActionDao getActionDaoFromActionAndPlayerBo(ActionAndPlayerBo actionAndPlayerBo);
+
+    ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromActionDetailsAndVisibilityBo(ActionDetailsAndVisibilityBo actionDetailsAndVisibilityBo);
+
+    ActionDetailsAndVisibilityBo getActionDetailsAndVisibilityBoFromActionDetailsAndVisibilityDao(ActionDetailsAndVisibilityDao actionDetailsAndVisibilityDao);
+
+    ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+}

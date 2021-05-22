@@ -39,7 +39,7 @@ public class UpdateCharacterDetailsVisibilityTest {
     public void shouldReturnVisibilityMapWithIdWhilePlayer() {
         String playerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(playerId);
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(responseJson, playerId, playerId, true);
         Assertions.assertNotNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
@@ -48,7 +48,7 @@ public class UpdateCharacterDetailsVisibilityTest {
         String playerId = "2";
         String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId);
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, false);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(responseJson, playerId, characterPlayerId, false);
         Assertions.assertNotNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
@@ -57,7 +57,7 @@ public class UpdateCharacterDetailsVisibilityTest {
         String playerId = "2";
         String characterPlayerId = "1";
         String responseJson = "{}";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, characterPlayerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(responseJson, playerId, characterPlayerId, true);
         Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
@@ -65,14 +65,14 @@ public class UpdateCharacterDetailsVisibilityTest {
     public void shouldReturnEmptyVisibilityMapWhenEmptyJson() {
         String playerId = "1";
         String responseJson = "{}";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(responseJson, playerId, playerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(responseJson, playerId, playerId, true);
         Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
     public void shouldReturnEmptyVisibilityMapWhenNullJson() {
         String playerId = "1";
-        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(null, playerId, playerId, true);
+        CharacterDetailsVisibilityResponse characterDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(null, playerId, playerId, true);
         Assertions.assertNull(characterDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
@@ -101,7 +101,7 @@ public class UpdateCharacterDetailsVisibilityTest {
         return responseJson.toString();
     }
 
-    private CharacterDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
+    private CharacterDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnCharacterDetailsVisibilityResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
         Player player;
         if (isPlayer)

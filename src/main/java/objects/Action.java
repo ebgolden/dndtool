@@ -8,4 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 public class Action {
     String id;
+    String playerId;
 }
