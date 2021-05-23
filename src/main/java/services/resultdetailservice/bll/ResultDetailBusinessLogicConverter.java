@@ -1,0 +1,21 @@
+package services.resultdetailservice.bll;
+
+import services.resultdetailservice.ResultDetailsRequest;
+import services.resultdetailservice.ResultDetailsResponse;
+import services.resultdetailservice.ResultDetailsVisibilityRequest;
+import services.resultdetailservice.ResultDetailsVisibilityResponse;
+import services.resultdetailservice.bll.bo.ResultAndPlayerBo;
+import services.resultdetailservice.bll.bo.ResultDetailsAndVisibilityAndPlayerBo;
+import services.resultdetailservice.bll.bo.ResultDetailsAndVisibilityBo;
+
+public interface ResultDetailBusinessLogicConverter {
+    ResultAndPlayerBo getResultAndPlayerBoFromResultDetailsRequest(ResultDetailsRequest resultDetailsRequest);
+
+    ResultDetailsAndVisibilityAndPlayerBo getResultDetailsAndVisibilityAndPlayerBoFromResultDetailsVisibilityRequest(ResultDetailsVisibilityRequest resultDetailsVisibilityRequest);
+
+    ResultDetailsResponse getResultDetailsResponseFromResultDetailsAndVisibilityBo(ResultDetailsAndVisibilityBo resultDetailsAndVisibilityBo);
+
+    ResultDetailsVisibilityResponse getResultDetailsVisibilityResponseFromResultDetailsAndVisibilityBo(ResultDetailsAndVisibilityBo resultDetailsAndVisibilityBo);
+
+    ResultDetailsAndVisibilityBo getResultDetailsAndVisibilityBoFromResultDetailsAndVisibilityAndPlayerBo(ResultDetailsAndVisibilityAndPlayerBo resultDetailsAndVisibilityAndPlayerBo);
+}

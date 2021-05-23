@@ -14,7 +14,7 @@ import services.actiondetailservice.dal.ActionDetailDataAccessConverter;
 import services.actiondetailservice.dal.ActionDetailDataAccessConverterImpl;
 import services.actiondetailservice.dal.ActionDetailDataAccessImpl;
 
-public class ActionDetailModule  extends AbstractModule {
+public class ActionDetailModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(GetActionDetails.class).to(GetActionDetailsImpl.class);

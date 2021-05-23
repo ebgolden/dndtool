@@ -8,4 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 public class Result {
     String id;
+    String playerId;
 }

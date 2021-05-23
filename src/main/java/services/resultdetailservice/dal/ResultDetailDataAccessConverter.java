@@ -1,0 +1,16 @@
+package services.resultdetailservice.dal;
+
+import services.resultdetailservice.bll.bo.ResultAndPlayerBo;
+import services.resultdetailservice.bll.bo.ResultDetailsAndVisibilityBo;
+import services.resultdetailservice.dal.dao.ResultDao;
+import services.resultdetailservice.dal.dao.ResultDetailsAndVisibilityDao;
+
+public interface ResultDetailDataAccessConverter {
+    ResultDao getResultDaoFromResultAndPlayerBo(ResultAndPlayerBo resultAndPlayerBo);
+
+    ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromResultDetailsAndVisibilityBo(ResultDetailsAndVisibilityBo resultDetailsAndVisibilityBo);
+
+    ResultDetailsAndVisibilityBo getResultDetailsAndVisibilityBoFromResultDetailsAndVisibilityDao(ResultDetailsAndVisibilityDao resultDetailsAndVisibilityDao);
+
+    ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+}
