@@ -107,8 +107,10 @@ public class ActionDetailBusinessLogicImpl implements ActionDetailBusinessLogic 
             visibilityMap = null;
         }
         Map<String, Visibility> filteredVisibilityMap = visibilityMap;
-        if (filteredVisibilityMap != null)
-            visibilityMap.keySet().forEach(key -> correctVisibility(player, actionPlayerId, filteredVisibilityMap, key));
+        if (filteredVisibilityMap != null) {
+            Action finalAction = action;
+            visibilityMap.keySet().forEach(key -> correctVisibility(player, actionPlayerId, filteredVisibilityMap, key, finalAction));
+        }
         return ActionDetailsAndVisibilityAndPlayerBo
                 .builder()
                 .action(action)
@@ -117,9 +119,25 @@ public class ActionDetailBusinessLogicImpl implements ActionDetailBusinessLogic 
                 .build();
     }
 
-    private void correctVisibility(Player player, String actionPlayerId, Map<String, Visibility> visibilityMap, String key) {
+    private void correctVisibility(Player player, String actionPlayerId, Map<String, Visibility> visibilityMap, String key, Action action) {
         String playerId = player.getId();
-        if ((player.getClass() != DungeonMaster.class) && (visibilityMap.get(key) == Visibility.DUNGEON_MASTER))
+        ObjectMapper objectMapper = new ObjectMapper();
+        String actionJson = "{}";
+        try {
+            actionJson = objectMapper.writeValueAsString(action);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        JSONParser jsonParser = new JSONParser();
+        JSONObject actionJsonObject = new JSONObject();
+        try {
+            actionJsonObject = (JSONObject)jsonParser.parse(actionJson);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (!actionJsonObject.containsKey(key))
+            visibilityMap.remove(key);
+        else if ((player.getClass() != DungeonMaster.class) && (visibilityMap.get(key) == Visibility.DUNGEON_MASTER))
             visibilityMap.replace(key, Visibility.PLAYER);
         else if (playerId.equals(actionPlayerId) && (player.getClass() == DungeonMaster.class) && (visibilityMap.get(key) == Visibility.PLAYER))
             visibilityMap.replace(key, Visibility.DUNGEON_MASTER);
