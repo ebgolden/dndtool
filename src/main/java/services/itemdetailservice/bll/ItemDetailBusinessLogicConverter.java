@@ -1,0 +1,21 @@
+package services.itemdetailservice.bll;
+
+import services.itemdetailservice.ItemDetailsRequest;
+import services.itemdetailservice.ItemDetailsResponse;
+import services.itemdetailservice.ItemDetailsVisibilityRequest;
+import services.itemdetailservice.ItemDetailsVisibilityResponse;
+import services.itemdetailservice.bll.bo.ItemAndPlayerBo;
+import services.itemdetailservice.bll.bo.ItemDetailsAndVisibilityAndPlayerBo;
+import services.itemdetailservice.bll.bo.ItemDetailsAndVisibilityBo;
+
+public interface ItemDetailBusinessLogicConverter {
+    ItemAndPlayerBo getItemAndPlayerBoFromItemDetailsRequest(ItemDetailsRequest itemDetailsRequest);
+
+    ItemDetailsAndVisibilityAndPlayerBo getItemDetailsAndVisibilityAndPlayerBoFromItemDetailsVisibilityRequest(ItemDetailsVisibilityRequest itemDetailsVisibilityRequest);
+
+    ItemDetailsResponse getItemDetailsResponseFromItemDetailsAndVisibilityBo(ItemDetailsAndVisibilityBo itemDetailsAndVisibilityBo);
+
+    ItemDetailsVisibilityResponse getItemDetailsVisibilityResponseFromItemDetailsAndVisibilityBo(ItemDetailsAndVisibilityBo itemDetailsAndVisibilityBo);
+
+    ItemDetailsAndVisibilityBo getItemDetailsAndVisibilityBoFromItemDetailsAndVisibilityAndPlayerBo(ItemDetailsAndVisibilityAndPlayerBo itemDetailsAndVisibilityAndPlayerBo);
+}
