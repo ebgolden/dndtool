@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.campaignservice.module.CampaignModule;
+import java.util.HashMap;
+import java.util.Map;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,12 +88,15 @@ public class CreateCampaignTest {
                 .builder()
                 .id(dungeonMasterId)
                 .build();
+        Map<String, Visibility> visibilityMap = new HashMap<>();
+        visibilityMap.put("id", Visibility.EVERYONE);
         CreateCampaignRequest createCampaignRequest = CreateCampaignRequest
                 .builder()
                 .campaign(Campaign
                         .builder()
                         .dungeonMasterId(campaignDungeonMasterId)
                         .build())
+                .visibilityMap(visibilityMap)
                 .dungeonMaster(dungeonMaster)
                 .build();
         return createCampaign.getCreateCampaignResponse(createCampaignRequest);

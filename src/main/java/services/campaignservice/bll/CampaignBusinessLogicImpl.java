@@ -2,12 +2,13 @@ package services.campaignservice.bll;
 
 import com.google.inject.Inject;
 import objects.*;
-import services.campaignservice.bll.bo.CampaignAndDungeonMasterBo;
+import services.campaignservice.bll.bo.CampaignAndVisibilityAndDungeonMasterBo;
 import services.campaignservice.bll.bo.CampaignBo;
 import services.campaignservice.dal.CampaignDataAccess;
 import services.campaignservice.dal.CampaignDataAccessConverter;
-import services.campaignservice.dal.dao.CampaignAndDungeonMasterDao;
+import services.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
 import services.campaignservice.dal.dao.CampaignDao;
+import java.util.Map;
 
 public class CampaignBusinessLogicImpl implements CampaignBusinessLogic {
     @Inject
@@ -15,23 +16,27 @@ public class CampaignBusinessLogicImpl implements CampaignBusinessLogic {
     @Inject
     private CampaignDataAccess campaignDataAccess;
 
-    public CampaignBo getCampaignBo(CampaignAndDungeonMasterBo campaignAndDungeonMasterBo) {
-        CampaignAndDungeonMasterBo filteredCampaignAndDungeonMasterBo = filterCampaignAndDungeonMasterBo(campaignAndDungeonMasterBo);
-        CampaignAndDungeonMasterDao campaignAndDungeonMasterDao = campaignDataAccessConverter.getCampaignAndDungeonMasterDaoFromCampaignAndDungeonMasterBo(filteredCampaignAndDungeonMasterBo);
-        CampaignDao campaignDao = campaignDataAccess.getCampaignDao(campaignAndDungeonMasterDao);
+    public CampaignBo getCampaignBo(CampaignAndVisibilityAndDungeonMasterBo campaignAndVisibilityAndDungeonMasterBo) {
+        CampaignAndVisibilityAndDungeonMasterBo filteredCampaignAndVisibilityAndDungeonMasterBo = filterCampaignAndDungeonMasterBo(campaignAndVisibilityAndDungeonMasterBo);
+        CampaignAndVisibilityAndDungeonMasterDao campaignAndVisibilityAndDungeonMasterDao = campaignDataAccessConverter.getCampaignAndVisibilityAndDungeonMasterDaoFromCampaignAndVisibilityAndDungeonMasterBo(filteredCampaignAndVisibilityAndDungeonMasterBo);
+        CampaignDao campaignDao = campaignDataAccess.getCampaignDao(campaignAndVisibilityAndDungeonMasterDao);
         return campaignDataAccessConverter.getCampaignBoFromCampaignDao(campaignDao);
     }
 
-    private CampaignAndDungeonMasterBo filterCampaignAndDungeonMasterBo(CampaignAndDungeonMasterBo campaignAndDungeonMasterBo) {
-        Campaign campaign = campaignAndDungeonMasterBo.getCampaign();
-        DungeonMaster dungeonMaster = campaignAndDungeonMasterBo.getDungeonMaster();
+    private CampaignAndVisibilityAndDungeonMasterBo filterCampaignAndDungeonMasterBo(CampaignAndVisibilityAndDungeonMasterBo campaignAndVisibilityAndDungeonMasterBo) {
+        Campaign campaign = campaignAndVisibilityAndDungeonMasterBo.getCampaign();
+        Map<String, Visibility> visibilityMap = campaignAndVisibilityAndDungeonMasterBo.getVisibilityMap();
+        DungeonMaster dungeonMaster = campaignAndVisibilityAndDungeonMasterBo.getDungeonMaster();
         String dungeonMasterId = dungeonMaster.getId();
         String campaignDungeonMasterId = campaign.getDungeonMasterId();
-        if (!dungeonMasterId.equals(campaignDungeonMasterId))
+        if (!dungeonMasterId.equals(campaignDungeonMasterId)) {
             campaign = null;
-        return CampaignAndDungeonMasterBo
+            visibilityMap = null;
+        }
+        return CampaignAndVisibilityAndDungeonMasterBo
                 .builder()
                 .campaign(campaign)
+                .visibilityMap(visibilityMap)
                 .dungeonMaster(dungeonMaster)
                 .build();
     }

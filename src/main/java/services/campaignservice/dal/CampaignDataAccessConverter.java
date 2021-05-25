@@ -1,12 +1,12 @@
 package services.campaignservice.dal;
 
-import services.campaignservice.bll.bo.CampaignAndDungeonMasterBo;
+import services.campaignservice.bll.bo.CampaignAndVisibilityAndDungeonMasterBo;
 import services.campaignservice.bll.bo.CampaignBo;
-import services.campaignservice.dal.dao.CampaignAndDungeonMasterDao;
+import services.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
 import services.campaignservice.dal.dao.CampaignDao;
 
 public interface CampaignDataAccessConverter {
-    CampaignAndDungeonMasterDao getCampaignAndDungeonMasterDaoFromCampaignAndDungeonMasterBo(CampaignAndDungeonMasterBo campaignAndDungeonMasterBo);
+    CampaignAndVisibilityAndDungeonMasterDao getCampaignAndVisibilityAndDungeonMasterDaoFromCampaignAndVisibilityAndDungeonMasterBo(CampaignAndVisibilityAndDungeonMasterBo campaignAndVisibilityAndDungeonMasterBo);
 
     CampaignBo getCampaignBoFromCampaignDao(CampaignDao campaignDao);
 
