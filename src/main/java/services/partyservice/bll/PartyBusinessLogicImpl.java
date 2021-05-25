@@ -45,31 +45,29 @@ public class PartyBusinessLogicImpl implements PartyBusinessLogic {
         Player player = partyAndCharacterAndPlayerBo.getPlayer();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
-        Character filteredCharacter = character;
         if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class))
-            filteredCharacter = null;
+            character = null;
         return PartyAndCharacterAndPlayerBo
                 .builder()
                 .party(party)
-                .character(filteredCharacter)
+                .character(character)
                 .player(player)
                 .build();
     }
 
-    PartyAndCharacterAndPlayerAndAcceptedByPartyBo filterPartyAndCharacterAndPlayerAndAcceptedByPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo) {
+    private PartyAndCharacterAndPlayerAndAcceptedByPartyBo filterPartyAndCharacterAndPlayerAndAcceptedByPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo) {
         Party party = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getParty();
         Character character = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getCharacter();
         Player player = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getPlayer();
         boolean acceptedByParty = partyAndCharacterAndPlayerAndAcceptedByPartyBo.isAcceptedByParty();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
-        Character filteredCharacter = character;
         if ((!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) || !acceptedByParty)
-            filteredCharacter = null;
+            character = null;
         return PartyAndCharacterAndPlayerAndAcceptedByPartyBo
                 .builder()
                 .party(party)
-                .character(filteredCharacter)
+                .character(character)
                 .player(player)
                 .acceptedByParty(acceptedByParty)
                 .build();
