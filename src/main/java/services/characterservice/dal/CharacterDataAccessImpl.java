@@ -11,9 +11,9 @@ public class CharacterDataAccessImpl implements CharacterDataAccess {
     @Inject
     private DataOperator dataOperator;
 
-    public CharacterDao getCharacterDao(CharacterAndVisibilityAndPlayerDao characterDetailsAndVisibilityDao) {
-        String characterDetailsAndVisibilityJson = characterDetailsAndVisibilityDao.getCharacterAndVisibilityAndPlayerJson();
-        dataOperator.sendRequestJson(characterDetailsAndVisibilityJson);
+    public CharacterDao getCharacterDao(CharacterAndVisibilityAndPlayerDao characterAndVisibilityDao) {
+        String characterAndVisibilityAndPlayerJson = characterAndVisibilityDao.getCharacterAndVisibilityAndPlayerJson();
+        dataOperator.sendRequestJson(characterAndVisibilityAndPlayerJson);
         String characterJsonObject = dataOperator.getResponseJson();
         return characterDataAccessConverter.getCharacterDaoFromCharacterJsonObject(characterJsonObject);
     }

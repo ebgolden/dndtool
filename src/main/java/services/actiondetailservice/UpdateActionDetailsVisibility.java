@@ -2,14 +2,14 @@ package services.actiondetailservice;
 
 public interface UpdateActionDetailsVisibility {
     /**
-     * Returns a ActionDetailsVisibilityResponse containing a visibility map.
-     * Accepts a Action object, a visibility map, and a Player object in a
+     * Returns a ActionDetailsVisibilityResponse containing a Visibility map.
+     * Accepts a Action object, a Visibility map, and a Player object in a
      * ActionDetailsVisibilityRequest.
      * @param actionDetailsVisibilityRequest ActionDetailsVisibilityRequest
      *                                       containing Action object,
-     *                                       visibility map, and Player
+     *                                       Visibility map, and Player
      *                                       object
-     * @return ActionDetailsVisibilityResponse containing visibility map
+     * @return ActionDetailsVisibilityResponse containing Visibility map
      */
     ActionDetailsVisibilityResponse getActionDetailsVisibilityResponse(ActionDetailsVisibilityRequest actionDetailsVisibilityRequest);
 }

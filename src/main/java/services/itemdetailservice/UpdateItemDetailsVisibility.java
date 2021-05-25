@@ -2,14 +2,14 @@ package services.itemdetailservice;
 
 public interface UpdateItemDetailsVisibility {
     /**
-     * Returns a ItemDetailsVisibilityResponse containing a visibility map.
-     * Accepts a Item object, a visibility map, and a Player object in a
+     * Returns a ItemDetailsVisibilityResponse containing a Visibility map.
+     * Accepts a Item object, a Visibility map, and a Player object in a
      * ItemDetailsVisibilityRequest.
      * @param itemDetailsVisibilityRequest ItemDetailsVisibilityRequest
      *                                     containing Item object,
-     *                                     visibility map, and Player
+     *                                     Visibility map, and Player
      *                                     object
-     * @return ItemDetailsVisibilityResponse containing visibility map
+     * @return ItemDetailsVisibilityResponse containing Visibility map
      */
     ItemDetailsVisibilityResponse getItemDetailsVisibilityResponse(ItemDetailsVisibilityRequest itemDetailsVisibilityRequest);
 }
