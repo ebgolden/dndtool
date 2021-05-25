@@ -3,7 +3,7 @@ package services.locationdetailservice;
 import com.google.inject.Inject;
 import services.locationdetailservice.bll.LocationDetailBusinessLogic;
 import services.locationdetailservice.bll.LocationDetailBusinessLogicConverter;
-import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndPlayerBo;
+import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndDungeonMasterBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
 
 public class UpdateLocationDetailsVisibilityImpl implements UpdateLocationDetailsVisibility {
@@ -13,8 +13,8 @@ public class UpdateLocationDetailsVisibilityImpl implements UpdateLocationDetail
     private LocationDetailBusinessLogic locationDetailBusinessLogic;
 
     public LocationDetailsVisibilityResponse getLocationDetailsVisibilityResponse(LocationDetailsVisibilityRequest locationDetailsVisibilityRequest) {
-        LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo = locationDetailBusinessLogicConverter.getLocationDetailsAndVisibilityAndPlayerBoFromLocationDetailsVisibilityRequest(locationDetailsVisibilityRequest);
-        LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo = locationDetailBusinessLogic.getLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityAndPlayerBo);
+        LocationDetailsAndVisibilityAndDungeonMasterBo locationDetailsAndVisibilityAndDungeonMasterBo = locationDetailBusinessLogicConverter.getLocationDetailsAndVisibilityAndDungeonMasterBoFromLocationDetailsVisibilityRequest(locationDetailsVisibilityRequest);
+        LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo = locationDetailBusinessLogic.getLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityAndDungeonMasterBo);
         return locationDetailBusinessLogicConverter.getLocationDetailsVisibilityResponseFromLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityBo);
     }
 }

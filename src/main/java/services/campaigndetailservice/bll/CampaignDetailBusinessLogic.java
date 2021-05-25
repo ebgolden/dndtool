@@ -1,0 +1,11 @@
+package services.campaigndetailservice.bll;
+
+import services.campaigndetailservice.bll.bo.CampaignAndPlayerBo;
+import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityAndDungeonMasterBo;
+import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityBo;
+
+public interface CampaignDetailBusinessLogic {
+    CampaignDetailsAndVisibilityBo getCampaignDetailsAndVisibilityBo(CampaignAndPlayerBo campaignAndPlayerBo);
+
+    CampaignDetailsAndVisibilityBo getCampaignDetailsAndVisibilityBo(CampaignDetailsAndVisibilityAndDungeonMasterBo campaignDetailsAndVisibilityAndDungeonMasterBo);
+}

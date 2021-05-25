@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
-import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndPlayerBo;
+import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndDungeonMasterBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
 import services.locationdetailservice.dal.LocationDetailDataAccess;
 import services.locationdetailservice.dal.LocationDetailDataAccessConverter;
@@ -37,9 +37,9 @@ public class LocationDetailBusinessLogicImpl implements LocationDetailBusinessLo
         return filterLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityBo, player);
     }
 
-    public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
-        LocationDetailsAndVisibilityAndPlayerBo filteredLocationDetailsAndVisibilityAndPlayerBo = filterLocationDetailsAndVisibilityAndPlayerBo(locationDetailsAndVisibilityAndPlayerBo);
-        LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo = locationDetailBusinessLogicConverter.getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndPlayerBo(filteredLocationDetailsAndVisibilityAndPlayerBo);
+    public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBo(LocationDetailsAndVisibilityAndDungeonMasterBo locationDetailsAndVisibilityAndDungeonMasterBo) {
+        LocationDetailsAndVisibilityAndDungeonMasterBo filteredLocationDetailsAndVisibilityAndDungeonMasterBo = filterLocationDetailsAndVisibilityAndDungeonMasterBo(locationDetailsAndVisibilityAndDungeonMasterBo);
+        LocationDetailsAndVisibilityBo locationDetailsAndVisibilityBo = locationDetailBusinessLogicConverter.getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndDungeonMasterBo(filteredLocationDetailsAndVisibilityAndDungeonMasterBo);
         LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao = locationDetailDataAccessConverter.getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityBo(locationDetailsAndVisibilityBo);
         locationDetailsAndVisibilityDao = locationDetailDataAccess.getLocationDetailsAndVisibilityDao(locationDetailsAndVisibilityDao);
         return locationDetailDataAccessConverter.getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityDao(locationDetailsAndVisibilityDao);
@@ -92,27 +92,29 @@ public class LocationDetailBusinessLogicImpl implements LocationDetailBusinessLo
                 .build();
     }
 
-    private LocationDetailsAndVisibilityAndPlayerBo filterLocationDetailsAndVisibilityAndPlayerBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
-        Location location = locationDetailsAndVisibilityAndPlayerBo.getLocation();
-        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
-        Player player = locationDetailsAndVisibilityAndPlayerBo.getPlayer();
-        if (player.getClass() != DungeonMaster.class) {
+    private LocationDetailsAndVisibilityAndDungeonMasterBo filterLocationDetailsAndVisibilityAndDungeonMasterBo(LocationDetailsAndVisibilityAndDungeonMasterBo locationDetailsAndVisibilityAndDungeonMasterBo) {
+        Location location = locationDetailsAndVisibilityAndDungeonMasterBo.getLocation();
+        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();
+        DungeonMaster dungeonMaster = locationDetailsAndVisibilityAndDungeonMasterBo.getDungeonMaster();
+        String dungeonMasterId = dungeonMaster.getId();
+        String campaignDungeonMasterId = location.getDungeonMasterId();
+        if (!dungeonMasterId.equals(campaignDungeonMasterId)) {
             location = null;
             visibilityMap = null;
         }
         Map<String, Visibility> filteredVisibilityMap = visibilityMap;
         if (filteredVisibilityMap != null)
-            visibilityMap.keySet().forEach(key -> correctVisibility(player, filteredVisibilityMap, key));
-        return LocationDetailsAndVisibilityAndPlayerBo
+            visibilityMap.keySet().forEach(key -> correctVisibility(filteredVisibilityMap, key));
+        return LocationDetailsAndVisibilityAndDungeonMasterBo
                 .builder()
                 .location(location)
                 .visibilityMap(filteredVisibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
     }
 
-    private void correctVisibility(Player player, Map<String, Visibility> visibilityMap, String key) {
-        if ((player.getClass() == DungeonMaster.class) && (visibilityMap.get(key) == Visibility.PLAYER))
+    private void correctVisibility(Map<String, Visibility> visibilityMap, String key) {
+        if (visibilityMap.get(key) == Visibility.PLAYER)
             visibilityMap.replace(key, Visibility.DUNGEON_MASTER);
     }
 }

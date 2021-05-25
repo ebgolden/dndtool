@@ -35,30 +35,35 @@ public class UpdateWorldDetailsVisibilityTest {
     }
 
     @Test
-    public void shouldReturnVisibilityMapWithIdWhileDM() {
+    public void shouldReturnVisibilityMapWithId() {
         String worldId = "0";
+        String dungeonMasterId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(worldId);
-        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
+        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAndReturnWorldDetailsResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityMapWhilePlayer() {
+    public void shouldReturnEmptyVisibilityMapWhileDifferentDM() {
+        String dungeonMasterId = "2";
+        String worldDungeonMasterId = "1";
         String responseJson = "{}";
-        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, true);
+        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAndReturnWorldDetailsResponse(responseJson, dungeonMasterId, worldDungeonMasterId);
         Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
     public void shouldReturnEmptyVisibilityMapWhenEmptyJson() {
+        String dungeonMasterId = "1";
         String responseJson = "{}";
-        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(responseJson, false);
+        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAndReturnWorldDetailsResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
     public void shouldReturnEmptyVisibilityMapWhenNullJson() {
-        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(null, false);
+        String dungeonMasterId = "1";
+        WorldDetailsVisibilityResponse worldDetailsVisibilityResponse = mockJsonResponseAndReturnWorldDetailsResponse(null, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(worldDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
@@ -85,15 +90,11 @@ public class UpdateWorldDetailsVisibilityTest {
         return responseJson.toString();
     }
 
-    private WorldDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnWorldDetailsResponse(String responseJson, boolean isPlayer) {
+    private WorldDetailsVisibilityResponse mockJsonResponseAndReturnWorldDetailsResponse(String responseJson, String dungeonMasterId, String worldDungeonMasterId) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
-        Player player;
-        if (isPlayer)
-            player = Player
-                    .builder()
-                    .build();
-        else player = DungeonMaster
+        DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
+                .id(dungeonMasterId)
                 .build();
         Map<String, Visibility> visibilityMap = new HashMap<>();
         visibilityMap.put("id", Visibility.EVERYONE);
@@ -101,9 +102,10 @@ public class UpdateWorldDetailsVisibilityTest {
                 .builder()
                 .world(World
                         .builder()
+                        .dungeonMasterId(worldDungeonMasterId)
                         .build())
                 .visibilityMap(visibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
         return updateWorldDetailsVisibility.getWorldDetailsVisibilityResponse(worldDetailsVisibilityRequest);
     }

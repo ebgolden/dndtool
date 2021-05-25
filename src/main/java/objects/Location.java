@@ -8,4 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 public class Location {
     String id;
+    String dungeonMasterId;
 }

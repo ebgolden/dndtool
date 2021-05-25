@@ -1,5 +1,6 @@
 package services.locationdetailservice.bll;
 
+import objects.DungeonMaster;
 import objects.Location;
 import objects.Player;
 import objects.Visibility;
@@ -8,7 +9,7 @@ import services.locationdetailservice.LocationDetailsResponse;
 import services.locationdetailservice.LocationDetailsVisibilityRequest;
 import services.locationdetailservice.LocationDetailsVisibilityResponse;
 import services.locationdetailservice.bll.bo.LocationAndPlayerBo;
-import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndPlayerBo;
+import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityAndDungeonMasterBo;
 import services.locationdetailservice.bll.bo.LocationDetailsAndVisibilityBo;
 import java.util.Map;
 
@@ -23,15 +24,15 @@ public class LocationDetailBusinessLogicConverterImpl implements LocationDetailB
                 .build();
     }
 
-    public LocationDetailsAndVisibilityAndPlayerBo getLocationDetailsAndVisibilityAndPlayerBoFromLocationDetailsVisibilityRequest(LocationDetailsVisibilityRequest locationDetailsVisibilityRequest) {
+    public LocationDetailsAndVisibilityAndDungeonMasterBo getLocationDetailsAndVisibilityAndDungeonMasterBoFromLocationDetailsVisibilityRequest(LocationDetailsVisibilityRequest locationDetailsVisibilityRequest) {
         Location location = locationDetailsVisibilityRequest.getLocation();
         Map<String, Visibility> visibilityMap = locationDetailsVisibilityRequest.getVisibilityMap();
-        Player player = locationDetailsVisibilityRequest.getPlayer();
-        return LocationDetailsAndVisibilityAndPlayerBo
+        DungeonMaster dungeonMaster = locationDetailsVisibilityRequest.getDungeonMaster();
+        return LocationDetailsAndVisibilityAndDungeonMasterBo
                 .builder()
                 .location(location)
                 .visibilityMap(visibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
     }
 
@@ -51,9 +52,9 @@ public class LocationDetailBusinessLogicConverterImpl implements LocationDetailB
                 .build();
     }
 
-    public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndPlayerBo(LocationDetailsAndVisibilityAndPlayerBo locationDetailsAndVisibilityAndPlayerBo) {
-        Location location = locationDetailsAndVisibilityAndPlayerBo.getLocation();
-        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
+    public LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityAndDungeonMasterBo(LocationDetailsAndVisibilityAndDungeonMasterBo locationDetailsAndVisibilityAndDungeonMasterBo) {
+        Location location = locationDetailsAndVisibilityAndDungeonMasterBo.getLocation();
+        Map<String, Visibility> visibilityMap = locationDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();
         return LocationDetailsAndVisibilityBo
                 .builder()
                 .location(location)

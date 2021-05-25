@@ -1,5 +1,6 @@
 package services.worlddetailservice.bll;
 
+import objects.DungeonMaster;
 import objects.Player;
 import objects.Visibility;
 import objects.World;
@@ -8,7 +9,7 @@ import services.worlddetailservice.WorldDetailsResponse;
 import services.worlddetailservice.WorldDetailsVisibilityRequest;
 import services.worlddetailservice.WorldDetailsVisibilityResponse;
 import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
-import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndPlayerBo;
+import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndDungeonMasterBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
 import java.util.Map;
 
@@ -39,21 +40,21 @@ public class WorldDetailBusinessLogicConverterImpl implements WorldDetailBusines
                 .build();
     }
 
-    public WorldDetailsAndVisibilityAndPlayerBo getWorldDetailsAndVisibilityAndPlayerBoFromWorldDetailsVisibilityRequest(WorldDetailsVisibilityRequest worldDetailsVisibilityRequest) {
+    public WorldDetailsAndVisibilityAndDungeonMasterBo getWorldDetailsAndVisibilityAndDungeonMasterBoFromWorldDetailsVisibilityRequest(WorldDetailsVisibilityRequest worldDetailsVisibilityRequest) {
         World world = worldDetailsVisibilityRequest.getWorld();
         Map<String, Visibility> visibilityMap = worldDetailsVisibilityRequest.getVisibilityMap();
-        Player player = worldDetailsVisibilityRequest.getPlayer();
-        return WorldDetailsAndVisibilityAndPlayerBo
+        DungeonMaster dungeonMaster = worldDetailsVisibilityRequest.getDungeonMaster();
+        return WorldDetailsAndVisibilityAndDungeonMasterBo
                 .builder()
                 .world(world)
                 .visibilityMap(visibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
     }
 
-    public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
-        World world = worldDetailsAndVisibilityAndPlayerBo.getWorld();
-        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
+    public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndDungeonMasterBo(WorldDetailsAndVisibilityAndDungeonMasterBo worldDetailsAndVisibilityAndDungeonMasterBo) {
+        World world = worldDetailsAndVisibilityAndDungeonMasterBo.getWorld();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();
         return WorldDetailsAndVisibilityBo
                 .builder()
                 .world(world)

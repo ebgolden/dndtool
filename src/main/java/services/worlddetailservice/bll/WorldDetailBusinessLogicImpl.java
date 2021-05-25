@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.worlddetailservice.bll.bo.WorldAndPlayerBo;
-import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndPlayerBo;
+import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityAndDungeonMasterBo;
 import services.worlddetailservice.bll.bo.WorldDetailsAndVisibilityBo;
 import services.worlddetailservice.dal.WorldDetailDataAccess;
 import services.worlddetailservice.dal.WorldDetailDataAccessConverter;
@@ -37,9 +37,9 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
         return filterWorldDetailsAndVisibilityBo(worldDetailsAndVisibilityBo, player);
     }
 
-    public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
-        WorldDetailsAndVisibilityAndPlayerBo filteredWorldDetailsAndVisibilityAndPlayerBo = filterWorldDetailsAndVisibilityAndPlayerBo(worldDetailsAndVisibilityAndPlayerBo);
-        WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo = worldDetailBusinessLogicConverter.getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndPlayerBo(filteredWorldDetailsAndVisibilityAndPlayerBo);
+    public WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBo(WorldDetailsAndVisibilityAndDungeonMasterBo worldDetailsAndVisibilityAndDungeonMasterBo) {
+        WorldDetailsAndVisibilityAndDungeonMasterBo filteredWorldDetailsAndVisibilityAndDungeonMasterBo = filterWorldDetailsAndVisibilityAndDungeonMasterBo(worldDetailsAndVisibilityAndDungeonMasterBo);
+        WorldDetailsAndVisibilityBo worldDetailsAndVisibilityBo = worldDetailBusinessLogicConverter.getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityAndDungeonMasterBo(filteredWorldDetailsAndVisibilityAndDungeonMasterBo);
         WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao = worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityBo(worldDetailsAndVisibilityBo);
         worldDetailsAndVisibilityDao = worldDetailDataAccess.getWorldDetailsAndVisibilityDao(worldDetailsAndVisibilityDao);
         return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityDao(worldDetailsAndVisibilityDao);
@@ -92,27 +92,29 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
                 .build();
     }
 
-    private WorldDetailsAndVisibilityAndPlayerBo filterWorldDetailsAndVisibilityAndPlayerBo(WorldDetailsAndVisibilityAndPlayerBo worldDetailsAndVisibilityAndPlayerBo) {
-        World world = worldDetailsAndVisibilityAndPlayerBo.getWorld();
-        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndPlayerBo.getVisibilityMap();
-        Player player = worldDetailsAndVisibilityAndPlayerBo.getPlayer();
-        if (player.getClass() != DungeonMaster.class) {
+    private WorldDetailsAndVisibilityAndDungeonMasterBo filterWorldDetailsAndVisibilityAndDungeonMasterBo(WorldDetailsAndVisibilityAndDungeonMasterBo worldDetailsAndVisibilityAndDungeonMasterBo) {
+        World world = worldDetailsAndVisibilityAndDungeonMasterBo.getWorld();
+        Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();
+        DungeonMaster dungeonMaster = worldDetailsAndVisibilityAndDungeonMasterBo.getDungeonMaster();
+        String dungeonMasterId = dungeonMaster.getId();
+        String campaignDungeonMasterId = world.getDungeonMasterId();
+        if (!dungeonMasterId.equals(campaignDungeonMasterId)) {
             world = null;
             visibilityMap = null;
         }
         Map<String, Visibility> filteredVisibilityMap = visibilityMap;
         if (filteredVisibilityMap != null)
-            visibilityMap.keySet().forEach(key -> correctVisibility(player, filteredVisibilityMap, key));
-        return WorldDetailsAndVisibilityAndPlayerBo
+            visibilityMap.keySet().forEach(key -> correctVisibility(filteredVisibilityMap, key));
+        return WorldDetailsAndVisibilityAndDungeonMasterBo
                 .builder()
                 .world(world)
                 .visibilityMap(filteredVisibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
     }
 
-    private void correctVisibility(Player player, Map<String, Visibility> visibilityMap, String key) {
-        if ((player.getClass() == DungeonMaster.class) && (visibilityMap.get(key) == Visibility.PLAYER))
+    private void correctVisibility(Map<String, Visibility> visibilityMap, String key) {
+        if (visibilityMap.get(key) == Visibility.PLAYER)
             visibilityMap.replace(key, Visibility.DUNGEON_MASTER);
     }
 }

@@ -35,30 +35,35 @@ public class UpdateLocationDetailsVisibilityTest {
     }
 
     @Test
-    public void shouldReturnVisibilityMapWithIdWhileDM() {
+    public void shouldReturnVisibilityMapWithId() {
         String locationId = "0";
+        String dungeonMasterId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(locationId);
-        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, false);
+        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAndReturnLocationDetailsVisibilityResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityMapWhilePlayer() {
+    public void shouldReturnEmptyVisibilityMapWhileDifferentDM() {
+        String dungeonMasterId = "2";
+        String locationDungeonMasterId = "1";
         String responseJson = "{}";
-        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, true);
+        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAndReturnLocationDetailsVisibilityResponse(responseJson, dungeonMasterId, locationDungeonMasterId);
         Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
     public void shouldReturnEmptyMapWhenEmptyJson() {
+        String dungeonMasterId = "1";
         String responseJson = "{}";
-        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(responseJson, false);
+        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAndReturnLocationDetailsVisibilityResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
     public void shouldReturnEmptyMapWhenNullJson() {
-        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(null, false);
+        String dungeonMasterId = "1";
+        LocationDetailsVisibilityResponse locationDetailsVisibilityResponse = mockJsonResponseAndReturnLocationDetailsVisibilityResponse(null, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(locationDetailsVisibilityResponse.getVisibilityMap(), "Visibility not null.");
     }
 
@@ -85,15 +90,11 @@ public class UpdateLocationDetailsVisibilityTest {
         return responseJson.toString();
     }
 
-    private LocationDetailsVisibilityResponse mockJsonResponseAsPlayerOrDMAndReturnLocationDetailsVisibilityResponse(String responseJson, boolean isPlayer) {
+    private LocationDetailsVisibilityResponse mockJsonResponseAndReturnLocationDetailsVisibilityResponse(String responseJson, String dungeonMasterId, String locationDungeonMasterId) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
-        Player player;
-        if (isPlayer)
-            player = Player
-                    .builder()
-                    .build();
-        else player = DungeonMaster
+        DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
+                .id(dungeonMasterId)
                 .build();
         Map<String, Visibility> visibilityMap = new HashMap<>();
         visibilityMap.put("id", Visibility.EVERYONE);
@@ -101,9 +102,10 @@ public class UpdateLocationDetailsVisibilityTest {
                 .builder()
                 .location(Location
                         .builder()
+                        .dungeonMasterId(locationDungeonMasterId)
                         .build())
                 .visibilityMap(visibilityMap)
-                .player(player)
+                .dungeonMaster(dungeonMaster)
                 .build();
         return updateLocationDetailsVisibility.getLocationDetailsVisibilityResponse(locationDetailsVisibilityRequest);
     }

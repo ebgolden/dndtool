@@ -2,8 +2,8 @@ package services.locationdetailservice;
 
 import lombok.Builder;
 import lombok.Value;
+import objects.DungeonMaster;
 import objects.Location;
-import objects.Player;
 import objects.Visibility;
 import java.util.Map;
 
@@ -12,5 +12,5 @@ import java.util.Map;
 public class LocationDetailsVisibilityRequest {
     Location location;
     Map<String, Visibility> visibilityMap;
-    Player player;
+    DungeonMaster dungeonMaster;
 }

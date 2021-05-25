@@ -1,0 +1,16 @@
+package services.campaigndetailservice.dal;
+
+import services.campaigndetailservice.bll.bo.CampaignAndPlayerBo;
+import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityBo;
+import services.campaigndetailservice.dal.dao.CampaignDao;
+import services.campaigndetailservice.dal.dao.CampaignDetailsAndVisibilityDao;
+
+public interface CampaignDetailDataAccessConverter {
+    CampaignDao getCampaignDaoFromCampaignAndPlayerBo(CampaignAndPlayerBo campaignAndPlayerBo);
+
+    CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityBo(CampaignDetailsAndVisibilityBo campaignDetailsAndVisibilityBo);
+
+    CampaignDetailsAndVisibilityBo getCampaignDetailsAndVisibilityBoFromCampaignDetailsAndVisibilityDao(CampaignDetailsAndVisibilityDao campaignDetailsAndVisibilityDao);
+
+    CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+}
