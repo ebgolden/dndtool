@@ -3,10 +3,7 @@ package services.characterservice.bll;
 import com.google.inject.Inject;
 import objects.*;
 import objects.Character;
-import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
-import services.characterservice.bll.bo.CharacterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterBo;
+import services.characterservice.bll.bo.*;
 import services.characterservice.dal.CharacterDataAccess;
 import services.characterservice.dal.CharacterDataAccessConverter;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
@@ -32,6 +29,12 @@ public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {
         NonPlayableCharacterAndVisibilityAndDungeonMasterBo filteredNonPlayableCharacterAndVisibilityAndDungeonMasterBo = filterNonPlayableCharacterAndVisibilityAndDungeonMasterBo(nonPlayableCharacterAndVisibilityAndDungeonMasterBo);
         NonPlayableCharacterAndVisibilityAndDungeonMasterDao nonPlayableCharacterAndVisibilityAndDungeonMasterDao = characterDataAccessConverter.getNonPlayableCharacterAndVisibilityAndDungeonMasterDaoFromNonPlayableCharacterAndVisibilityAndDungeonMasterBo(filteredNonPlayableCharacterAndVisibilityAndDungeonMasterBo);
         NonPlayableCharacterDao nonPlayableCharacterDao = characterDataAccess.getNonPlayableCharacterDao(nonPlayableCharacterAndVisibilityAndDungeonMasterDao);
+        return characterDataAccessConverter.getNonPlayableCharacterBoFromNonPlayableCharacterDao(nonPlayableCharacterDao);
+    }
+
+    public NonPlayableCharacterBo getNonPlayableCharacterBo(CharacterAndDungeonMasterBo characterAndDungeonMasterBo) {
+        CharacterDao characterDao = characterDataAccessConverter.getCharacterDaoFromCharacterAndDungeonMasterBo(characterAndDungeonMasterBo);
+        NonPlayableCharacterDao nonPlayableCharacterDao = characterDataAccess.getNonPlayableCharacterDao(characterDao);
         return characterDataAccessConverter.getNonPlayableCharacterBoFromNonPlayableCharacterDao(nonPlayableCharacterDao);
     }
 

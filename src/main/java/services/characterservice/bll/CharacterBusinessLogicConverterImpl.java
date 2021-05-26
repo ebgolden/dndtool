@@ -2,14 +2,8 @@ package services.characterservice.bll;
 
 import objects.*;
 import objects.Character;
-import services.characterservice.CreateCharacterRequest;
-import services.characterservice.CreateCharacterResponse;
-import services.characterservice.CreateNonPlayableCharacterRequest;
-import services.characterservice.CreateNonPlayableCharacterResponse;
-import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
-import services.characterservice.bll.bo.CharacterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterBo;
+import services.characterservice.*;
+import services.characterservice.bll.bo.*;
 import java.util.Map;
 
 public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLogicConverter {
@@ -37,6 +31,16 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
                 .build();
     }
 
+    public CharacterAndDungeonMasterBo getCharacterAndDungeonMasterBoFromChangeCharacterToNonPlayableCharacterRequest(ChangeCharacterToNonPlayableCharacterRequest changeCharacterToNonPlayableCharacterRequest) {
+        Character character = changeCharacterToNonPlayableCharacterRequest.getCharacter();
+        DungeonMaster dungeonMaster = changeCharacterToNonPlayableCharacterRequest.getDungeonMaster();
+        return CharacterAndDungeonMasterBo
+                .builder()
+                .character(character)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public CreateCharacterResponse getCreateCharacterResponseFromCharacterBo(CharacterBo characterBo) {
         Character character = characterBo.getCharacter();
         return CreateCharacterResponse
@@ -48,6 +52,14 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
     public CreateNonPlayableCharacterResponse getCreateNonPlayableCharacterResponseFromNonPlayableCharacterBo(NonPlayableCharacterBo nonPlayableCharacterBo) {
         NonPlayableCharacter nonPlayableCharacter = nonPlayableCharacterBo.getNonPlayableCharacter();
         return CreateNonPlayableCharacterResponse
+                .builder()
+                .nonPlayableCharacter(nonPlayableCharacter)
+                .build();
+    }
+
+    public ChangeCharacterToNonPlayableCharacterResponse getChangeCharacterToNonPlayableCharacterResponseFromNonPlayableCharacterBo(NonPlayableCharacterBo nonPlayableCharacterBo) {
+        NonPlayableCharacter nonPlayableCharacter = nonPlayableCharacterBo.getNonPlayableCharacter();
+        return ChangeCharacterToNonPlayableCharacterResponse
                 .builder()
                 .nonPlayableCharacter(nonPlayableCharacter)
                 .build();

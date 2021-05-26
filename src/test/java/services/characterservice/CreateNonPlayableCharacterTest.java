@@ -37,7 +37,7 @@ public class CreateNonPlayableCharacterTest {
     @Test
     public void shouldReturnNonPlayableCharacter() {
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(dungeonMasterId);
+        String responseJson = createMockResponseJson(dungeonMasterId);
         CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter null.");
     }
@@ -66,14 +66,12 @@ public class CreateNonPlayableCharacterTest {
         Assertions.assertNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String nonPlayableCharacterDungeonMasterId) {
+    private String createMockResponseJson(String nonPlayableCharacterDungeonMasterId) {
         ObjectMapper objectMapper = new ObjectMapper();
         String nonPlayableCharacterJson;
-        String nonPlayableCharacterId = "1";
         try {
             nonPlayableCharacterJson = objectMapper.writeValueAsString(NonPlayableCharacter
                     .builder()
-                    .id(nonPlayableCharacterId)
                     .playerId(nonPlayableCharacterDungeonMasterId)
                     .build());
         } catch (JsonProcessingException e) {

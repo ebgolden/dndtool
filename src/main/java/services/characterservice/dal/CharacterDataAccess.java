@@ -9,4 +9,6 @@ public interface CharacterDataAccess {
     CharacterDao getCharacterDao(CharacterAndVisibilityAndPlayerDao characterAndVisibilityDao);
 
     NonPlayableCharacterDao getNonPlayableCharacterDao(NonPlayableCharacterAndVisibilityAndDungeonMasterDao nonPlayableCharacterAndVisibilityAndDungeonMasterDao);
+
+    NonPlayableCharacterDao getNonPlayableCharacterDao(CharacterDao characterDao);
 }

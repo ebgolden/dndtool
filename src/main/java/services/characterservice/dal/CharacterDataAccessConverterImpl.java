@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.*;
 import objects.Character;
-import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
-import services.characterservice.bll.bo.CharacterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterBo;
+import services.characterservice.bll.bo.*;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
 import services.characterservice.dal.dao.CharacterDao;
 import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
@@ -74,6 +71,21 @@ public class CharacterDataAccessConverterImpl implements CharacterDataAccessConv
         return NonPlayableCharacterAndVisibilityAndDungeonMasterDao
                 .builder()
                 .nonPlayableCharacterAndVisibilityAndDungeonMasterJson(nonPlayableCharacterAndVisibilityAndDungeonMasterJson)
+                .build();
+    }
+
+    public CharacterDao getCharacterDaoFromCharacterAndDungeonMasterBo(CharacterAndDungeonMasterBo characterAndDungeonMasterBo) {
+        Character character = characterAndDungeonMasterBo.getCharacter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String characterJson = "{}";
+        try {
+            characterJson = objectMapper.writeValueAsString(character);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return CharacterDao
+                .builder()
+                .characterJson(characterJson)
                 .build();
     }
 

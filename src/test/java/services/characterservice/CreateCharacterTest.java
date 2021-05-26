@@ -38,7 +38,7 @@ public class CreateCharacterTest {
     @Test
     public void shouldReturnCharacterWhilePlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId);
+        String responseJson = createMockResponseJson(playerId);
         CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, playerId, true);
         Assertions.assertNotNull(createCharacterResponse.getCharacter(), "Character null.");
     }
@@ -47,7 +47,7 @@ public class CreateCharacterTest {
     public void shouldReturnCharacterWhileDM() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(characterPlayerId);
+        String responseJson = createMockResponseJson(characterPlayerId);
         CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, characterPlayerId, false);
         Assertions.assertNotNull(createCharacterResponse.getCharacter(), "Character null.");
     }
@@ -76,14 +76,12 @@ public class CreateCharacterTest {
         Assertions.assertNull(createCharacterResponse.getCharacter(), "Character not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String characterPlayerId) {
+    private String createMockResponseJson(String characterPlayerId) {
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
-        String characterId = "1";
         try {
             characterJson = objectMapper.writeValueAsString(Character
                     .builder()
-                    .id(characterId)
                     .playerId(characterPlayerId)
                     .build());
         } catch (JsonProcessingException e) {

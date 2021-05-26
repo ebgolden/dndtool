@@ -1,9 +1,6 @@
 package services.characterservice.dal;
 
-import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
-import services.characterservice.bll.bo.CharacterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
-import services.characterservice.bll.bo.NonPlayableCharacterBo;
+import services.characterservice.bll.bo.*;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
 import services.characterservice.dal.dao.CharacterDao;
 import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
@@ -13,6 +10,8 @@ public interface CharacterDataAccessConverter {
     CharacterAndVisibilityAndPlayerDao getCharacterAndVisibilityAndPlayerDaoFromCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo);
 
     NonPlayableCharacterAndVisibilityAndDungeonMasterDao getNonPlayableCharacterAndVisibilityAndDungeonMasterDaoFromNonPlayableCharacterAndVisibilityAndDungeonMasterBo(NonPlayableCharacterAndVisibilityAndDungeonMasterBo nonPlayableCharacterAndVisibilityAndDungeonMasterBo);
+
+    CharacterDao getCharacterDaoFromCharacterAndDungeonMasterBo(CharacterAndDungeonMasterBo characterAndDungeonMasterBo);
 
     CharacterBo getCharacterBoFromCharacterDao(CharacterDao characterDao);
 

@@ -37,7 +37,7 @@ public class CreateCampaignTest {
     @Test
     public void shouldReturnCampaign() {
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(dungeonMasterId);
+        String responseJson = createMockResponseJson(dungeonMasterId);
         CreateCampaignResponse createCampaignResponse = mockJsonResponseAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(createCampaignResponse.getCampaign(), "Campaign null.");
     }
@@ -66,14 +66,12 @@ public class CreateCampaignTest {
         Assertions.assertNull(createCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String campaignDungeonMasterId) {
+    private String createMockResponseJson(String campaignDungeonMasterId) {
         ObjectMapper objectMapper = new ObjectMapper();
         String campaignJson;
-        String campaignId = "1";
         try {
             campaignJson = objectMapper.writeValueAsString(Campaign
                     .builder()
-                    .id(campaignId)
                     .dungeonMasterId(campaignDungeonMasterId)
                     .build());
         } catch (JsonProcessingException e) {

@@ -39,7 +39,7 @@ public class RemovePlayerFromCampaignTest {
     public void shouldReturnCampaign() {
         String campaignId = "0";
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(campaignId);
+        String responseJson = createMockResponseJson(campaignId);
         RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign null.");
     }
@@ -68,7 +68,7 @@ public class RemovePlayerFromCampaignTest {
         Assertions.assertNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String campaignId) {
+    private String createMockResponseJson(String campaignId) {
         ObjectMapper objectMapper = new ObjectMapper();
         String campaignJson;
         try {
