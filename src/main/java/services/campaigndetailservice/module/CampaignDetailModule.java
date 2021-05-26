@@ -17,6 +17,7 @@ public class CampaignDetailModule extends AbstractModule {
         bind(GetCampaignDetails.class).to(GetCampaignDetailsImpl.class);
         bind(UpdateCampaignDetailsVisibility.class).to(UpdateCampaignDetailsVisibilityImpl.class);
         bind(AddPlayerToCampaign.class).to(AddPlayerToCampaignImpl.class);
+        bind(RemovePlayerFromCampaign.class).to(RemovePlayerFromCampaignImpl.class);
         bind(CampaignDetailBusinessLogicConverter.class).to(CampaignDetailBusinessLogicConverterImpl.class);
         bind(CampaignDetailBusinessLogic.class).to(CampaignDetailBusinessLogicImpl.class);
         bind(CampaignDetailDataAccessConverter.class).to(CampaignDetailDataAccessConverterImpl.class);

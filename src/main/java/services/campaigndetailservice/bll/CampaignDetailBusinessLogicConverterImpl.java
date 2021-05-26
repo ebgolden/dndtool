@@ -43,6 +43,18 @@ public class CampaignDetailBusinessLogicConverterImpl implements CampaignDetailB
                 .build();
     }
 
+    public CampaignAndPlayerAndDungeonMasterBo getCampaignAndPlayerAndDungeonMasterBoFromRemovePlayerFromCampaignRequest(RemovePlayerFromCampaignRequest removePlayerFromCampaignRequest) {
+        Campaign campaign = removePlayerFromCampaignRequest.getCampaign();
+        Player player = removePlayerFromCampaignRequest.getPlayer();
+        DungeonMaster dungeonMaster = removePlayerFromCampaignRequest.getDungeonMaster();
+        return CampaignAndPlayerAndDungeonMasterBo
+                .builder()
+                .campaign(campaign)
+                .player(player)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public CampaignDetailsResponse getCampaignDetailsResponseFromCampaignDetailsAndVisibilityBo(CampaignDetailsAndVisibilityBo campaignDetailsAndVisibilityBo) {
         Campaign campaign = campaignDetailsAndVisibilityBo.getCampaign();
         return CampaignDetailsResponse
@@ -62,6 +74,14 @@ public class CampaignDetailBusinessLogicConverterImpl implements CampaignDetailB
     public AddPlayerToCampaignResponse getAddPlayerToCampaignResponseFromCampaignDetailsBo(CampaignDetailsBo campaignDetailsBo) {
         Campaign campaign = campaignDetailsBo.getCampaign();
         return AddPlayerToCampaignResponse
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
+    public RemovePlayerFromCampaignResponse getRemovePlayerFromCampaignResponseFromCampaignDetailsBo(CampaignDetailsBo campaignDetailsBo) {
+        Campaign campaign = campaignDetailsBo.getCampaign();
+        return RemovePlayerFromCampaignResponse
                 .builder()
                 .campaign(campaign)
                 .build();
