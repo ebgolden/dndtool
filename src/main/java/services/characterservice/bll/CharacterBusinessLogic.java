@@ -2,7 +2,11 @@ package services.characterservice.bll;
 
 import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
 import services.characterservice.bll.bo.CharacterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterBo;
 
 public interface CharacterBusinessLogic {
     CharacterBo getCharacterBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo);
+
+    NonPlayableCharacterBo getNonPlayableCharacterBo(NonPlayableCharacterAndVisibilityAndDungeonMasterBo nonPlayableCharacterAndVisibilityAndDungeonMasterBo);
 }

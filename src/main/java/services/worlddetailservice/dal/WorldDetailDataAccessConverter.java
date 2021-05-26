@@ -12,5 +12,5 @@ public interface WorldDetailDataAccessConverter {
 
     WorldDetailsAndVisibilityBo getWorldDetailsAndVisibilityBoFromWorldDetailsAndVisibilityDao(WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao);
 
-    WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityJson(String worldDetailsAndVisibilityJson);
 }

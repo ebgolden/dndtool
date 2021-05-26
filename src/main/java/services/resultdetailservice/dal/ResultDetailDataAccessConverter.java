@@ -12,5 +12,5 @@ public interface ResultDetailDataAccessConverter {
 
     ResultDetailsAndVisibilityBo getResultDetailsAndVisibilityBoFromResultDetailsAndVisibilityDao(ResultDetailsAndVisibilityDao resultDetailsAndVisibilityDao);
 
-    ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromResultDetailsAndVisibilityJson(String resultDetailsAndVisibilityJson);
 }

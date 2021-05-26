@@ -65,10 +65,10 @@ public class TurnQueueDataAccessConverterImpl implements TurnQueueDataAccessConv
     }
 
     @Override
-    public TurnQueueDao getTurnQueueDaoFromLatestObjectJson(String latestObjectJson) {
+    public TurnQueueDao getTurnQueueDaoFromTurnQueueJson(String turnQueueJson) {
         return TurnQueueDao
                 .builder()
-                .turnQueueJson(latestObjectJson)
+                .turnQueueJson(turnQueueJson)
                 .build();
     }
 }

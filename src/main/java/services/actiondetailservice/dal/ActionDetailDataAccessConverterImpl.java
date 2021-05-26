@@ -99,10 +99,10 @@ public class ActionDetailDataAccessConverterImpl implements ActionDetailDataAcce
                 .build();
     }
 
-    public ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromActionDetailsAndVisibilityJson(String actionDetailsAndVisibilityJson) {
         return ActionDetailsAndVisibilityDao
                 .builder()
-                .actionDetailsAndVisibilityJson(latestJsonObject)
+                .actionDetailsAndVisibilityJson(actionDetailsAndVisibilityJson)
                 .build();
     }
 }

@@ -10,5 +10,5 @@ public interface CampaignDataAccessConverter {
 
     CampaignBo getCampaignBoFromCampaignDao(CampaignDao campaignDao);
 
-    CampaignDao getCampaignDaoFromCampaignJsonObject(String campaignJsonObject);
+    CampaignDao getCampaignDaoFromCampaignJson(String campaignJson);
 }

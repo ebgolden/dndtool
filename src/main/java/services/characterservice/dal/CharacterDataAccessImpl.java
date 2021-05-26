@@ -4,17 +4,26 @@ import com.google.inject.Inject;
 import objects.DataOperator;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
 import services.characterservice.dal.dao.CharacterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterDao;
 
 public class CharacterDataAccessImpl implements CharacterDataAccess {
     @Inject
-    private CharacterDataAccessConverter characterDataAccessConverter;
-    @Inject
     private DataOperator dataOperator;
+    @Inject
+    private CharacterDataAccessConverter characterDataAccessConverter;
 
     public CharacterDao getCharacterDao(CharacterAndVisibilityAndPlayerDao characterAndVisibilityDao) {
         String characterAndVisibilityAndPlayerJson = characterAndVisibilityDao.getCharacterAndVisibilityAndPlayerJson();
         dataOperator.sendRequestJson(characterAndVisibilityAndPlayerJson);
-        String characterJsonObject = dataOperator.getResponseJson();
-        return characterDataAccessConverter.getCharacterDaoFromCharacterJsonObject(characterJsonObject);
+        String characterJson = dataOperator.getResponseJson();
+        return characterDataAccessConverter.getCharacterDaoFromCharacterJson(characterJson);
+    }
+
+    public NonPlayableCharacterDao getNonPlayableCharacterDao(NonPlayableCharacterAndVisibilityAndDungeonMasterDao nonPlayableCharacterAndVisibilityAndDungeonMasterDao) {
+        String nonPlayableCharacterAndVisibilityAndDungeonMasterJson = nonPlayableCharacterAndVisibilityAndDungeonMasterDao.getNonPlayableCharacterAndVisibilityAndDungeonMasterJson();
+        dataOperator.sendRequestJson(nonPlayableCharacterAndVisibilityAndDungeonMasterJson);
+        String nonPlayableCharacterJson = dataOperator.getResponseJson();
+        return characterDataAccessConverter.getNonPlayableCharacterDaoFromNonPlayableCharacterJson(nonPlayableCharacterJson);
     }
 }

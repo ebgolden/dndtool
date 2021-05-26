@@ -7,14 +7,14 @@ import services.classdetailservice.dal.dao.ClassDetailsDao;
 
 public class ClassDetailDataAccessImpl implements ClassDetailDataAccess {
     @Inject
-    ClassDetailDataAccessConverter classDetailDataAccessConverter;
+    private DataOperator dataOperator;
     @Inject
-    DataOperator dataOperator;
+    private ClassDetailDataAccessConverter classDetailDataAccessConverter;
 
     public ClassDetailsDao getClassDetailsDao(ClassDao classDao) {
         String classJson = classDao.getClassJson();
         dataOperator.sendRequestJson(classJson);
-        String latestJsonObject = dataOperator.getResponseJson();
-        return classDetailDataAccessConverter.getClassDetailsDaoFromLatestJsonObject(latestJsonObject);
+        String classDetailsJson = dataOperator.getResponseJson();
+        return classDetailDataAccessConverter.getClassDetailsDaoFromClassDetailsJson(classDetailsJson);
     }
 }

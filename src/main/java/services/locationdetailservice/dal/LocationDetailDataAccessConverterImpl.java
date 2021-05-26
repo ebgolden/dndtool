@@ -99,10 +99,10 @@ public class LocationDetailDataAccessConverterImpl implements LocationDetailData
                 .build();
     }
 
-    public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityJson(String locationDetailsAndVisibilityJson) {
         return LocationDetailsAndVisibilityDao
                 .builder()
-                .locationDetailsAndVisibilityJson(latestJsonObject)
+                .locationDetailsAndVisibilityJson(locationDetailsAndVisibilityJson)
                 .build();
     }
 }

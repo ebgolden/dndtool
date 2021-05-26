@@ -65,10 +65,10 @@ public class CampaignDataAccessConverterImpl implements CampaignDataAccessConver
                 .build();
     }
 
-    public CampaignDao getCampaignDaoFromCampaignJsonObject(String campaignJsonObject) {
+    public CampaignDao getCampaignDaoFromCampaignJson(String campaignJson) {
         return CampaignDao
                 .builder()
-                .campaignJson(campaignJsonObject)
+                .campaignJson(campaignJson)
                 .build();
     }
 }

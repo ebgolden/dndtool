@@ -12,5 +12,5 @@ public interface LocationDetailDataAccessConverter {
 
     LocationDetailsAndVisibilityBo getLocationDetailsAndVisibilityBoFromLocationDetailsAndVisibilityDao(LocationDetailsAndVisibilityDao locationDetailsAndVisibilityDao);
 
-    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    LocationDetailsAndVisibilityDao getLocationDetailsAndVisibilityDaoFromLocationDetailsAndVisibilityJson(String locationDetailsAndVisibilityJson);
 }

@@ -99,10 +99,10 @@ public class CampaignDetailDataAccessConverterImpl implements CampaignDetailData
                 .build();
     }
 
-    public CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityJson(String campaignDetailsAndVisibilityJson) {
         return CampaignDetailsAndVisibilityDao
                 .builder()
-                .campaignDetailsAndVisibilityJson(latestJsonObject)
+                .campaignDetailsAndVisibilityJson(campaignDetailsAndVisibilityJson)
                 .build();
     }
 }

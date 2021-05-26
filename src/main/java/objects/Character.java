@@ -1,10 +1,11 @@
 package objects;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Data
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Character {
     String id;

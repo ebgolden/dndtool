@@ -38,7 +38,7 @@ public class CreateCampaignTest {
     public void shouldReturnCampaign() {
         String dungeonMasterId = "1";
         String responseJson = createMockResponseJsonWithVisibilityOfId(dungeonMasterId);
-        CreateCampaignResponse createCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        CreateCampaignResponse createCampaignResponse = mockJsonResponseAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(createCampaignResponse.getCampaign(), "Campaign null.");
     }
 
@@ -47,7 +47,7 @@ public class CreateCampaignTest {
         String dungeonMasterId = "2";
         String campaignDungeonMasterId = "1";
         String responseJson = "{}";
-        CreateCampaignResponse createCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, campaignDungeonMasterId);
+        CreateCampaignResponse createCampaignResponse = mockJsonResponseAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, campaignDungeonMasterId);
         Assertions.assertNull(createCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
@@ -55,14 +55,14 @@ public class CreateCampaignTest {
     public void shouldReturnEmptyCampaignWhenEmptyJson() {
         String dungeonMasterId = "1";
         String responseJson = "{}";
-        CreateCampaignResponse createCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        CreateCampaignResponse createCampaignResponse = mockJsonResponseAndReturnCreateCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(createCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
     @Test
     public void shouldReturnEmptyCampaignWhenNullJson() {
         String dungeonMasterId = "1";
-        CreateCampaignResponse createCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCampaignResponse(null, dungeonMasterId, dungeonMasterId);
+        CreateCampaignResponse createCampaignResponse = mockJsonResponseAndReturnCreateCampaignResponse(null, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(createCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
@@ -82,7 +82,7 @@ public class CreateCampaignTest {
         return campaignJson;
     }
 
-    private CreateCampaignResponse mockJsonResponseAsPlayerOrDMAndReturnCreateCampaignResponse(String responseJson, String dungeonMasterId, String campaignDungeonMasterId) {
+    private CreateCampaignResponse mockJsonResponseAndReturnCreateCampaignResponse(String responseJson, String dungeonMasterId, String campaignDungeonMasterId) {
         when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()

@@ -10,5 +10,5 @@ public interface RaceDetailDataAccessConverter {
 
     RaceDetailsBo getRaceDetailsBoFromRaceDetailsDao(RaceDetailsDao RaceDetailsDao);
 
-    RaceDetailsDao getRaceDetailsDaoFromLatestJsonObject(String latestJsonObject);
+    RaceDetailsDao getRaceDetailsDaoFromRaceDetailsJson(String raceDetailsJson);
 }

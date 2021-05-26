@@ -7,21 +7,21 @@ import services.spelldetailservice.dal.dao.SpellDetailsAndVisibilityDao;
 
 public class SpellDetailDataAccessImpl implements SpellDetailDataAccess {
     @Inject
-    private SpellDetailDataAccessConverter spellDetailDataAccessConverter;
-    @Inject
     private DataOperator dataOperator;
+    @Inject
+    private SpellDetailDataAccessConverter spellDetailDataAccessConverter;
 
     public SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDao(SpellDao spellDao) {
         String spellJson = spellDao.getSpellJson();
         dataOperator.sendRequestJson(spellJson);
-        String latestJsonObject = dataOperator.getResponseJson();
-        return spellDetailDataAccessConverter.getSpellDetailsAndVisibilityDaoFromLatestJsonObject(latestJsonObject);
+        String spellDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return spellDetailDataAccessConverter.getSpellDetailsAndVisibilityDaoFromSpellDetailsAndVisibilityJson(spellDetailsAndVisibilityJson);
     }
 
     public SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDao(SpellDetailsAndVisibilityDao spellDetailsAndVisibilityDao) {
-        String spellDetailsAndVisibilityJson = spellDetailsAndVisibilityDao.getSpellDetailsAndVisibilityJson();
-        dataOperator.sendRequestJson(spellDetailsAndVisibilityJson);
-        String updatedJsonObject = dataOperator.getResponseJson();
-        return spellDetailDataAccessConverter.getSpellDetailsAndVisibilityDaoFromLatestJsonObject(updatedJsonObject);
+        String spellAndVisibilityJson = spellDetailsAndVisibilityDao.getSpellDetailsAndVisibilityJson();
+        dataOperator.sendRequestJson(spellAndVisibilityJson);
+        String spellDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return spellDetailDataAccessConverter.getSpellDetailsAndVisibilityDaoFromSpellDetailsAndVisibilityJson(spellDetailsAndVisibilityJson);
     }
 }

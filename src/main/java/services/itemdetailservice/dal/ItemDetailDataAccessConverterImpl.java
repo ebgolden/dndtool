@@ -99,10 +99,10 @@ public class ItemDetailDataAccessConverterImpl implements ItemDetailDataAccessCo
                 .build();
     }
 
-    public ItemDetailsAndVisibilityDao getItemDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public ItemDetailsAndVisibilityDao getItemDetailsAndVisibilityDaoFromItemDetailsAndVisibilityJson(String itemDetailsAndVisibilityJson) {
         return ItemDetailsAndVisibilityDao
                 .builder()
-                .itemDetailsAndVisibilityJson(latestJsonObject)
+                .itemDetailsAndVisibilityJson(itemDetailsAndVisibilityJson)
                 .build();
     }
 }

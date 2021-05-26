@@ -7,21 +7,21 @@ import services.worlddetailservice.dal.dao.WorldDetailsAndVisibilityDao;
 
 public class WorldDetailDataAccessImpl implements WorldDetailDataAccess {
     @Inject
-    private WorldDetailDataAccessConverter worldDetailDataAccessConverter;
-    @Inject
     private DataOperator dataOperator;
+    @Inject
+    private WorldDetailDataAccessConverter worldDetailDataAccessConverter;
 
     public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDao(WorldDao worldDao) {
         String worldJson = worldDao.getWorldJson();
         dataOperator.sendRequestJson(worldJson);
-        String latestJsonObject = dataOperator.getResponseJson();
-        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromLatestJsonObject(latestJsonObject);
+        String worldDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityJson(worldDetailsAndVisibilityJson);
     }
 
     public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDao(WorldDetailsAndVisibilityDao worldDetailsAndVisibilityDao) {
         String worldAndVisibilityJson = worldDetailsAndVisibilityDao.getWorldDetailsAndVisibilityJson();
         dataOperator.sendRequestJson(worldAndVisibilityJson);
-        String updatedJsonObject = dataOperator.getResponseJson();
-        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromLatestJsonObject(updatedJsonObject);
+        String worldDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return worldDetailDataAccessConverter.getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityJson(worldDetailsAndVisibilityJson);
     }
 }

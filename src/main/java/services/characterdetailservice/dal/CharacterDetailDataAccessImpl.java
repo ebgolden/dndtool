@@ -7,21 +7,21 @@ import services.characterdetailservice.dal.dao.CharacterDetailsAndVisibilityDao;
 
 public class CharacterDetailDataAccessImpl implements CharacterDetailDataAccess {
     @Inject
-    private CharacterDetailDataAccessConverter characterDetailDataAccessConverter;
-    @Inject
     private DataOperator dataOperator;
+    @Inject
+    private CharacterDetailDataAccessConverter characterDetailDataAccessConverter;
 
     public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDao(CharacterDao characterDao) {
         String characterJson = characterDao.getCharacterJson();
         dataOperator.sendRequestJson(characterJson);
-        String latestJsonObject = dataOperator.getResponseJson();
-        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(latestJsonObject);
+        String characterDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityJson(characterDetailsAndVisibilityJson);
     }
 
     public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDao(CharacterDetailsAndVisibilityDao characterDetailsAndVisibilityDao) {
         String characterAndVisibilityJson = characterDetailsAndVisibilityDao.getCharacterDetailsAndVisibilityJson();
         dataOperator.sendRequestJson(characterAndVisibilityJson);
-        String updatedJsonObject = dataOperator.getResponseJson();
-        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(updatedJsonObject);
+        String characterDetailsAndVisibilityJson = dataOperator.getResponseJson();
+        return characterDetailDataAccessConverter.getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityJson(characterDetailsAndVisibilityJson);
     }
 }

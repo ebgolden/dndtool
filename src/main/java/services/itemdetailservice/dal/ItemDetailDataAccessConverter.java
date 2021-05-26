@@ -12,5 +12,5 @@ public interface ItemDetailDataAccessConverter {
 
     ItemDetailsAndVisibilityBo getItemDetailsAndVisibilityBoFromItemDetailsAndVisibilityDao(ItemDetailsAndVisibilityDao itemDetailsAndVisibilityDao);
 
-    ItemDetailsAndVisibilityDao getItemDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    ItemDetailsAndVisibilityDao getItemDetailsAndVisibilityDaoFromItemDetailsAndVisibilityJson(String itemDetailsAndVisibilityJson);
 }

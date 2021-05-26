@@ -2,11 +2,19 @@ package services.characterservice.bll;
 
 import services.characterservice.CreateCharacterRequest;
 import services.characterservice.CreateCharacterResponse;
+import services.characterservice.CreateNonPlayableCharacterRequest;
+import services.characterservice.CreateNonPlayableCharacterResponse;
 import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
 import services.characterservice.bll.bo.CharacterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterBo;
 
 public interface CharacterBusinessLogicConverter {
     CharacterAndVisibilityAndPlayerBo getCharacterAndVisibilityAndPlayerBoFromCreateCharacterRequest(CreateCharacterRequest createCharacterRequest);
 
+    NonPlayableCharacterAndVisibilityAndDungeonMasterBo getNonPlayableCharacterAndVisibilityAndDungeonMasterBoFromCreateNonPlayableCharacterRequest(CreateNonPlayableCharacterRequest createNonPlayableCharacterRequest);
+
     CreateCharacterResponse getCreateCharacterResponseFromCharacterBo(CharacterBo characterBo);
+
+    CreateNonPlayableCharacterResponse getCreateNonPlayableCharacterResponseFromNonPlayableCharacterBo(NonPlayableCharacterBo nonPlayableCharacterBo);
 }

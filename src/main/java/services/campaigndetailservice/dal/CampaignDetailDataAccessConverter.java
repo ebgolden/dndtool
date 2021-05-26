@@ -12,5 +12,5 @@ public interface CampaignDetailDataAccessConverter {
 
     CampaignDetailsAndVisibilityBo getCampaignDetailsAndVisibilityBoFromCampaignDetailsAndVisibilityDao(CampaignDetailsAndVisibilityDao campaignDetailsAndVisibilityDao);
 
-    CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityJson(String campaignDetailsAndVisibilityJson);
 }

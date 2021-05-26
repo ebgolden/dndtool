@@ -2,13 +2,16 @@ package services.characterservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import objects.*;
 import objects.Character;
-import objects.Player;
-import objects.Visibility;
 import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
 import services.characterservice.bll.bo.CharacterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterBo;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
 import services.characterservice.dal.dao.CharacterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterDao;
 import java.util.Map;
 
 public class CharacterDataAccessConverterImpl implements CharacterDataAccessConverter {
@@ -43,6 +46,37 @@ public class CharacterDataAccessConverterImpl implements CharacterDataAccessConv
                 .build();
     }
 
+    public NonPlayableCharacterAndVisibilityAndDungeonMasterDao getNonPlayableCharacterAndVisibilityAndDungeonMasterDaoFromNonPlayableCharacterAndVisibilityAndDungeonMasterBo(NonPlayableCharacterAndVisibilityAndDungeonMasterBo nonPlayableCharacterAndVisibilityAndDungeonMasterBo) {
+        NonPlayableCharacter nonPlayableCharacter = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getNonPlayableCharacter();
+        Map<String, Visibility> visibilityMap = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getVisibilityMap();
+        DungeonMaster dungeonMaster = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getDungeonMaster();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String nonPlayableCharacterJson = "{}";
+        String visibilityJson = "{}";
+        String dungeonMasterJson = "{}";
+        try {
+            nonPlayableCharacterJson = objectMapper.writeValueAsString(nonPlayableCharacter);
+            visibilityJson = objectMapper.writeValueAsString(visibilityMap);
+            dungeonMasterJson = objectMapper.writeValueAsString(dungeonMaster);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String nonPlayableCharacterAndVisibilityAndDungeonMasterJson = "{}";
+        if ((!nonPlayableCharacterJson.equals("{}") && (!nonPlayableCharacterJson.equals("null"))) || (!visibilityJson.equals("{}") && (!visibilityJson.equals("null"))) || (!dungeonMasterJson.equals("{}") && (!dungeonMasterJson.equals("null"))))
+            nonPlayableCharacterAndVisibilityAndDungeonMasterJson = "{" +
+                    "nonPlayableCharacter:" +
+                    nonPlayableCharacterJson +
+                    ",visibility:" +
+                    visibilityJson +
+                    ",dungeonMaster:" +
+                    dungeonMasterJson +
+                    "}";
+        return NonPlayableCharacterAndVisibilityAndDungeonMasterDao
+                .builder()
+                .nonPlayableCharacterAndVisibilityAndDungeonMasterJson(nonPlayableCharacterAndVisibilityAndDungeonMasterJson)
+                .build();
+    }
+
     public CharacterBo getCharacterBoFromCharacterDao(CharacterDao characterDao) {
         String characterJson = characterDao.getCharacterJson();
         if (characterJson == null)
@@ -65,10 +99,39 @@ public class CharacterDataAccessConverterImpl implements CharacterDataAccessConv
                 .build();
     }
 
-    public CharacterDao getCharacterDaoFromCharacterJsonObject(String characterJsonObject) {
+    public NonPlayableCharacterBo getNonPlayableCharacterBoFromNonPlayableCharacterDao(NonPlayableCharacterDao nonPlayableCharacterDao) {
+        String nonPlayableCharacterJson = nonPlayableCharacterDao.getNonPlayableCharacterJson();
+        if (nonPlayableCharacterJson == null)
+            nonPlayableCharacterJson = "{}";
+        NonPlayableCharacter nonPlayableCharacter = null;
+        if (!nonPlayableCharacterJson.equals("{}")) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            nonPlayableCharacter = NonPlayableCharacter
+                    .builder()
+                    .build();
+            try {
+                nonPlayableCharacter = objectMapper.readValue(nonPlayableCharacterJson, NonPlayableCharacter.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return NonPlayableCharacterBo
+                .builder()
+                .nonPlayableCharacter(nonPlayableCharacter)
+                .build();
+    }
+
+    public CharacterDao getCharacterDaoFromCharacterJson(String characterJson) {
         return CharacterDao
                 .builder()
-                .characterJson(characterJsonObject)
+                .characterJson(characterJson)
+                .build();
+    }
+
+    public NonPlayableCharacterDao getNonPlayableCharacterDaoFromNonPlayableCharacterJson(String nonPlayableCharacterJson) {
+        return NonPlayableCharacterDao
+                .builder()
+                .nonPlayableCharacterJson(nonPlayableCharacterJson)
                 .build();
     }
 }

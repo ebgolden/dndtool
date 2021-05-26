@@ -99,10 +99,10 @@ public class SpellDetailDataAccessConverterImpl implements SpellDetailDataAccess
                 .build();
     }
 
-    public SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDaoFromSpellDetailsAndVisibilityJson(String spellDetailsAndVisibilityJson) {
         return SpellDetailsAndVisibilityDao
                 .builder()
-                .spellDetailsAndVisibilityJson(latestJsonObject)
+                .spellDetailsAndVisibilityJson(spellDetailsAndVisibilityJson)
                 .build();
     }
 }

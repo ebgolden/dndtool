@@ -99,10 +99,10 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
                 .build();
     }
 
-    public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public WorldDetailsAndVisibilityDao getWorldDetailsAndVisibilityDaoFromWorldDetailsAndVisibilityJson(String worldDetailsAndVisibilityJson) {
         return WorldDetailsAndVisibilityDao
                 .builder()
-                .worldDetailsAndVisibilityJson(latestJsonObject)
+                .worldDetailsAndVisibilityJson(worldDetailsAndVisibilityJson)
                 .build();
     }
 }

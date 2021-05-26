@@ -7,14 +7,14 @@ import services.partyservice.dal.dao.PartyDao;
 
 public class PartyDataAccessImpl implements PartyDataAccess {
     @Inject
-    private PartyDataAccessConverter partyDataAccessConverter;
-    @Inject
     private DataOperator dataOperator;
+    @Inject
+    private PartyDataAccessConverter partyDataAccessConverter;
 
     public PartyDao getPartyDao(PartyAndCharacterDao partyAndCharacterDao) {
         String partyAndCharacterJson = partyAndCharacterDao.getPartyAndCharacterJson();
         dataOperator.sendRequestJson(partyAndCharacterJson);
-        String updatedJsonObject = dataOperator.getResponseJson();
-        return partyDataAccessConverter.getPartyDaoFromUpdatedJsonObject(updatedJsonObject);
+        String partyJson = dataOperator.getResponseJson();
+        return partyDataAccessConverter.getPartyDaoFromPartyJson(partyJson);
     }
 }

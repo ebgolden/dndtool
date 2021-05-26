@@ -16,9 +16,9 @@ public interface ActionDataAccessConverter {
 
     ActionBo getActionBoFromActionDao(ActionDao actionDao);
 
-    ActionsDao getActionsDaoFromLatestObjectJson(String latestObjectJson);
+    ActionsDao getActionsDaoFromActionsJson(String actionsJson);
 
-    ResultDao getResultDaoFromResultObjectJson(String resultObjectJson);
+    ResultDao getResultDaoFromResultJson(String resultJson);
 
-    ActionDao getActionDaoFromActionObjectJson(String actionObjectJson);
+    ActionDao getActionDaoFromActionJson(String actionJson);
 }

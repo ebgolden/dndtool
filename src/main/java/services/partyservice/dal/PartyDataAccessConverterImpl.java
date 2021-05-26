@@ -66,10 +66,10 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
                 .build();
     }
 
-    public PartyDao getPartyDaoFromUpdatedJsonObject(String updatedJsonObject) {
+    public PartyDao getPartyDaoFromPartyJson(String partyJson) {
         return PartyDao
                 .builder()
-                .partyJson(updatedJsonObject)
+                .partyJson(partyJson)
                 .build();
     }
 }

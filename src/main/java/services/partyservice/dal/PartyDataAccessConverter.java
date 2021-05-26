@@ -13,5 +13,5 @@ public interface PartyDataAccessConverter {
 
     PartyBo getPartyBoFromPartyDao(PartyDao partyDao);
 
-    PartyDao getPartyDaoFromUpdatedJsonObject(String updatedJsonObject);
+    PartyDao getPartyDaoFromPartyJson(String partyJson);
 }

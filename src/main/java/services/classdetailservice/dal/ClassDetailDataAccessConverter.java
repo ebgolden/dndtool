@@ -10,5 +10,5 @@ public interface ClassDetailDataAccessConverter {
 
     ClassDetailsBo getClassDetailsBoFromClassDetailsDao(ClassDetailsDao classDetailsDao);
 
-    ClassDetailsDao getClassDetailsDaoFromLatestJsonObject(String latestJsonObject);
+    ClassDetailsDao getClassDetailsDaoFromClassDetailsJson(String classDetailsJson);
 }

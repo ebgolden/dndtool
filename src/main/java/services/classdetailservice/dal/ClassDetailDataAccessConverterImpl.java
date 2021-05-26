@@ -46,10 +46,10 @@ public class ClassDetailDataAccessConverterImpl implements ClassDetailDataAccess
                 .build();
     }
 
-    public ClassDetailsDao getClassDetailsDaoFromLatestJsonObject(String latestJsonObject) {
+    public ClassDetailsDao getClassDetailsDaoFromClassDetailsJson(String classDetailsJson) {
         return ClassDetailsDao
                 .builder()
-                .classDetailsJson(latestJsonObject)
+                .classDetailsJson(classDetailsJson)
                 .build();
     }
 }

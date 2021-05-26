@@ -10,5 +10,5 @@ public interface TurnQueueDataAccessConverter {
 
     TurnQueueBo getTurnQueueBoFromTurnQueueDao(TurnQueueDao turnQueueDao);
 
-    TurnQueueDao getTurnQueueDaoFromLatestObjectJson(String latestObjectJson);
+    TurnQueueDao getTurnQueueDaoFromTurnQueueJson(String turnQueueJson);
 }

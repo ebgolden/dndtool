@@ -1,16 +1,18 @@
 package services.characterservice.bll;
 
 import com.google.inject.Inject;
+import objects.*;
 import objects.Character;
-import objects.DungeonMaster;
-import objects.Player;
-import objects.Visibility;
 import services.characterservice.bll.bo.CharacterAndVisibilityAndPlayerBo;
 import services.characterservice.bll.bo.CharacterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
+import services.characterservice.bll.bo.NonPlayableCharacterBo;
 import services.characterservice.dal.CharacterDataAccess;
 import services.characterservice.dal.CharacterDataAccessConverter;
 import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
 import services.characterservice.dal.dao.CharacterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
+import services.characterservice.dal.dao.NonPlayableCharacterDao;
 import java.util.Map;
 
 public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {
@@ -24,6 +26,13 @@ public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {
         CharacterAndVisibilityAndPlayerDao characterDetailsAndVisibilityDao = characterDataAccessConverter.getCharacterAndVisibilityAndPlayerDaoFromCharacterAndVisibilityAndPlayerBo(filteredCharacterAndVisibilityAndPlayerBo);
         CharacterDao characterDao = characterDataAccess.getCharacterDao(characterDetailsAndVisibilityDao);
         return characterDataAccessConverter.getCharacterBoFromCharacterDao(characterDao);
+    }
+
+    public NonPlayableCharacterBo getNonPlayableCharacterBo(NonPlayableCharacterAndVisibilityAndDungeonMasterBo nonPlayableCharacterAndVisibilityAndDungeonMasterBo) {
+        NonPlayableCharacterAndVisibilityAndDungeonMasterBo filteredNonPlayableCharacterAndVisibilityAndDungeonMasterBo = filterNonPlayableCharacterAndVisibilityAndDungeonMasterBo(nonPlayableCharacterAndVisibilityAndDungeonMasterBo);
+        NonPlayableCharacterAndVisibilityAndDungeonMasterDao nonPlayableCharacterAndVisibilityAndDungeonMasterDao = characterDataAccessConverter.getNonPlayableCharacterAndVisibilityAndDungeonMasterDaoFromNonPlayableCharacterAndVisibilityAndDungeonMasterBo(filteredNonPlayableCharacterAndVisibilityAndDungeonMasterBo);
+        NonPlayableCharacterDao nonPlayableCharacterDao = characterDataAccess.getNonPlayableCharacterDao(nonPlayableCharacterAndVisibilityAndDungeonMasterDao);
+        return characterDataAccessConverter.getNonPlayableCharacterBoFromNonPlayableCharacterDao(nonPlayableCharacterDao);
     }
 
     private CharacterAndVisibilityAndPlayerBo filterCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo) {
@@ -41,6 +50,24 @@ public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {
                 .character(character)
                 .visibilityMap(visibilityMap)
                 .player(player)
+                .build();
+    }
+
+    NonPlayableCharacterAndVisibilityAndDungeonMasterBo filterNonPlayableCharacterAndVisibilityAndDungeonMasterBo(NonPlayableCharacterAndVisibilityAndDungeonMasterBo nonPlayableCharacterAndVisibilityAndDungeonMasterBo) {
+        NonPlayableCharacter nonPlayableCharacter = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getNonPlayableCharacter();
+        Map<String, Visibility> visibilityMap = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getVisibilityMap();
+        DungeonMaster dungeonMaster = nonPlayableCharacterAndVisibilityAndDungeonMasterBo.getDungeonMaster();
+        String dungeonMasterId = dungeonMaster.getId();
+        String nonPlayableCharacterDungeonMasterId = nonPlayableCharacter.getPlayerId();
+        if (!dungeonMasterId.equals(nonPlayableCharacterDungeonMasterId)) {
+            nonPlayableCharacter = null;
+            visibilityMap = null;
+        }
+        return NonPlayableCharacterAndVisibilityAndDungeonMasterBo
+                .builder()
+                .nonPlayableCharacter(nonPlayableCharacter)
+                .visibilityMap(visibilityMap)
+                .dungeonMaster(dungeonMaster)
                 .build();
     }
 }

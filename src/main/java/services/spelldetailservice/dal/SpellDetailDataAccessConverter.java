@@ -12,5 +12,5 @@ public interface SpellDetailDataAccessConverter {
 
     SpellDetailsAndVisibilityBo getSpellDetailsAndVisibilityBoFromSpellDetailsAndVisibilityDao(SpellDetailsAndVisibilityDao spellDetailsAndVisibilityDao);
 
-    SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    SpellDetailsAndVisibilityDao getSpellDetailsAndVisibilityDaoFromSpellDetailsAndVisibilityJson(String spellDetailsAndVisibilityJson);
 }

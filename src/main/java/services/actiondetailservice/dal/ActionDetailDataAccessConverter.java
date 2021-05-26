@@ -12,5 +12,5 @@ public interface ActionDetailDataAccessConverter {
 
     ActionDetailsAndVisibilityBo getActionDetailsAndVisibilityBoFromActionDetailsAndVisibilityDao(ActionDetailsAndVisibilityDao actionDetailsAndVisibilityDao);
 
-    ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject);
+    ActionDetailsAndVisibilityDao getActionDetailsAndVisibilityDaoFromActionDetailsAndVisibilityJson(String latestJsonObject);
 }

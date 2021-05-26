@@ -46,10 +46,10 @@ public class RaceDetailDataAccessConverterImpl implements RaceDetailDataAccessCo
                 .build();
     }
 
-    public RaceDetailsDao getRaceDetailsDaoFromLatestJsonObject(String latestJsonObject) {
+    public RaceDetailsDao getRaceDetailsDaoFromRaceDetailsJson(String raceDetailsJson) {
         return RaceDetailsDao
                 .builder()
-                .raceDetailsJson(latestJsonObject)
+                .raceDetailsJson(raceDetailsJson)
                 .build();
     }
 }

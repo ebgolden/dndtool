@@ -99,10 +99,10 @@ public class CharacterDetailDataAccessConverterImpl implements CharacterDetailDa
                 .build();
     }
 
-    public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public CharacterDetailsAndVisibilityDao getCharacterDetailsAndVisibilityDaoFromCharacterDetailsAndVisibilityJson(String characterDetailsAndVisibilityJson) {
         return CharacterDetailsAndVisibilityDao
                 .builder()
-                .characterDetailsAndVisibilityJson(latestJsonObject)
+                .characterDetailsAndVisibilityJson(characterDetailsAndVisibilityJson)
                 .build();
     }
 }

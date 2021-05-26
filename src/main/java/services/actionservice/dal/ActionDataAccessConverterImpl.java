@@ -161,24 +161,24 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
-    public ActionsDao getActionsDaoFromLatestObjectJson(String latestObjectJson) {
+    public ActionsDao getActionsDaoFromActionsJson(String actionsJson) {
         return ActionsDao
                 .builder()
-                .actionsJson(latestObjectJson)
+                .actionsJson(actionsJson)
                 .build();
     }
 
-    public ResultDao getResultDaoFromResultObjectJson(String resultObjectJson) {
+    public ResultDao getResultDaoFromResultJson(String resultJson) {
         return ResultDao
                 .builder()
-                .resultJson(resultObjectJson)
+                .resultJson(resultJson)
                 .build();
     }
 
-    public ActionDao getActionDaoFromActionObjectJson(String actionObjectJson) {
+    public ActionDao getActionDaoFromActionJson(String actionJson) {
         return ActionDao
                 .builder()
-                .actionJson(actionObjectJson)
+                .actionJson(actionJson)
                 .build();
     }
 }

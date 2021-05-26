@@ -7,14 +7,14 @@ import services.racedetailservice.dal.dao.RaceDetailsDao;
 
 public class RaceDetailDataAccessImpl implements RaceDetailDataAccess {
     @Inject
-    RaceDetailDataAccessConverter raceDetailDataAccessConverter;
+    private DataOperator dataOperator;
     @Inject
-    DataOperator dataOperator;
+    private RaceDetailDataAccessConverter raceDetailDataAccessConverter;
 
     public RaceDetailsDao getRaceDetailsDao(RaceDao raceDao) {
         String raceJson = raceDao.getRaceJson();
         dataOperator.sendRequestJson(raceJson);
-        String latestJsonObject = dataOperator.getResponseJson();
-        return raceDetailDataAccessConverter.getRaceDetailsDaoFromLatestJsonObject(latestJsonObject);
+        String raceDetailsJson = dataOperator.getResponseJson();
+        return raceDetailDataAccessConverter.getRaceDetailsDaoFromRaceDetailsJson(raceDetailsJson);
     }
 }

@@ -99,10 +99,10 @@ public class ResultDetailDataAccessConverterImpl implements ResultDetailDataAcce
                 .build();
     }
 
-    public ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromLatestJsonObject(String latestJsonObject) {
+    public ResultDetailsAndVisibilityDao getResultDetailsAndVisibilityDaoFromResultDetailsAndVisibilityJson(String resultDetailsAndVisibilityJson) {
         return ResultDetailsAndVisibilityDao
                 .builder()
-                .resultDetailsAndVisibilityJson(latestJsonObject)
+                .resultDetailsAndVisibilityJson(resultDetailsAndVisibilityJson)
                 .build();
     }
 }
