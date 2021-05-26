@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CreateCharacterTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<CreateCharacter> mockDataOperator;
     private CreateCharacter createCharacter;
 
     @BeforeEach

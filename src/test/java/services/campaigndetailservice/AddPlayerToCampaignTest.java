@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AddPlayerToCampaignTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<AddPlayerToCampaign> mockDataOperator;
     private AddPlayerToCampaign addPlayerToCampaign;
 
     @BeforeEach

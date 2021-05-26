@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UpdateCharacterDetailsVisibilityTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<UpdateCharacterDetailsVisibility> mockDataOperator;
     private UpdateCharacterDetailsVisibility updateCharacterDetailsVisibility;
 
     @BeforeEach

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetLocationDetailsTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<GetLocationDetails> mockDataOperator;
     private GetLocationDetails getLocationDetails;
 
     @BeforeEach

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetClassDetailsTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<GetClassDetails> mockDataOperator;
     private GetClassDetails getClassDetails;
 
     @BeforeEach

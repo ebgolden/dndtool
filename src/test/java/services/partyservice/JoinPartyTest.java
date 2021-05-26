@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class JoinPartyTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<JoinParty> mockDataOperator;
     private JoinParty joinParty;
 
     @BeforeEach

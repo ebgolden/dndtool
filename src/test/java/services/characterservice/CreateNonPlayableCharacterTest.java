@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CreateNonPlayableCharacterTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<CreateNonPlayableCharacter> mockDataOperator;
     private CreateNonPlayableCharacter createNonPlayableCharacter;
 
     @BeforeEach

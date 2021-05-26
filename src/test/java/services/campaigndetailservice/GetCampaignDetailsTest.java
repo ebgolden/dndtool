@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetCampaignDetailsTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<GetCampaignDetails> mockDataOperator;
     private GetCampaignDetails getCampaignDetails;
 
     @BeforeEach

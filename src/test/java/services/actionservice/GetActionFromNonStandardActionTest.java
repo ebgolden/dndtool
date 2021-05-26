@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetActionFromNonStandardActionTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<GetActionFromNonStandardAction> mockDataOperator;
     GetActionFromNonStandardAction getActionFromNonStandardAction;
 
     @BeforeEach

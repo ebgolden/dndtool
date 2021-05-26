@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class RemovePlayerFromCampaignTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<RemovePlayerFromCampaign> mockDataOperator;
     private RemovePlayerFromCampaign removePlayerFromCampaign;
 
     @BeforeEach

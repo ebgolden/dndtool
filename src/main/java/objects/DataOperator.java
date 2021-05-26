@@ -1,6 +1,6 @@
 package objects;
 
-public interface DataOperator {
+public interface DataOperator<T> {
     void sendRequestJson(String requestJson);
 
     String getResponseJson();

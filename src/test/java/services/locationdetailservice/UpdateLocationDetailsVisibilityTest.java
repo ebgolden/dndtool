@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UpdateLocationDetailsVisibilityTest {
     @Mock
-    DataOperator mockDataOperator;
+    DataOperator<UpdateLocationDetailsVisibility> mockDataOperator;
     private UpdateLocationDetailsVisibility updateLocationDetailsVisibility;
 
     @BeforeEach
