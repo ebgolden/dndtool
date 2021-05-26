@@ -3,14 +3,19 @@ package services.campaigndetailservice.dal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Campaign;
+import objects.Player;
 import objects.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import services.campaigndetailservice.bll.bo.CampaignAndPlayerAndDungeonMasterBo;
 import services.campaigndetailservice.bll.bo.CampaignAndPlayerBo;
 import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityBo;
+import services.campaigndetailservice.bll.bo.CampaignDetailsBo;
+import services.campaigndetailservice.dal.dao.CampaignAndPlayerDao;
 import services.campaigndetailservice.dal.dao.CampaignDao;
 import services.campaigndetailservice.dal.dao.CampaignDetailsAndVisibilityDao;
+import services.campaigndetailservice.dal.dao.CampaignDetailsDao;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +58,32 @@ public class CampaignDetailDataAccessConverterImpl implements CampaignDetailData
         return CampaignDetailsAndVisibilityDao
                 .builder()
                 .campaignDetailsAndVisibilityJson(campaignDetailsAndVisibilityJson)
+                .build();
+    }
+
+    public CampaignAndPlayerDao getCampaignAndPlayerDaoFromCampaignAndPlayerAndDungeonMasterBo(CampaignAndPlayerAndDungeonMasterBo campaignAndPlayerAndDungeonMasterBo) {
+        Campaign campaign = campaignAndPlayerAndDungeonMasterBo.getCampaign();
+        Player player = campaignAndPlayerAndDungeonMasterBo.getPlayer();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String campaignJson = "{}";
+        String playerJson = "{}";
+        try {
+            campaignJson = objectMapper.writeValueAsString(campaign);
+            playerJson = objectMapper.writeValueAsString(player);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String campaignDetailsAndPlayerJson = "{}";
+        if ((!campaignJson.equals("{}") && (!campaignJson.equals("null"))) || (!playerJson.equals("{}") && (!playerJson.equals("null"))))
+            campaignDetailsAndPlayerJson = "{" +
+                    "campaignDetails:" +
+                    campaignJson +
+                    ",player:" +
+                    playerJson +
+                    "}";
+        return CampaignAndPlayerDao
+                .builder()
+                .campaignDetailsAndPlayerJson(campaignDetailsAndPlayerJson)
                 .build();
     }
 
@@ -99,10 +130,39 @@ public class CampaignDetailDataAccessConverterImpl implements CampaignDetailData
                 .build();
     }
 
+    public CampaignDetailsBo getCampaignDetailsBoFromCampaignDetailsDao(CampaignDetailsDao campaignDetailsDao) {
+        String campaignDetailsJson = campaignDetailsDao.getCampaignDetailsJson();
+        if (campaignDetailsJson == null)
+            campaignDetailsJson = "{}";
+        Campaign campaign = null;
+        if (!campaignDetailsJson.equals("{}")) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            campaign = Campaign
+                    .builder()
+                    .build();
+            try {
+                campaign = objectMapper.readValue(campaignDetailsJson, Campaign.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return CampaignDetailsBo
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
     public CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityJson(String campaignDetailsAndVisibilityJson) {
         return CampaignDetailsAndVisibilityDao
                 .builder()
                 .campaignDetailsAndVisibilityJson(campaignDetailsAndVisibilityJson)
+                .build();
+    }
+
+    public CampaignDetailsDao getCampaignDetailsDaoFromCampaignDetailsJson(String campaignDetailsJson) {
+        return CampaignDetailsDao
+                .builder()
+                .campaignDetailsJson(campaignDetailsJson)
                 .build();
     }
 }

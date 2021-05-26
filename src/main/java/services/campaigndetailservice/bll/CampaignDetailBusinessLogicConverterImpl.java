@@ -4,13 +4,8 @@ import objects.Campaign;
 import objects.DungeonMaster;
 import objects.Player;
 import objects.Visibility;
-import services.campaigndetailservice.CampaignDetailsRequest;
-import services.campaigndetailservice.CampaignDetailsResponse;
-import services.campaigndetailservice.CampaignDetailsVisibilityRequest;
-import services.campaigndetailservice.CampaignDetailsVisibilityResponse;
-import services.campaigndetailservice.bll.bo.CampaignAndPlayerBo;
-import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityAndDungeonMasterBo;
-import services.campaigndetailservice.bll.bo.CampaignDetailsAndVisibilityBo;
+import services.campaigndetailservice.*;
+import services.campaigndetailservice.bll.bo.*;
 import java.util.Map;
 
 public class CampaignDetailBusinessLogicConverterImpl implements CampaignDetailBusinessLogicConverter {
@@ -36,6 +31,18 @@ public class CampaignDetailBusinessLogicConverterImpl implements CampaignDetailB
                 .build();
     }
 
+    public CampaignAndPlayerAndDungeonMasterBo getCampaignAndPlayerAndDungeonMasterBoFromAddPlayerToCampaignRequest(AddPlayerToCampaignRequest addPlayerToCampaignRequest) {
+        Campaign campaign = addPlayerToCampaignRequest.getCampaign();
+        Player player = addPlayerToCampaignRequest.getPlayer();
+        DungeonMaster dungeonMaster = addPlayerToCampaignRequest.getDungeonMaster();
+        return CampaignAndPlayerAndDungeonMasterBo
+                .builder()
+                .campaign(campaign)
+                .player(player)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public CampaignDetailsResponse getCampaignDetailsResponseFromCampaignDetailsAndVisibilityBo(CampaignDetailsAndVisibilityBo campaignDetailsAndVisibilityBo) {
         Campaign campaign = campaignDetailsAndVisibilityBo.getCampaign();
         return CampaignDetailsResponse
@@ -52,7 +59,14 @@ public class CampaignDetailBusinessLogicConverterImpl implements CampaignDetailB
                 .build();
     }
 
-    @Override
+    public AddPlayerToCampaignResponse getAddPlayerToCampaignResponseFromCampaignDetailsBo(CampaignDetailsBo campaignDetailsBo) {
+        Campaign campaign = campaignDetailsBo.getCampaign();
+        return AddPlayerToCampaignResponse
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
     public CampaignDetailsAndVisibilityBo getCampaignDetailsAndVisibilityBoFromCampaignDetailsAndVisibilityAndDungeonMasterBo(CampaignDetailsAndVisibilityAndDungeonMasterBo campaignDetailsAndVisibilityAndDungeonMasterBo) {
         Campaign campaign = campaignDetailsAndVisibilityAndDungeonMasterBo.getCampaign();
         Map<String, Visibility> visibilityMap = campaignDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();

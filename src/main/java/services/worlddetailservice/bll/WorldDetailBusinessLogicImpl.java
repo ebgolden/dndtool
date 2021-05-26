@@ -97,8 +97,8 @@ public class WorldDetailBusinessLogicImpl implements WorldDetailBusinessLogic {
         Map<String, Visibility> visibilityMap = worldDetailsAndVisibilityAndDungeonMasterBo.getVisibilityMap();
         DungeonMaster dungeonMaster = worldDetailsAndVisibilityAndDungeonMasterBo.getDungeonMaster();
         String dungeonMasterId = dungeonMaster.getId();
-        String campaignDungeonMasterId = world.getDungeonMasterId();
-        if (!dungeonMasterId.equals(campaignDungeonMasterId)) {
+        String worldDungeonMasterId = world.getDungeonMasterId();
+        if (!dungeonMasterId.equals(worldDungeonMasterId)) {
             world = null;
             visibilityMap = null;
         }

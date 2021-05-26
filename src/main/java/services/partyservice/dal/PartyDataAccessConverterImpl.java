@@ -33,7 +33,8 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        String partyAndCharacterJson = "{party:" +
+        String partyAndCharacterJson = "{" +
+                "party:" +
                 partyJson +
                 ",character:" +
                 characterJson +
