@@ -89,6 +89,21 @@ public class CharacterDataAccessConverterImpl implements CharacterDataAccessConv
                 .build();
     }
 
+    public NonPlayableCharacterDao getNonPlayableCharacterDaoFromNonPlayableCharacterAndDungeonMasterBo(NonPlayableCharacterAndDungeonMasterBo nonPlayableCharacterAndDungeonMasterBo) {
+        NonPlayableCharacter nonPlayableCharacter = nonPlayableCharacterAndDungeonMasterBo.getNonPlayableCharacter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String nonPlayableCharacterJson = "{}";
+        try {
+            nonPlayableCharacterJson = objectMapper.writeValueAsString(nonPlayableCharacter);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return NonPlayableCharacterDao
+                .builder()
+                .nonPlayableCharacterJson(nonPlayableCharacterJson)
+                .build();
+    }
+
     public CharacterBo getCharacterBoFromCharacterDao(CharacterDao characterDao) {
         String characterJson = characterDao.getCharacterJson();
         if (characterJson == null)

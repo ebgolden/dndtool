@@ -38,6 +38,12 @@ public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {
         return characterDataAccessConverter.getNonPlayableCharacterBoFromNonPlayableCharacterDao(nonPlayableCharacterDao);
     }
 
+    public CharacterBo getCharacterBo(NonPlayableCharacterAndDungeonMasterBo nonPlayableCharacterAndDungeonMasterBo) {
+        NonPlayableCharacterDao nonPlayableCharacterDao = characterDataAccessConverter.getNonPlayableCharacterDaoFromNonPlayableCharacterAndDungeonMasterBo(nonPlayableCharacterAndDungeonMasterBo);
+        CharacterDao characterDao = characterDataAccess.getCharacterDao(nonPlayableCharacterDao);
+        return characterDataAccessConverter.getCharacterBoFromCharacterDao(characterDao);
+    }
+
     private CharacterAndVisibilityAndPlayerBo filterCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo) {
         Character character = characterAndVisibilityAndPlayerBo.getCharacter();
         Map<String, Visibility> visibilityMap = characterAndVisibilityAndPlayerBo.getVisibilityMap();

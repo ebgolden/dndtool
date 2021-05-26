@@ -13,6 +13,8 @@ public interface CharacterDataAccessConverter {
 
     CharacterDao getCharacterDaoFromCharacterAndDungeonMasterBo(CharacterAndDungeonMasterBo characterAndDungeonMasterBo);
 
+    NonPlayableCharacterDao getNonPlayableCharacterDaoFromNonPlayableCharacterAndDungeonMasterBo(NonPlayableCharacterAndDungeonMasterBo nonPlayableCharacterAndDungeonMasterBo);
+
     CharacterBo getCharacterBoFromCharacterDao(CharacterDao characterDao);
 
     NonPlayableCharacterBo getNonPlayableCharacterBoFromNonPlayableCharacterDao(NonPlayableCharacterDao nonPlayableCharacterDao);

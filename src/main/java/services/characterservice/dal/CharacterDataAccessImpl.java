@@ -33,4 +33,11 @@ public class CharacterDataAccessImpl implements CharacterDataAccess {
         String nonPlayableCharacterJson = dataOperator.getResponseJson();
         return characterDataAccessConverter.getNonPlayableCharacterDaoFromNonPlayableCharacterJson(nonPlayableCharacterJson);
     }
+
+    public CharacterDao getCharacterDao(NonPlayableCharacterDao nonPlayableCharacterDao) {
+        String nonPlayableCharacterJson = nonPlayableCharacterDao.getNonPlayableCharacterJson();
+        dataOperator.sendRequestJson(nonPlayableCharacterJson);
+        String characterJson = dataOperator.getResponseJson();
+        return characterDataAccessConverter.getCharacterDaoFromCharacterJson(characterJson);
+    }
 }

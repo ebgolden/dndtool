@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 import objects.Character;
 import objects.DataOperator;
 import objects.DungeonMaster;
+import objects.NonPlayableCharacter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,36 +36,36 @@ public class ChangeCharacterToNonPlayableCharacterTest {
     }
 
     @Test
-    public void shouldReturnCharacter() {
+    public void shouldReturnNonPlayableCharacter() {
         String responseJson = createMockResponseJson();
         ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(responseJson);
-        Assertions.assertNotNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "Character null.");
+        Assertions.assertNotNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter null.");
     }
 
     @Test
-    public void shouldReturnEmptyCharacterWhenEmptyJson() {
+    public void shouldReturnEmptyNonPlayableCharacterWhenEmptyJson() {
         String responseJson = "{}";
         ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(responseJson);
-        Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "Character not null.");
+        Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
     @Test
-    public void shouldReturnEmptyCharacterWhenNullJson() {
+    public void shouldReturnEmptyNonPlayableCharacterWhenNullJson() {
         ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(null);
-        Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "Character not null.");
+        Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
     private String createMockResponseJson() {
         ObjectMapper objectMapper = new ObjectMapper();
-        String characterJson;
+        String nonPlayableCharacterJson;
         try {
-            characterJson = objectMapper.writeValueAsString(Character
+            nonPlayableCharacterJson = objectMapper.writeValueAsString(NonPlayableCharacter
                     .builder()
                     .build());
         } catch (JsonProcessingException e) {
-            characterJson = "{}";
+            nonPlayableCharacterJson = "{}";
         }
-        return characterJson;
+        return nonPlayableCharacterJson;
     }
 
     private ChangeCharacterToNonPlayableCharacterResponse mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(String responseJson) {

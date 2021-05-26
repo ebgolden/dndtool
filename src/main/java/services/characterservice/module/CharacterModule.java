@@ -17,6 +17,7 @@ public class CharacterModule extends AbstractModule {
         bind(CreateCharacter.class).to(CreateCharacterImpl.class);
         bind(CreateNonPlayableCharacter.class).to(CreateNonPlayableCharacterImpl.class);
         bind(ChangeCharacterToNonPlayableCharacter.class).to(ChangeCharacterToNonPlayableCharacterImpl.class);
+        bind(ChangeNonPlayableCharacterToCharacter.class).to(ChangeNonPlayableCharacterToCharacterImpl.class);
         bind(CharacterBusinessLogicConverter.class).to(CharacterBusinessLogicConverterImpl.class);
         bind(CharacterBusinessLogic.class).to(CharacterBusinessLogicImpl.class);
         bind(CharacterDataAccessConverter.class).to(CharacterDataAccessConverterImpl.class);

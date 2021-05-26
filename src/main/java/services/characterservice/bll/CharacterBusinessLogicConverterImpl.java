@@ -41,6 +41,16 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
                 .build();
     }
 
+    public NonPlayableCharacterAndDungeonMasterBo getNonPlayableCharacterAndDungeonMasterBoFromChangeNonPlayableCharacterToCharacterRequest(ChangeNonPlayableCharacterToCharacterRequest changeNonPlayableCharacterToCharacterRequest) {
+        NonPlayableCharacter nonPlayableCharacter = changeNonPlayableCharacterToCharacterRequest.getNonPlayableCharacter();
+        DungeonMaster dungeonMaster = changeNonPlayableCharacterToCharacterRequest.getDungeonMaster();
+        return NonPlayableCharacterAndDungeonMasterBo
+                .builder()
+                .nonPlayableCharacter(nonPlayableCharacter)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public CreateCharacterResponse getCreateCharacterResponseFromCharacterBo(CharacterBo characterBo) {
         Character character = characterBo.getCharacter();
         return CreateCharacterResponse
@@ -62,6 +72,14 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
         return ChangeCharacterToNonPlayableCharacterResponse
                 .builder()
                 .nonPlayableCharacter(nonPlayableCharacter)
+                .build();
+    }
+
+    public ChangeNonPlayableCharacterToCharacterResponse getChangeNonPlayableCharacterToCharacterResponseFromCharacterBo(CharacterBo characterBo) {
+        Character character = characterBo.getCharacter();
+        return ChangeNonPlayableCharacterToCharacterResponse
+                .builder()
+                .character(character)
                 .build();
     }
 }

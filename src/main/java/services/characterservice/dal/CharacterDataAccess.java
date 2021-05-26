@@ -11,4 +11,6 @@ public interface CharacterDataAccess {
     NonPlayableCharacterDao getNonPlayableCharacterDao(NonPlayableCharacterAndVisibilityAndDungeonMasterDao nonPlayableCharacterAndVisibilityAndDungeonMasterDao);
 
     NonPlayableCharacterDao getNonPlayableCharacterDao(CharacterDao characterDao);
+
+    CharacterDao getCharacterDao(NonPlayableCharacterDao nonPlayableCharacterDao);
 }
