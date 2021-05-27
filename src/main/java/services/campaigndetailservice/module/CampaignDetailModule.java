@@ -1,6 +1,8 @@
 package services.campaigndetailservice.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import services.campaigndetailservice.*;
 import services.campaigndetailservice.bll.CampaignDetailBusinessLogic;
 import services.campaigndetailservice.bll.CampaignDetailBusinessLogicConverter;
@@ -12,6 +14,12 @@ import services.campaigndetailservice.dal.CampaignDetailDataAccessConverterImpl;
 import services.campaigndetailservice.dal.CampaignDetailDataAccessImpl;
 
 public class CampaignDetailModule extends AbstractModule {
+    private final Object API;
+
+    public CampaignDetailModule(Object api) {
+        API = api;
+    }
+
     @Override
     protected void configure() {
         bind(GetCampaignDetails.class).to(GetCampaignDetailsImpl.class);
@@ -22,5 +30,11 @@ public class CampaignDetailModule extends AbstractModule {
         bind(CampaignDetailBusinessLogic.class).to(CampaignDetailBusinessLogicImpl.class);
         bind(CampaignDetailDataAccessConverter.class).to(CampaignDetailDataAccessConverterImpl.class);
         bind(CampaignDetailDataAccess.class).to(CampaignDetailDataAccessImpl.class);
+    }
+
+    @Provides
+    @Named("api")
+    public Object provideAPIClass() {
+        return API;
     }
 }

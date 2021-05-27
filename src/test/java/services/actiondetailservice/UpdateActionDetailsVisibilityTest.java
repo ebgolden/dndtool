@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UpdateActionDetailsVisibilityTest {
     @Mock
-    DataOperator<UpdateActionDetailsVisibility> mockDataOperator;
+    DataOperator mockDataOperator;
     private UpdateActionDetailsVisibility updateActionDetailsVisibility;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class UpdateActionDetailsVisibilityTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new ActionDetailModule());
+        }, new ActionDetailModule(UpdateActionDetailsVisibility.class));
         updateActionDetailsVisibility = injector.getInstance(UpdateActionDetailsVisibility.class);
     }
 

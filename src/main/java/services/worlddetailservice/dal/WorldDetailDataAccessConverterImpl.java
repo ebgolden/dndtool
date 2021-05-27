@@ -1,6 +1,7 @@
 package services.worlddetailservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Visibility;
 import objects.World;
@@ -87,7 +88,8 @@ public class WorldDetailDataAccessConverterImpl implements WorldDetailDataAccess
             visibilityJson = ((JSONObject)jsonObject.get("visibility")).toJSONString();
             visibilityMap = new HashMap<>();
             try {
-                visibilityMap = objectMapper.readValue(visibilityJson, Map.class);
+                TypeReference<Map<String, Visibility>> visibilityMapTypeReference = new TypeReference<Map<String, Visibility>>(){};
+                visibilityMap = objectMapper.readValue(visibilityJson, visibilityMapTypeReference);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

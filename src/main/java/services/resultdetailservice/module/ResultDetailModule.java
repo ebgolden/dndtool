@@ -1,6 +1,8 @@
 package services.resultdetailservice.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import services.resultdetailservice.GetResultDetails;
 import services.resultdetailservice.GetResultDetailsImpl;
 import services.resultdetailservice.UpdateResultDetailsVisibility;
@@ -15,6 +17,12 @@ import services.resultdetailservice.dal.ResultDetailDataAccessConverterImpl;
 import services.resultdetailservice.dal.ResultDetailDataAccessImpl;
 
 public class ResultDetailModule extends AbstractModule {
+    private final Object API;
+
+    public ResultDetailModule(Object api) {
+        API = api;
+    }
+
     @Override
     protected void configure() {
         bind(GetResultDetails.class).to(GetResultDetailsImpl.class);
@@ -23,5 +31,11 @@ public class ResultDetailModule extends AbstractModule {
         bind(ResultDetailBusinessLogic.class).to(ResultDetailBusinessLogicImpl.class);
         bind(ResultDetailDataAccessConverter.class).to(ResultDetailDataAccessConverterImpl.class);
         bind(ResultDetailDataAccess.class).to(ResultDetailDataAccessImpl.class);
+    }
+
+    @Provides
+    @Named("api")
+    public Object provideAPIClass() {
+        return API;
     }
 }

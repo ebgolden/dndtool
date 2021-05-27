@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class LeavePartyTest {
     @Mock
-    DataOperator<LeaveParty> mockDataOperator;
+    DataOperator mockDataOperator;
     private LeaveParty leaveParty;
 
     @BeforeEach
@@ -29,7 +29,7 @@ public class LeavePartyTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new PartyModule());
+        }, new PartyModule(LeaveParty.class));
         leaveParty = injector.getInstance(LeaveParty.class);
     }
 

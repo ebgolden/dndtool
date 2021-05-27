@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AddPlayerToCampaignTest {
     @Mock
-    DataOperator<AddPlayerToCampaign> mockDataOperator;
+    DataOperator mockDataOperator;
     private AddPlayerToCampaign addPlayerToCampaign;
 
     @BeforeEach
@@ -28,7 +28,7 @@ public class AddPlayerToCampaignTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new CampaignDetailModule());
+        }, new CampaignDetailModule(AddPlayerToCampaign.class));
         addPlayerToCampaign = injector.getInstance(AddPlayerToCampaign.class);
     }
 

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class TakeActionTest {
     @Mock
-    DataOperator<TakeAction> mockDataOperator;
+    DataOperator mockDataOperator;
     private TakeAction takeAction;
 
     @BeforeEach
@@ -29,7 +29,7 @@ public class TakeActionTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new ActionModule());
+        }, new ActionModule(TakeAction.class));
         takeAction = injector.getInstance(TakeAction.class);
     }
 

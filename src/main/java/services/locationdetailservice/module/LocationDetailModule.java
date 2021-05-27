@@ -1,6 +1,8 @@
 package services.locationdetailservice.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import services.locationdetailservice.GetLocationDetails;
 import services.locationdetailservice.GetLocationDetailsImpl;
 import services.locationdetailservice.UpdateLocationDetailsVisibility;
@@ -15,6 +17,12 @@ import services.locationdetailservice.dal.LocationDetailDataAccessConverterImpl;
 import services.locationdetailservice.dal.LocationDetailDataAccessImpl;
 
 public class LocationDetailModule extends AbstractModule {
+    private final Object API;
+
+    public LocationDetailModule(Object api) {
+        API = api;
+    }
+
     @Override
     protected void configure() {
         bind(GetLocationDetails.class).to(GetLocationDetailsImpl.class);
@@ -23,5 +31,11 @@ public class LocationDetailModule extends AbstractModule {
         bind(LocationDetailBusinessLogic.class).to(LocationDetailBusinessLogicImpl.class);
         bind(LocationDetailDataAccessConverter.class).to(LocationDetailDataAccessConverterImpl.class);
         bind(LocationDetailDataAccess.class).to(LocationDetailDataAccessImpl.class);
+    }
+
+    @Provides
+    @Named("api")
+    public Object provideAPIClass() {
+        return API;
     }
 }

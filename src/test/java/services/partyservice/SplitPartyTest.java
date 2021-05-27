@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class SplitPartyTest {
     @Mock
-    DataOperator<SplitParty> mockDataOperator;
+    DataOperator mockDataOperator;
     private SplitParty splitParty;
 
     @BeforeEach
@@ -28,7 +28,7 @@ public class SplitPartyTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new PartyModule());
+        }, new PartyModule(SplitParty.class));
         splitParty = injector.getInstance(SplitParty.class);
     }
 

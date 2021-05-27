@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetTurnQueueTest {
     @Mock
-    DataOperator<GetTurnQueue> mockDataOperator;
+    DataOperator mockDataOperator;
     private GetTurnQueue getTurnQueue;
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class GetTurnQueueTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new TurnQueueModule());
+        }, new TurnQueueModule(GetTurnQueue.class));
         getTurnQueue = injector.getInstance(GetTurnQueue.class);
     }
 

@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CreateCampaignTest {
     @Mock
-    DataOperator<CreateCampaign> mockDataOperator;
+    DataOperator mockDataOperator;
     private CreateCampaign createCampaign;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class CreateCampaignTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new CampaignModule());
+        }, new CampaignModule(CreateCampaign.class));
         createCampaign = injector.getInstance(CreateCampaign.class);
     }
 

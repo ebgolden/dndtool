@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetSpellDetailsTest {
     @Mock
-    DataOperator<GetSpellDetails> mockDataOperator;
+    DataOperator mockDataOperator;
     private GetSpellDetails getSpellDetails;
 
     @BeforeEach
@@ -28,7 +28,7 @@ public class GetSpellDetailsTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new SpellDetailModule());
+        }, new SpellDetailModule(GetSpellDetails.class));
         getSpellDetails = injector.getInstance(GetSpellDetails.class);
     }
 

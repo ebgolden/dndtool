@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class MergePartiesTest {
     @Mock
-    DataOperator<MergeParties> mockDataOperator;
+    DataOperator mockDataOperator;
     private MergeParties mergeParties;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class MergePartiesTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new PartyModule());
+        }, new PartyModule(MergeParties.class));
         mergeParties = injector.getInstance(MergeParties.class);
     }
 

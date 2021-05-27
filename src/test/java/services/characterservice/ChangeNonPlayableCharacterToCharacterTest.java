@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ChangeNonPlayableCharacterToCharacterTest {
     @Mock
-    DataOperator<ChangeNonPlayableCharacterToCharacter> mockDataOperator;
+    DataOperator mockDataOperator;
     private ChangeNonPlayableCharacterToCharacter changeNonPlayableCharacterToCharacter;
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class ChangeNonPlayableCharacterToCharacterTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new CharacterModule());
+        }, new CharacterModule(ChangeNonPlayableCharacterToCharacter.class));
         changeNonPlayableCharacterToCharacter = injector.getInstance(ChangeNonPlayableCharacterToCharacter.class);
     }
 

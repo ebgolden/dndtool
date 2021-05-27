@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CreateNonPlayableCharacterTest {
     @Mock
-    DataOperator<CreateNonPlayableCharacter> mockDataOperator;
+    DataOperator mockDataOperator;
     private CreateNonPlayableCharacter createNonPlayableCharacter;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class CreateNonPlayableCharacterTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new CharacterModule());
+        }, new CharacterModule(CreateNonPlayableCharacter.class));
         createNonPlayableCharacter = injector.getInstance(CreateNonPlayableCharacter.class);
     }
 

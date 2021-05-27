@@ -1,11 +1,15 @@
 package services.classdetailservice.dal;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import objects.DataOperator;
 import services.classdetailservice.dal.dao.ClassDao;
 import services.classdetailservice.dal.dao.ClassDetailsDao;
 
 public class ClassDetailDataAccessImpl implements ClassDetailDataAccess {
+    @Inject
+    @Named("api")
+    private Object api;
     @Inject
     private DataOperator dataOperator;
     @Inject
@@ -13,7 +17,7 @@ public class ClassDetailDataAccessImpl implements ClassDetailDataAccess {
 
     public ClassDetailsDao getClassDetailsDao(ClassDao classDao) {
         String classJson = classDao.getClassJson();
-        dataOperator.sendRequestJson(classJson);
+        dataOperator.sendRequestJson(api, classJson);
         String classDetailsJson = dataOperator.getResponseJson();
         return classDetailDataAccessConverter.getClassDetailsDaoFromClassDetailsJson(classDetailsJson);
     }

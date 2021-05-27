@@ -1,6 +1,7 @@
 package services.campaigndetailservice.dal;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import objects.DataOperator;
 import services.campaigndetailservice.dal.dao.CampaignAndPlayerDao;
 import services.campaigndetailservice.dal.dao.CampaignDao;
@@ -9,27 +10,30 @@ import services.campaigndetailservice.dal.dao.CampaignDetailsDao;
 
 public class CampaignDetailDataAccessImpl implements CampaignDetailDataAccess {
     @Inject
+    @Named("api")
+    private Object api;
+    @Inject
     private DataOperator dataOperator;
     @Inject
     private CampaignDetailDataAccessConverter campaignDetailBusinessLogicConverter;
 
     public CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDao(CampaignDao campaignDao) {
         String campaignJson = campaignDao.getCampaignJson();
-        dataOperator.sendRequestJson(campaignJson);
+        dataOperator.sendRequestJson(api, campaignJson);
         String campaignDetailsAndVisibilityJson = dataOperator.getResponseJson();
         return campaignDetailBusinessLogicConverter.getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityJson(campaignDetailsAndVisibilityJson);
     }
 
     public CampaignDetailsAndVisibilityDao getCampaignDetailsAndVisibilityDao(CampaignDetailsAndVisibilityDao campaignDetailsAndVisibilityDao) {
         String campaignAndVisibilityJson = campaignDetailsAndVisibilityDao.getCampaignDetailsAndVisibilityJson();
-        dataOperator.sendRequestJson(campaignAndVisibilityJson);
+        dataOperator.sendRequestJson(api, campaignAndVisibilityJson);
         String campaignDetailsAndVisibilityJson = dataOperator.getResponseJson();
         return campaignDetailBusinessLogicConverter.getCampaignDetailsAndVisibilityDaoFromCampaignDetailsAndVisibilityJson(campaignDetailsAndVisibilityJson);
     }
 
     public CampaignDetailsDao getCampaignDetailsDao(CampaignAndPlayerDao campaignAndPlayerDao) {
         String campaignAndPlayerJson = campaignAndPlayerDao.getCampaignDetailsAndPlayerJson();
-        dataOperator.sendRequestJson(campaignAndPlayerJson);
+        dataOperator.sendRequestJson(api, campaignAndPlayerJson);
         String campaignDetailsJson = dataOperator.getResponseJson();
         return campaignDetailBusinessLogicConverter.getCampaignDetailsDaoFromCampaignDetailsJson(campaignDetailsJson);
     }

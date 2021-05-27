@@ -1,6 +1,8 @@
 package services.classdetailservice.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import services.classdetailservice.GetClassDetails;
 import services.classdetailservice.GetClassDetailsImpl;
 import services.classdetailservice.bll.ClassDetailBusinessLogic;
@@ -13,6 +15,12 @@ import services.classdetailservice.dal.ClassDetailDataAccessConverterImpl;
 import services.classdetailservice.dal.ClassDetailDataAccessImpl;
 
 public class ClassDetailModule extends AbstractModule {
+    private final Object API;
+
+    public ClassDetailModule(Object api) {
+        API = api;
+    }
+
     @Override
     protected void configure() {
         bind(GetClassDetails.class).to(GetClassDetailsImpl.class);
@@ -20,5 +28,11 @@ public class ClassDetailModule extends AbstractModule {
         bind(ClassDetailBusinessLogic.class).to(ClassDetailBusinessLogicImpl.class);
         bind(ClassDetailDataAccessConverter.class).to(ClassDetailDataAccessConverterImpl.class);
         bind(ClassDetailDataAccess.class).to(ClassDetailDataAccessImpl.class);
+    }
+
+    @Provides
+    @Named("api")
+    public Object provideAPIClass() {
+        return API;
     }
 }

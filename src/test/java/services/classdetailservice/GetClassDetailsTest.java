@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetClassDetailsTest {
     @Mock
-    DataOperator<GetClassDetails> mockDataOperator;
+    DataOperator mockDataOperator;
     private GetClassDetails getClassDetails;
 
     @BeforeEach
@@ -29,7 +29,7 @@ public class GetClassDetailsTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new ClassDetailModule());
+        }, new ClassDetailModule(GetClassDetails.class));
         getClassDetails = injector.getInstance(GetClassDetails.class);
     }
 

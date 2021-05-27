@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GetResultDetailsTest {
     @Mock
-    DataOperator<GetResultDetails> mockDataOperator;
+    DataOperator mockDataOperator;
     private GetResultDetails getResultDetails;
 
     @BeforeEach
@@ -28,7 +28,7 @@ public class GetResultDetailsTest {
             protected void configure() {
                 bind(DataOperator.class).toInstance(mockDataOperator);
             }
-        }, new ResultDetailModule());
+        }, new ResultDetailModule(GetResultDetails.class));
         getResultDetails = injector.getInstance(GetResultDetails.class);
     }
 

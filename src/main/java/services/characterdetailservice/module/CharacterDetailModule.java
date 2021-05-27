@@ -1,6 +1,8 @@
 package services.characterdetailservice.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import services.characterdetailservice.GetCharacterDetails;
 import services.characterdetailservice.GetCharacterDetailsImpl;
 import services.characterdetailservice.UpdateCharacterDetailsVisibility;
@@ -15,6 +17,12 @@ import services.characterdetailservice.dal.CharacterDetailDataAccessConverterImp
 import services.characterdetailservice.dal.CharacterDetailDataAccessImpl;
 
 public class CharacterDetailModule extends AbstractModule {
+    private final Object API;
+
+    public CharacterDetailModule(Object api) {
+        API = api;
+    }
+
     @Override
     protected void configure() {
         bind(GetCharacterDetails.class).to(GetCharacterDetailsImpl.class);
@@ -23,5 +31,11 @@ public class CharacterDetailModule extends AbstractModule {
         bind(CharacterDetailBusinessLogic.class).to(CharacterDetailBusinessLogicImpl.class);
         bind(CharacterDetailDataAccessConverter.class).to(CharacterDetailDataAccessConverterImpl.class);
         bind(CharacterDetailDataAccess.class).to(CharacterDetailDataAccessImpl.class);
+    }
+
+    @Provides
+    @Named("api")
+    public Object provideAPIClass() {
+        return API;
     }
 }
