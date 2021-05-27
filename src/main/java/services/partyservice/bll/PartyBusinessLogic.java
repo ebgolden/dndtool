@@ -3,9 +3,9 @@ package services.partyservice.bll;
 import services.partyservice.bll.bo.*;
 
 public interface PartyBusinessLogic {
-    LeftPartyBo getLeftPartyBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo);
+    PartyBo getPartyBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo);
 
-    JoinedPartyBo getJoinedPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo);
+    PartyBo getPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo);
 
     SplitPartiesBo getSplitPartiesBo(PartyAndSplitPartiesAndDungeonMasterBo partyAndSplitPartiesAndDungeonMasterBo);
 

@@ -3,8 +3,8 @@ package services.partyservice;
 import com.google.inject.Inject;
 import services.partyservice.bll.PartyBusinessLogic;
 import services.partyservice.bll.PartyBusinessLogicConverter;
-import services.partyservice.bll.bo.LeftPartyBo;
 import services.partyservice.bll.bo.PartyAndCharacterAndPlayerBo;
+import services.partyservice.bll.bo.PartyBo;
 
 public class LeavePartyImpl implements LeaveParty {
     @Inject
@@ -14,7 +14,7 @@ public class LeavePartyImpl implements LeaveParty {
 
     public LeavePartyResponse getLeavePartyResponse(LeavePartyRequest leavePartyRequest) {
         PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo = partyBusinessLogicConverter.getPartyAndCharacterAndPlayerBoFromLeavePartyRequest(leavePartyRequest);
-        LeftPartyBo leftPartyBo = partyBusinessLogic.getLeftPartyBo(partyAndCharacterAndPlayerBo);
-        return partyBusinessLogicConverter.getLeavePartyResponseFromLeftPartyBo(leftPartyBo);
+        PartyBo partyBo = partyBusinessLogic.getPartyBo(partyAndCharacterAndPlayerBo);
+        return partyBusinessLogicConverter.getLeavePartyResponseFromPartyBo(partyBo);
     }
 }

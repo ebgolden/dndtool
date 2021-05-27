@@ -34,45 +34,45 @@ public class LeavePartyTest {
     }
 
     @Test
-    public void shouldReturnLeftPartyWhilePlayer() {
+    public void shouldReturnPartyWhilePlayer() {
         String playerId = "1";
         String responseJson = createMockResponseJsonWithEmptyParty();
         LeavePartyResponse leavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(responseJson, playerId, playerId, true);
-        Assertions.assertTrue(leavePartyResponse.leftParty, "Did not leave party.");
+        Assertions.assertNotNull(leavePartyResponse.getParty(), "Party null.");
     }
 
     @Test
-    public void shouldReturnLeftPartyWhileDM() {
+    public void shouldReturnPartyWhileDM() {
         String playerId = "2";
         String characterPlayerId = "1";
         String responseJson = createMockResponseJsonWithEmptyParty();
         LeavePartyResponse leavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(responseJson, playerId, characterPlayerId, false);
-        Assertions.assertTrue(leavePartyResponse.leftParty, "Did not leave party.");
+        Assertions.assertNotNull(leavePartyResponse.getParty(), "Party null.");
     }
 
     @Test
-    public void shouldReturnNotLeftPartyWhileOtherPlayer() {
+    public void shouldReturnEmptyPartyWhileOtherPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         String characterId = "0";
         String responseJson = createMockResponseJsonWithCharacterInParty(characterId, characterPlayerId);
         LeavePartyResponse leavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(responseJson, playerId, characterPlayerId, true);
-        Assertions.assertFalse(leavePartyResponse.leftParty, "Left party.");
+        Assertions.assertNull(leavePartyResponse.getParty(), "Party not null.");
     }
 
     @Test
-    public void shouldReturnNotLeftPartyWhenEmptyJson() {
+    public void shouldReturnEmptyPartyWhenEmptyJson() {
         String playerId = "1";
         String responseJson = "{}";
         LeavePartyResponse leavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(responseJson, playerId, playerId, false);
-        Assertions.assertFalse(leavePartyResponse.leftParty, "Left party.");
+        Assertions.assertNull(leavePartyResponse.getParty(), "Party not null.");
     }
 
     @Test
-    public void shouldReturnNotLeftPartyWhenNullJson() {
+    public void shouldReturnEmptyPartyWhenNullJson() {
         String playerId = "1";
         LeavePartyResponse LeavePartyResponse = mockJsonResponseAsPlayerOrDMAndReturnLeavePartyResponse(null, playerId, playerId, false);
-        Assertions.assertFalse(LeavePartyResponse.leftParty, "Left party.");
+        Assertions.assertNull(LeavePartyResponse.getParty(), "Party not null.");
     }
 
     private String createMockResponseJsonWithCharacterInParty(String characterId, String playerId) {

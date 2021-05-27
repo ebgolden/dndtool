@@ -3,8 +3,8 @@ package services.partyservice;
 import com.google.inject.Inject;
 import services.partyservice.bll.PartyBusinessLogic;
 import services.partyservice.bll.PartyBusinessLogicConverter;
-import services.partyservice.bll.bo.JoinedPartyBo;
 import services.partyservice.bll.bo.PartyAndCharacterAndPlayerAndAcceptedByPartyBo;
+import services.partyservice.bll.bo.PartyBo;
 
 public class JoinPartyImpl implements JoinParty {
     @Inject
@@ -14,7 +14,7 @@ public class JoinPartyImpl implements JoinParty {
 
     public JoinPartyResponse getJoinPartyResponse(JoinPartyRequest joinPartyRequest) {
         PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo = partyBusinessLogicConverter.getPartyAndCharacterAndPlayerAndAcceptedByPartyBoFromJoinPartyRequest(joinPartyRequest);
-        JoinedPartyBo joinedPartyBo = partyBusinessLogic.getJoinedPartyBo(partyAndCharacterAndPlayerAndAcceptedByPartyBo);
-        return partyBusinessLogicConverter.getJoinPartyResponseFromJoinedPartyBo(joinedPartyBo);
+        PartyBo partyBo = partyBusinessLogic.getPartyBo(partyAndCharacterAndPlayerAndAcceptedByPartyBo);
+        return partyBusinessLogicConverter.getJoinPartyResponseFromPartyBo(partyBo);
     }
 }

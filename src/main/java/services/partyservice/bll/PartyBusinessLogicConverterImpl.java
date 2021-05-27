@@ -56,19 +56,19 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
                 .build();
     }
 
-    public LeavePartyResponse getLeavePartyResponseFromLeftPartyBo(LeftPartyBo leftPartyBo) {
-        boolean leftParty = leftPartyBo.isLeftParty();
+    public LeavePartyResponse getLeavePartyResponseFromPartyBo(PartyBo partyBo) {
+        Party party = partyBo.getParty();
         return LeavePartyResponse
                 .builder()
-                .leftParty(leftParty)
+                .party(party)
                 .build();
     }
 
-    public JoinPartyResponse getJoinPartyResponseFromJoinedPartyBo(JoinedPartyBo joinedPartyBo) {
-        boolean joinedParty = joinedPartyBo.isJoinedParty();
+    public JoinPartyResponse getJoinPartyResponseFromPartyBo(PartyBo partyBo) {
+        Party party = partyBo.getParty();
         return JoinPartyResponse
                 .builder()
-                .joinedParty(joinedParty)
+                .party(party)
                 .build();
     }
 
@@ -86,26 +86,5 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
                 .builder()
                 .party(party)
                 .build();
-    }
-
-    public LeftPartyBo getLeftPartyBoFromPartyBo(PartyBo partyBo) {
-        boolean leftParty = isPartyNullInPartyBo(partyBo);
-        return LeftPartyBo
-                .builder()
-                .leftParty(leftParty)
-                .build();
-    }
-
-    public JoinedPartyBo getJoinedPartyBoFromPartyBo(PartyBo partyBo) {
-        boolean joinedParty = isPartyNullInPartyBo(partyBo);
-        return JoinedPartyBo
-                .builder()
-                .joinedParty(joinedParty)
-                .build();
-    }
-
-    private boolean isPartyNullInPartyBo(PartyBo partyBo) {
-        Party party = partyBo.getParty();
-        return (party != null);
     }
 }

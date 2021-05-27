@@ -15,27 +15,23 @@ public class PartyBusinessLogicImpl implements PartyBusinessLogic {
     private PartyDataAccessConverter partyDataAccessConverter;
     @Inject
     private PartyDataAccess partyDataAccess;
-    @Inject
-    private PartyBusinessLogicConverter partyBusinessLogicConverter;
 
-    public LeftPartyBo getLeftPartyBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {
+    public PartyBo getPartyBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {
         PartyAndCharacterAndPlayerBo filteredPartyAndCharacterAndPlayerBo = filterPartyAndCharacterAndPlayerBo(partyAndCharacterAndPlayerBo);
         Character character = filteredPartyAndCharacterAndPlayerBo.getCharacter();
         PartyAndCharacterDao partyAndCharacterDao = partyDataAccessConverter.getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerBo(filteredPartyAndCharacterAndPlayerBo);
         PartyDao partyDao = partyDataAccess.getPartyDao(partyAndCharacterDao);
         PartyBo partyBo = partyDataAccessConverter.getPartyBoFromPartyDao(partyDao);
-        PartyBo filteredPartyBo = filterPartyBoForLeavingParty(partyBo, character);
-        return partyBusinessLogicConverter.getLeftPartyBoFromPartyBo(filteredPartyBo);
+        return filterPartyBoForLeavingParty(partyBo, character);
     }
 
-    public JoinedPartyBo getJoinedPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo) {
+    public PartyBo getPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo) {
         PartyAndCharacterAndPlayerAndAcceptedByPartyBo filteredPartyAndCharacterAndPlayerAndAcceptedByPartyBo = filterPartyAndCharacterAndPlayerAndAcceptedByPartyBo(partyAndCharacterAndPlayerAndAcceptedByPartyBo);
         Character character = filteredPartyAndCharacterAndPlayerAndAcceptedByPartyBo.getCharacter();
         PartyAndCharacterDao partyAndCharacterDao = partyDataAccessConverter.getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerAndAcceptedByPartyBo(filteredPartyAndCharacterAndPlayerAndAcceptedByPartyBo);
         PartyDao partyDao = partyDataAccess.getPartyDao(partyAndCharacterDao);
         PartyBo partyBo = partyDataAccessConverter.getPartyBoFromPartyDao(partyDao);
-        PartyBo filteredPartyBo = filterPartyBoForJoiningParty(partyBo, character);
-        return partyBusinessLogicConverter.getJoinedPartyBoFromPartyBo(filteredPartyBo);
+        return filterPartyBoForJoiningParty(partyBo, character);
     }
 
     public SplitPartiesBo getSplitPartiesBo(PartyAndSplitPartiesAndDungeonMasterBo partyAndSplitPartiesAndDungeonMasterBo) {
