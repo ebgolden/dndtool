@@ -2,10 +2,7 @@ package services.partyservice.dal;
 
 import com.google.inject.Inject;
 import objects.DataOperator;
-import services.partyservice.dal.dao.PartyAndCharacterDao;
-import services.partyservice.dal.dao.PartyAndSplitPartiesDao;
-import services.partyservice.dal.dao.PartyDao;
-import services.partyservice.dal.dao.SplitPartiesDao;
+import services.partyservice.dal.dao.*;
 
 public class PartyDataAccessImpl implements PartyDataAccess {
     @Inject
@@ -25,5 +22,12 @@ public class PartyDataAccessImpl implements PartyDataAccess {
         dataOperator.sendRequestJson(partyAndSplitPartiesJson);
         String splitPartiesJson = dataOperator.getResponseJson();
         return partyDataAccessConverter.getSplitPartiesDaoFromSplitPartiesJson(splitPartiesJson);
+    }
+
+    public PartyDao getPartyDao(PartiesDao partiesDao) {
+        String partiesJson = partiesDao.getPartiesJson();
+        dataOperator.sendRequestJson(partiesJson);
+        String partyJson = dataOperator.getResponseJson();
+        return partyDataAccessConverter.getPartyDaoFromPartyJson(partyJson);
     }
 }

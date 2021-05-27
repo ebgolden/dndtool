@@ -46,6 +46,16 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
                 .build();
     }
 
+    public PartiesAndDungeonMasterBo getPartiesAndDungeonMasterBoFromMergePartiesRequest(MergePartiesRequest mergePartiesRequest) {
+        Party[] parties = mergePartiesRequest.getParties();
+        DungeonMaster dungeonMaster = mergePartiesRequest.getDungeonMaster();
+        return PartiesAndDungeonMasterBo
+                .builder()
+                .parties(parties)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public LeavePartyResponse getLeavePartyResponseFromLeftPartyBo(LeftPartyBo leftPartyBo) {
         boolean leftParty = leftPartyBo.isLeftParty();
         return LeavePartyResponse
@@ -67,6 +77,14 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
         return SplitPartyResponse
                 .builder()
                 .splitParties(splitParties)
+                .build();
+    }
+
+    public MergePartiesResponse getMergePartiesResponseFromPartyBo(PartyBo partyBo) {
+        Party party = partyBo.getParty();
+        return MergePartiesResponse
+                .builder()
+                .party(party)
                 .build();
     }
 

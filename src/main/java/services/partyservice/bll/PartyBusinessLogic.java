@@ -8,4 +8,6 @@ public interface PartyBusinessLogic {
     JoinedPartyBo getJoinedPartyBo(PartyAndCharacterAndPlayerAndAcceptedByPartyBo partyAndCharacterAndPlayerAndAcceptedByPartyBo);
 
     SplitPartiesBo getSplitPartiesBo(PartyAndSplitPartiesAndDungeonMasterBo partyAndSplitPartiesAndDungeonMasterBo);
+
+    PartyBo getPartyBo(PartiesAndDungeonMasterBo partiesAndDungeonMasterBo);
 }

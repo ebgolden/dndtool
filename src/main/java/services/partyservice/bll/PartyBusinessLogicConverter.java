@@ -10,11 +10,15 @@ public interface PartyBusinessLogicConverter {
 
     PartyAndSplitPartiesAndDungeonMasterBo getPartyAndSplitPartiesAndDungeonMasterBoFromSplitPartyRequest(SplitPartyRequest splitPartyRequest);
 
+    PartiesAndDungeonMasterBo getPartiesAndDungeonMasterBoFromMergePartiesRequest(MergePartiesRequest mergePartiesRequest);
+
     LeavePartyResponse getLeavePartyResponseFromLeftPartyBo(LeftPartyBo leftPartyBo);
 
     JoinPartyResponse getJoinPartyResponseFromJoinedPartyBo(JoinedPartyBo joinedPartyBo);
 
     SplitPartyResponse getSplitPartyResponseFromSplitPartiesBo(SplitPartiesBo splitPartiesBo);
+
+    MergePartiesResponse getMergePartiesResponseFromPartyBo(PartyBo partyBo);
 
     LeftPartyBo getLeftPartyBoFromPartyBo(PartyBo partyBo);
 

@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Character;
 import objects.Party;
 import services.partyservice.bll.bo.*;
-import services.partyservice.dal.dao.PartyAndCharacterDao;
-import services.partyservice.dal.dao.PartyAndSplitPartiesDao;
-import services.partyservice.dal.dao.PartyDao;
-import services.partyservice.dal.dao.SplitPartiesDao;
+import services.partyservice.dal.dao.*;
 
 public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
     public PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {
@@ -44,6 +41,21 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
         return PartyAndSplitPartiesDao
                 .builder()
                 .partyAndSplitPartiesJson(partyAndSplitPartiesJson)
+                .build();
+    }
+
+    public PartiesDao getPartiesDaoFromPartiesAndDungeonMasterBo(PartiesAndDungeonMasterBo partiesAndDungeonMasterBo) {
+        Party[] parties = partiesAndDungeonMasterBo.getParties();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String partiesJson = "{}";
+        try {
+            partiesJson = objectMapper.writeValueAsString(parties);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return PartiesDao
+                .builder()
+                .partiesJson(partiesJson)
                 .build();
     }
 
