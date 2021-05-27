@@ -89,7 +89,7 @@ public class GetActionsTest {
     }
 
     private String createMockResponseJson(int actionCount) {
-        StringBuilder responseJson = new StringBuilder("{\"actions\":[");
+        StringBuilder responseJson = new StringBuilder("[");
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson;
         try {
@@ -104,7 +104,7 @@ public class GetActionsTest {
             if (currentActionIndex < (actionCount - 1))
                 responseJson.append(",");
         }
-        responseJson.append("]}");
+        responseJson.append("]");
         return responseJson.toString();
     }
 

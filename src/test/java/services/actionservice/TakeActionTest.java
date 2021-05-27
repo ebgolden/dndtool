@@ -104,7 +104,7 @@ public class TakeActionTest {
                 .action(Action
                         .builder()
                         .build())
-                .diceRolls(new int[] {})
+                .dice(new Die[] {})
                 .character(Character
                         .builder()
                         .playerId(characterPlayerId)

@@ -2,14 +2,8 @@ package services.actionservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.Action;
+import objects.*;
 import objects.Character;
-import objects.NonStandardAction;
-import objects.Result;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import services.actionservice.bll.bo.*;
 import services.actionservice.dal.dao.*;
 
@@ -29,34 +23,34 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
-    public ActionAndDiceRollsAndCharacterDao getActionAndDiceRollsAndCharacterDaoFromActionAndDiceRollsBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo) {
-        Action action = actionAndDiceRollsAndCharacterAndPlayerBo.getAction();
-        int[] diceRolls = actionAndDiceRollsAndCharacterAndPlayerBo.getDiceRolls();
-        Character character = actionAndDiceRollsAndCharacterAndPlayerBo.getCharacter();
+    public ActionAndDiceAndCharacterDao getActionAndDiceAndCharacterDaoFromActionAndDiceAndCharacterAndPlayerBo(ActionAndDiceAndCharacterAndPlayerBo actionAndDiceAndCharacterAndPlayerBo) {
+        Action action = actionAndDiceAndCharacterAndPlayerBo.getAction();
+        Die[] dice = actionAndDiceAndCharacterAndPlayerBo.getDice();
+        Character character = actionAndDiceAndCharacterAndPlayerBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson = "{}";
-        String diceRollsJson = "{}";
+        String diceJson = "{}";
         String characterJson = "{}";
         try {
             actionJson = objectMapper.writeValueAsString(action);
-            diceRollsJson = objectMapper.writeValueAsString(diceRolls);
+            diceJson = objectMapper.writeValueAsString(dice);
             characterJson = objectMapper.writeValueAsString(character);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        String actionAndDiceRollsAndCharacterJson = "{}";
-        if (!actionJson.equals("{}") && !actionJson.equals("null") && !diceRollsJson.equals("{}") && !diceRollsJson.equals("null") && !characterJson.equals("{}") && !characterJson.equals("null"))
-            actionAndDiceRollsAndCharacterJson = "{" +
+        String actionAndDiceAndCharacterJson = "{}";
+        if (!actionJson.equals("{}") && !actionJson.equals("null") && !diceJson.equals("{}") && !diceJson.equals("null") && !characterJson.equals("{}") && !characterJson.equals("null"))
+            actionAndDiceAndCharacterJson = "{" +
                     "\"action\":" +
                     actionJson +
-                    ",\"diceRolls\":" +
-                    diceRollsJson +
+                    ",\"dice\":" +
+                    diceJson +
                     ",\"character\":" +
                     characterJson +
                     "}";
-        return ActionAndDiceRollsAndCharacterDao
+        return ActionAndDiceAndCharacterDao
                 .builder()
-                .actionAndDiceRollsAndCharacterJson(actionAndDiceRollsAndCharacterJson)
+                .actionAndDiceAndCharacterJson(actionAndDiceAndCharacterJson)
                 .build();
     }
 
@@ -90,26 +84,12 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
         String actionsJson = actionsDao.getActionsJson();
         if (actionsJson == null)
             actionsJson = "{}";
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject = (JSONObject)jsonParser.parse(actionsJson);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        JSONArray jsonArray = (JSONArray)jsonObject.get("actions");
-        int numberOfActions = 0;
-        if (jsonArray != null)
-            numberOfActions = jsonArray.size();
-        Action[] actions = new Action[numberOfActions];
         ObjectMapper objectMapper = new ObjectMapper();
-        for (int actionIndex = 0; actionIndex < numberOfActions; ++actionIndex) {
-            String actionJson = ((JSONObject)jsonArray.get(actionIndex)).toJSONString();
-            try {
-                actions[actionIndex] = objectMapper.readValue(actionJson, Action.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+        Action[] actions;
+        try {
+            actions = objectMapper.readValue(actionsJson, Action[].class);
+        } catch (JsonProcessingException e) {
+            actions = new Action[] {};
         }
         return ActionsBo
                 .builder()

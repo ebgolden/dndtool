@@ -41,18 +41,15 @@ public class TurnQueueDataAccessConverterImpl implements TurnQueueDataAccessConv
             e.printStackTrace();
         }
         JSONArray jsonArray = (JSONArray)jsonObject.get("characters");
-        int numberOfCharacters = 0;
+        String charactersJson = "{}";
         if (jsonArray != null)
-            numberOfCharacters = jsonArray.size();
-        Character[] characters = new Character[numberOfCharacters];
+            charactersJson = jsonArray.toJSONString();
         ObjectMapper objectMapper = new ObjectMapper();
-        for (int characterIndex = 0; characterIndex < numberOfCharacters; ++characterIndex) {
-            String characterJson = ((JSONObject)jsonArray.get(characterIndex)).toJSONString();
-            try {
-                characters[characterIndex] = objectMapper.readValue(characterJson, Character.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+        Character[] characters;
+        try {
+            characters = objectMapper.readValue(charactersJson, Character[].class);
+        } catch (JsonProcessingException e) {
+            characters = new Character[] {};
         }
         int currentTurnIndex = 0;
         if (jsonObject.get("currentTurnIndex") != null)

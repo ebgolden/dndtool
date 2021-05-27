@@ -5,6 +5,6 @@ import lombok.Value;
 
 @Builder
 @Value
-public class ActionAndDiceRollsAndCharacterDao {
-    String actionAndDiceRollsAndCharacterJson;
+public class ActionAndDiceAndCharacterDao {
+    String actionAndDiceAndCharacterJson;
 }

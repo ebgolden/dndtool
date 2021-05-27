@@ -21,9 +21,9 @@ public class ActionDataAccessImpl implements ActionDataAccess {
         return actionDataAccessConverter.getActionsDaoFromActionsJson(actionsJson);
     }
 
-    public ResultDao getResultDao(ActionAndDiceRollsAndCharacterDao actionAndDiceRollsAndCharacterDao) {
-        String actionAndDiceRollsAndCharacterJson = actionAndDiceRollsAndCharacterDao.getActionAndDiceRollsAndCharacterJson();
-        dataOperator.sendRequestJson(api, actionAndDiceRollsAndCharacterJson);
+    public ResultDao getResultDao(ActionAndDiceAndCharacterDao actionAndDiceAndCharacterDao) {
+        String actionAndDiceAndCharacterJson = actionAndDiceAndCharacterDao.getActionAndDiceAndCharacterJson();
+        dataOperator.sendRequestJson(api, actionAndDiceAndCharacterJson);
         String resultJson = dataOperator.getResponseJson();
         return actionDataAccessConverter.getResultDaoFromResultJson(resultJson);
     }

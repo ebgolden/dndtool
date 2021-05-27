@@ -4,13 +4,14 @@ import lombok.Builder;
 import lombok.Value;
 import objects.Action;
 import objects.Character;
+import objects.Die;
 import objects.Player;
 
 @Builder
 @Value
-public class ActionAndDiceRollsAndCharacterAndPlayerBo {
+public class ActionAndDiceAndCharacterAndPlayerBo {
     Action action;
-    int[] diceRolls;
+    Die[] dice;
     Character character;
     Player player;
 }

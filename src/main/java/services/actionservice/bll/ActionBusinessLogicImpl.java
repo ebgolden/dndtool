@@ -21,10 +21,10 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
         return actionDataAccessConverter.getActionsBoFromActionsDao(actionsDao);
     }
 
-    public ResultBo getResultBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo) {
-        ActionAndDiceRollsAndCharacterAndPlayerBo filteredActionAndDiceRollsAndCharacterAndPlayerBo = filterActionAndDiceRollsAndCharacterAndPlayerBo(actionAndDiceRollsAndCharacterAndPlayerBo);
-        ActionAndDiceRollsAndCharacterDao actionAndDiceRollsAndCharacterDao = actionDataAccessConverter.getActionAndDiceRollsAndCharacterDaoFromActionAndDiceRollsBo(filteredActionAndDiceRollsAndCharacterAndPlayerBo);
-        ResultDao resultDao = actionDataAccess.getResultDao(actionAndDiceRollsAndCharacterDao);
+    public ResultBo getResultBo(ActionAndDiceAndCharacterAndPlayerBo actionAndDiceAndCharacterAndPlayerBo) {
+        ActionAndDiceAndCharacterAndPlayerBo filteredActionAndDiceAndCharacterAndPlayerBo = filterActionAndDiceAndCharacterAndPlayerBo(actionAndDiceAndCharacterAndPlayerBo);
+        ActionAndDiceAndCharacterDao actionAndDiceAndCharacterDao = actionDataAccessConverter.getActionAndDiceAndCharacterDaoFromActionAndDiceAndCharacterAndPlayerBo(filteredActionAndDiceAndCharacterAndPlayerBo);
+        ResultDao resultDao = actionDataAccess.getResultDao(actionAndDiceAndCharacterDao);
         return actionDataAccessConverter.getResultBoFromResultDao(resultDao);
     }
 
@@ -49,22 +49,22 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
                 .build();
     }
 
-    private ActionAndDiceRollsAndCharacterAndPlayerBo filterActionAndDiceRollsAndCharacterAndPlayerBo(ActionAndDiceRollsAndCharacterAndPlayerBo actionAndDiceRollsAndCharacterAndPlayerBo) {
-        Action action = actionAndDiceRollsAndCharacterAndPlayerBo.getAction();
-        int[] diceRolls = actionAndDiceRollsAndCharacterAndPlayerBo.getDiceRolls();
-        Character character = actionAndDiceRollsAndCharacterAndPlayerBo.getCharacter();
-        Player player = actionAndDiceRollsAndCharacterAndPlayerBo.getPlayer();
+    private ActionAndDiceAndCharacterAndPlayerBo filterActionAndDiceAndCharacterAndPlayerBo(ActionAndDiceAndCharacterAndPlayerBo actionAndDiceAndCharacterAndPlayerBo) {
+        Action action = actionAndDiceAndCharacterAndPlayerBo.getAction();
+        Die[] dice = actionAndDiceAndCharacterAndPlayerBo.getDice();
+        Character character = actionAndDiceAndCharacterAndPlayerBo.getCharacter();
+        Player player = actionAndDiceAndCharacterAndPlayerBo.getPlayer();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
         if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
             action = null;
-            diceRolls = new int[] {};
+            dice = new Die[] {};
             character = null;
         }
-        return ActionAndDiceRollsAndCharacterAndPlayerBo
+        return ActionAndDiceAndCharacterAndPlayerBo
                 .builder()
                 .action(action)
-                .diceRolls(diceRolls)
+                .dice(dice)
                 .character(character)
                 .player(player)
                 .build();
