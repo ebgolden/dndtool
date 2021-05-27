@@ -64,7 +64,6 @@ public class TurnQueueDataAccessConverterImpl implements TurnQueueDataAccessConv
                 .build();
     }
 
-    @Override
     public TurnQueueDao getTurnQueueDaoFromTurnQueueJson(String turnQueueJson) {
         return TurnQueueDao
                 .builder()

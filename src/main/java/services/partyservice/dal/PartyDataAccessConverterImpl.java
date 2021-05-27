@@ -4,11 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import objects.Character;
 import objects.Party;
-import services.partyservice.bll.bo.PartyAndCharacterAndPlayerAndAcceptedByPartyBo;
-import services.partyservice.bll.bo.PartyBo;
-import services.partyservice.bll.bo.PartyAndCharacterAndPlayerBo;
+import services.partyservice.bll.bo.*;
 import services.partyservice.dal.dao.PartyAndCharacterDao;
+import services.partyservice.dal.dao.PartyAndSplitPartiesDao;
 import services.partyservice.dal.dao.PartyDao;
+import services.partyservice.dal.dao.SplitPartiesDao;
 
 public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
     public PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacterAndPlayerBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {
@@ -21,6 +21,30 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
         Party party = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getParty();
         Character character = partyAndCharacterAndPlayerAndAcceptedByPartyBo.getCharacter();
         return getPartyAndCharacterDaoFromPartyAndCharacter(party, character);
+    }
+
+    public PartyAndSplitPartiesDao getPartyAndSplitPartiesDaoFromPartyAndSplitPartiesAndDungeonMasterBo(PartyAndSplitPartiesAndDungeonMasterBo partyAndSplitPartiesAndDungeonMasterBo) {
+        Party party = partyAndSplitPartiesAndDungeonMasterBo.getParty();
+        Party[] splitParties = partyAndSplitPartiesAndDungeonMasterBo.getSplitParties();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String partyJson = "{}";
+        String splitPartiesJson = "{}";
+        try {
+            partyJson = objectMapper.writeValueAsString(party);
+            splitPartiesJson = objectMapper.writeValueAsString(splitParties);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String partyAndSplitPartiesJson = "{" +
+                "party:" +
+                partyJson +
+                ",splitParties:" +
+                splitPartiesJson +
+                "}";
+        return PartyAndSplitPartiesDao
+                .builder()
+                .partyAndSplitPartiesJson(partyAndSplitPartiesJson)
+                .build();
     }
 
     private PartyAndCharacterDao getPartyAndCharacterDaoFromPartyAndCharacter(Party party, Character character) {
@@ -67,10 +91,34 @@ public class PartyDataAccessConverterImpl implements PartyDataAccessConverter {
                 .build();
     }
 
+    public SplitPartiesBo getSplitPartiesBoFromSplitPartiesDao(SplitPartiesDao splitPartiesDao) {
+        String splitPartiesJson = splitPartiesDao.getSplitPartiesJson();
+        if (splitPartiesJson == null)
+            splitPartiesJson = "{}";
+        ObjectMapper objectMapper = new ObjectMapper();
+        Party[] splitParties;
+        try {
+            splitParties = objectMapper.readValue(splitPartiesJson, Party[].class);
+        } catch (JsonProcessingException e) {
+            splitParties = new Party[] {};
+        }
+        return SplitPartiesBo
+                .builder()
+                .splitParties(splitParties)
+                .build();
+    }
+
     public PartyDao getPartyDaoFromPartyJson(String partyJson) {
         return PartyDao
                 .builder()
                 .partyJson(partyJson)
+                .build();
+    }
+
+    public SplitPartiesDao getSplitPartiesDaoFromSplitPartiesJson(String splitPartiesJson) {
+        return SplitPartiesDao
+                .builder()
+                .splitPartiesJson(splitPartiesJson)
                 .build();
     }
 }

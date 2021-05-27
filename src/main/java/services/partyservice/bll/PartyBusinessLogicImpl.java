@@ -9,7 +9,9 @@ import services.partyservice.bll.bo.*;
 import services.partyservice.dal.PartyDataAccess;
 import services.partyservice.dal.PartyDataAccessConverter;
 import services.partyservice.dal.dao.PartyAndCharacterDao;
+import services.partyservice.dal.dao.PartyAndSplitPartiesDao;
 import services.partyservice.dal.dao.PartyDao;
+import services.partyservice.dal.dao.SplitPartiesDao;
 
 public class PartyBusinessLogicImpl implements PartyBusinessLogic {
     @Inject
@@ -37,6 +39,12 @@ public class PartyBusinessLogicImpl implements PartyBusinessLogic {
         PartyBo partyBo = partyDataAccessConverter.getPartyBoFromPartyDao(partyDao);
         PartyBo filteredPartyBo = filterPartyBoForJoiningParty(partyBo, character);
         return partyBusinessLogicConverter.getJoinedPartyBoFromPartyBo(filteredPartyBo);
+    }
+
+    public SplitPartiesBo getSplitPartiesBo(PartyAndSplitPartiesAndDungeonMasterBo partyAndSplitPartiesAndDungeonMasterBo) {
+        PartyAndSplitPartiesDao partyAndSplitPartiesDao = partyDataAccessConverter.getPartyAndSplitPartiesDaoFromPartyAndSplitPartiesAndDungeonMasterBo(partyAndSplitPartiesAndDungeonMasterBo);
+        SplitPartiesDao splitPartiesDao = partyDataAccess.getSplitPartiesDao(partyAndSplitPartiesDao);
+        return partyDataAccessConverter.getSplitPartiesBoFromSplitPartiesDao(splitPartiesDao);
     }
 
     private PartyAndCharacterAndPlayerBo filterPartyAndCharacterAndPlayerBo(PartyAndCharacterAndPlayerBo partyAndCharacterAndPlayerBo) {

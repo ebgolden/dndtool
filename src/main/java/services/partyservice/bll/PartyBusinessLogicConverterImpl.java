@@ -1,12 +1,10 @@
 package services.partyservice.bll;
 
 import objects.Character;
+import objects.DungeonMaster;
 import objects.Party;
 import objects.Player;
-import services.partyservice.JoinPartyRequest;
-import services.partyservice.JoinPartyResponse;
-import services.partyservice.LeavePartyRequest;
-import services.partyservice.LeavePartyResponse;
+import services.partyservice.*;
 import services.partyservice.bll.bo.*;
 
 public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConverter {
@@ -36,6 +34,18 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
                 .build();
     }
 
+    public PartyAndSplitPartiesAndDungeonMasterBo getPartyAndSplitPartiesAndDungeonMasterBoFromSplitPartyRequest(SplitPartyRequest splitPartyRequest) {
+        Party party = splitPartyRequest.getParty();
+        Party[] splitParties = splitPartyRequest.getSplitParties();
+        DungeonMaster dungeonMaster = splitPartyRequest.getDungeonMaster();
+        return PartyAndSplitPartiesAndDungeonMasterBo
+                .builder()
+                .party(party)
+                .splitParties(splitParties)
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public LeavePartyResponse getLeavePartyResponseFromLeftPartyBo(LeftPartyBo leftPartyBo) {
         boolean leftParty = leftPartyBo.isLeftParty();
         return LeavePartyResponse
@@ -49,6 +59,14 @@ public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConver
         return JoinPartyResponse
                 .builder()
                 .joinedParty(joinedParty)
+                .build();
+    }
+
+    public SplitPartyResponse getSplitPartyResponseFromSplitPartiesBo(SplitPartiesBo splitPartiesBo) {
+        Party[] splitParties = splitPartiesBo.getSplitParties();
+        return SplitPartyResponse
+                .builder()
+                .splitParties(splitParties)
                 .build();
     }
 
