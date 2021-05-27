@@ -2,8 +2,8 @@ package services.partyservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.Character;
-import objects.Party;
+import commonobjects.Character;
+import commonobjects.Party;
 import services.partyservice.bll.bo.*;
 import services.partyservice.dal.dao.*;
 

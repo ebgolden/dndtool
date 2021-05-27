@@ -1,10 +1,10 @@
 package services.partyservice.bll;
 
 import com.google.inject.Inject;
-import objects.Character;
-import objects.DungeonMaster;
-import objects.Party;
-import objects.Player;
+import commonobjects.Character;
+import commonobjects.DungeonMaster;
+import commonobjects.Party;
+import commonobjects.Player;
 import services.partyservice.bll.bo.*;
 import services.partyservice.dal.PartyDataAccess;
 import services.partyservice.dal.PartyDataAccessConverter;

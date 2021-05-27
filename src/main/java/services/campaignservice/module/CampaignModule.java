@@ -3,8 +3,7 @@ package services.campaignservice.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import services.campaignservice.CreateCampaign;
-import services.campaignservice.CreateCampaignImpl;
+import services.campaignservice.*;
 import services.campaignservice.bll.CampaignBusinessLogic;
 import services.campaignservice.bll.CampaignBusinessLogicConverter;
 import services.campaignservice.bll.CampaignBusinessLogicConverterImpl;
@@ -24,6 +23,10 @@ public class CampaignModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(CreateCampaign.class).to(CreateCampaignImpl.class);
+        bind(GetUpdatedCampaign.class).to(GetUpdatedCampaignImpl.class);
+        bind(ChangeVisibilityOfCampaignDetails.class).to(ChangeVisibilityOfCampaignDetailsImpl.class);
+        bind(AddPlayerToCampaign.class).to(AddPlayerToCampaignImpl.class);
+        bind(RemovePlayerFromCampaign.class).to(RemovePlayerFromCampaignImpl.class);
         bind(CampaignBusinessLogicConverter.class).to(CampaignBusinessLogicConverterImpl.class);
         bind(CampaignBusinessLogic.class).to(CampaignBusinessLogicImpl.class);
         bind(CampaignDataAccessConverter.class).to(CampaignDataAccessConverterImpl.class);

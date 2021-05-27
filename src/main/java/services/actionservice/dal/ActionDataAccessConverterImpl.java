@@ -1,11 +1,17 @@
 package services.actionservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.*;
-import objects.Character;
+import commonobjects.*;
+import commonobjects.Character;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import services.actionservice.bll.bo.*;
 import services.actionservice.dal.dao.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionDataAccessConverterImpl implements ActionDataAccessConverter {
     public CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo) {
@@ -80,6 +86,47 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
+    public ActionDao getActionDaoFromActionAndPlayerBo(ActionAndPlayerBo actionAndPlayerBo) {
+        Action action = actionAndPlayerBo.getAction();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String actionJson = "{}";
+        try {
+            actionJson = objectMapper.writeValueAsString(action);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return ActionDao
+                .builder()
+                .actionJson(actionJson)
+                .build();
+    }
+
+    public ActionAndVisibilityDao getActionAndVisibilityDaoFromActionAndVisibilityBo(ActionAndVisibilityBo actionAndVisibilityBo) {
+        Action action = actionAndVisibilityBo.getAction();
+        Map<String, Visibility> visibilityMap = actionAndVisibilityBo.getVisibilityMap();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String actionJson = "{}";
+        String visibilityJson = "{}";
+        try {
+            actionJson = objectMapper.writeValueAsString(action);
+            visibilityJson = objectMapper.writeValueAsString(visibilityMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String actionAndVisibilityJson = "{}";
+        if ((!actionJson.equals("{}") && (!actionJson.equals("null"))) || (!visibilityJson.equals("{}") && (!visibilityJson.equals("null"))))
+            actionAndVisibilityJson = "{" +
+                    "action:" +
+                    actionJson +
+                    ",visibility:" +
+                    visibilityJson +
+                    "}";
+        return ActionAndVisibilityDao
+                .builder()
+                .actionAndVisibilityJson(actionAndVisibilityJson)
+                .build();
+    }
+
     public ActionsBo getActionsBoFromActionsDao(ActionsDao actionsDao) {
         String actionsJson = actionsDao.getActionsJson();
         if (actionsJson == null)
@@ -141,6 +188,50 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
+    public ActionAndVisibilityBo getActionAndVisibilityBoFromActionAndVisibilityDao(ActionAndVisibilityDao actionAndVisibilityDao) {
+        String actionAndVisibilityJson = actionAndVisibilityDao.getActionAndVisibilityJson();
+        if (actionAndVisibilityJson == null)
+            actionAndVisibilityJson = "{}";
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = (JSONObject)jsonParser.parse(actionAndVisibilityJson);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String actionJson;
+        Action action = null;
+        if (jsonObject.get("action") != null) {
+            actionJson = ((JSONObject) jsonObject.get("action")).toJSONString();
+            action = Action
+                    .builder()
+                    .build();
+            try {
+                action = objectMapper.readValue(actionJson, Action.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        String visibilityJson;
+        Map<String, Visibility> visibilityMap = null;
+        if (jsonObject.get("visibility") != null) {
+            visibilityJson = ((JSONObject)jsonObject.get("visibility")).toJSONString();
+            visibilityMap = new HashMap<>();
+            try {
+                TypeReference<Map<String, Visibility>> visibilityMapTypeReference = new TypeReference<Map<String, Visibility>>(){};
+                visibilityMap = objectMapper.readValue(visibilityJson, visibilityMapTypeReference);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return ActionAndVisibilityBo
+                .builder()
+                .action(action)
+                .visibilityMap(visibilityMap)
+                .build();
+    }
+
     public ActionsDao getActionsDaoFromActionsJson(String actionsJson) {
         return ActionsDao
                 .builder()
@@ -159,6 +250,13 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
         return ActionDao
                 .builder()
                 .actionJson(actionJson)
+                .build();
+    }
+
+    public ActionAndVisibilityDao getActionAndVisibilityDaoFromActionAndVisibilityJson(String actionAndVisibilityJson) {
+        return ActionAndVisibilityDao
+                .builder()
+                .actionAndVisibilityJson(actionAndVisibilityJson)
                 .build();
     }
 }

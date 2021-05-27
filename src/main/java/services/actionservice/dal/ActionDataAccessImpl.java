@@ -2,7 +2,7 @@ package services.actionservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import objects.DataOperator;
+import commonobjects.DataOperator;
 import services.actionservice.dal.dao.*;
 
 public class ActionDataAccessImpl implements ActionDataAccess {
@@ -33,5 +33,19 @@ public class ActionDataAccessImpl implements ActionDataAccess {
         dataOperator.sendRequestJson(api, nonStandardActionAndCharacterJson);
         String actionJson = dataOperator.getResponseJson();
         return actionDataAccessConverter.getActionDaoFromActionJson(actionJson);
+    }
+
+    public ActionAndVisibilityDao getActionAndVisibilityDao(ActionDao actionDao) {
+        String actionJson = actionDao.getActionJson();
+        dataOperator.sendRequestJson(api, actionJson);
+        String actionAndVisibilityJson = dataOperator.getResponseJson();
+        return actionDataAccessConverter.getActionAndVisibilityDaoFromActionAndVisibilityJson(actionAndVisibilityJson);
+    }
+
+    public ActionAndVisibilityDao getActionAndVisibilityDao(ActionAndVisibilityDao actionAndVisibilityDao) {
+        String actionAndVisibilityJson = actionAndVisibilityDao.getActionAndVisibilityJson();
+        dataOperator.sendRequestJson(api, actionAndVisibilityJson);
+        actionAndVisibilityJson = dataOperator.getResponseJson();
+        return actionDataAccessConverter.getActionAndVisibilityDaoFromActionAndVisibilityJson(actionAndVisibilityJson);
     }
 }

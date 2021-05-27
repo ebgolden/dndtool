@@ -1,0 +1,21 @@
+package services.locationservice.bll;
+
+import services.locationservice.UpdatedLocationRequest;
+import services.locationservice.UpdatedLocationResponse;
+import services.locationservice.ChangeVisibilityOfLocationDetailsRequest;
+import services.locationservice.ChangeVisibilityOfLocationDetailsResponse;
+import services.locationservice.bll.bo.LocationAndPlayerBo;
+import services.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
+import services.locationservice.bll.bo.LocationAndVisibilityBo;
+
+public interface LocationBusinessLogicConverter {
+    LocationAndPlayerBo getLocationAndPlayerBoFromUpdatedLocationRequest(UpdatedLocationRequest updatedLocationRequest);
+
+    LocationAndVisibilityAndDungeonMasterBo getLocationAndVisibilityAndDungeonMasterBoFromChangeVisibilityOfLocationDetailsRequest(ChangeVisibilityOfLocationDetailsRequest changeVisibilityOfUpdatedLocationRequest);
+
+    UpdatedLocationResponse getUpdatedLocationResponseFromLocationAndVisibilityBo(LocationAndVisibilityBo locationAndVisibilityBo);
+
+    ChangeVisibilityOfLocationDetailsResponse getChangeVisibilityOfLocationDetailsResponseFromLocationAndVisibilityBo(LocationAndVisibilityBo locationAndVisibilityBo);
+
+    LocationAndVisibilityBo getLocationAndVisibilityBoFromLocationAndVisibilityAndDungeonMasterBo(LocationAndVisibilityAndDungeonMasterBo locationAndVisibilityAndDungeonMasterBo);
+}

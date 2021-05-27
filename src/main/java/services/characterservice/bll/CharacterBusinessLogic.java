@@ -10,4 +10,8 @@ public interface CharacterBusinessLogic {
     NonPlayableCharacterBo getNonPlayableCharacterBo(CharacterAndDungeonMasterBo characterAndDungeonMasterBo);
 
     CharacterBo getCharacterBo(NonPlayableCharacterAndDungeonMasterBo nonPlayableCharacterAndDungeonMasterBo);
+
+    CharacterAndVisibilityBo getCharacterAndVisibilityBo(CharacterAndPlayerBo characterAndPlayerBo);
+
+    CharacterAndVisibilityBo getCharacterAndVisibilityBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo);
 }

@@ -2,8 +2,8 @@ package services.partyservice;
 
 import lombok.Builder;
 import lombok.Data;
-import objects.DungeonMaster;
-import objects.Party;
+import commonobjects.DungeonMaster;
+import commonobjects.Party;
 
 @Builder
 @Data

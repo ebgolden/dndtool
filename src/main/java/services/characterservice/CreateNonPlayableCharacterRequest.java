@@ -2,9 +2,9 @@ package services.characterservice;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.DungeonMaster;
-import objects.NonPlayableCharacter;
-import objects.Visibility;
+import commonobjects.DungeonMaster;
+import commonobjects.NonPlayableCharacter;
+import commonobjects.Visibility;
 import java.util.Map;
 
 @Builder

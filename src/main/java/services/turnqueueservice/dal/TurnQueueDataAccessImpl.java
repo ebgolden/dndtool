@@ -2,7 +2,7 @@ package services.turnqueueservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import objects.DataOperator;
+import commonobjects.DataOperator;
 import services.turnqueueservice.dal.dao.EncounterDao;
 import services.turnqueueservice.dal.dao.TurnQueueDao;
 

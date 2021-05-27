@@ -2,7 +2,7 @@ package services.actionservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.Result;
+import commonobjects.Result;
 
 @Builder
 @Value

@@ -1,6 +1,6 @@
 package services.turnqueueservice.bll;
 
-import objects.Encounter;
+import commonobjects.Encounter;
 import services.turnqueueservice.TurnQueueRequest;
 import services.turnqueueservice.TurnQueueResponse;
 import services.turnqueueservice.bll.bo.EncounterBo;

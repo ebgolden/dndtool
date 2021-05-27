@@ -1,9 +1,9 @@
 package services.partyservice.bll;
 
-import objects.Character;
-import objects.DungeonMaster;
-import objects.Party;
-import objects.Player;
+import commonobjects.Character;
+import commonobjects.DungeonMaster;
+import commonobjects.Party;
+import commonobjects.Player;
 import services.partyservice.*;
 import services.partyservice.bll.bo.*;
 

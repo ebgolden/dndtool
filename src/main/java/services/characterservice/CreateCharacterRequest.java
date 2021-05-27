@@ -2,9 +2,9 @@ package services.characterservice;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.Character;
-import objects.Player;
-import objects.Visibility;
+import commonobjects.Character;
+import commonobjects.Player;
+import commonobjects.Visibility;
 import java.util.Map;
 
 @Builder

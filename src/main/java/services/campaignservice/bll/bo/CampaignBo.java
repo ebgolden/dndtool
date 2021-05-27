@@ -2,7 +2,7 @@ package services.campaignservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.Campaign;
+import commonobjects.Campaign;
 
 @Builder
 @Value

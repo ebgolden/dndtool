@@ -2,7 +2,7 @@ package services.turnqueueservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.Encounter;
+import commonobjects.Encounter;
 
 @Builder
 @Value

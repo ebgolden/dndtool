@@ -1,10 +1,7 @@
 package services.characterservice.dal;
 
 import services.characterservice.bll.bo.*;
-import services.characterservice.dal.dao.CharacterAndVisibilityAndPlayerDao;
-import services.characterservice.dal.dao.CharacterDao;
-import services.characterservice.dal.dao.NonPlayableCharacterAndVisibilityAndDungeonMasterDao;
-import services.characterservice.dal.dao.NonPlayableCharacterDao;
+import services.characterservice.dal.dao.*;
 
 public interface CharacterDataAccessConverter {
     CharacterAndVisibilityAndPlayerDao getCharacterAndVisibilityAndPlayerDaoFromCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo);
@@ -15,11 +12,19 @@ public interface CharacterDataAccessConverter {
 
     NonPlayableCharacterDao getNonPlayableCharacterDaoFromNonPlayableCharacterAndDungeonMasterBo(NonPlayableCharacterAndDungeonMasterBo nonPlayableCharacterAndDungeonMasterBo);
 
+    CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo);
+
+    CharacterAndVisibilityDao getCharacterAndVisibilityDaoFromCharacterAndVisibilityBo(CharacterAndVisibilityBo characterAndVisibilityBo);
+
     CharacterBo getCharacterBoFromCharacterDao(CharacterDao characterDao);
 
     NonPlayableCharacterBo getNonPlayableCharacterBoFromNonPlayableCharacterDao(NonPlayableCharacterDao nonPlayableCharacterDao);
 
+    CharacterAndVisibilityBo getCharacterAndVisibilityBoFromCharacterAndVisibilityDao(CharacterAndVisibilityDao characterAndVisibilityDao);
+
     CharacterDao getCharacterDaoFromCharacterJson(String characterJson);
 
     NonPlayableCharacterDao getNonPlayableCharacterDaoFromNonPlayableCharacterJson(String nonPlayableCharacterJson);
+
+    CharacterAndVisibilityDao getCharacterAndVisibilityDaoFromCharacterAndVisibilityJson(String characterAndVisibilityJson);
 }

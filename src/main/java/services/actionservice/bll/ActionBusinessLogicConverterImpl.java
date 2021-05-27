@@ -1,9 +1,10 @@
 package services.actionservice.bll;
 
-import objects.*;
-import objects.Character;
+import commonobjects.*;
+import commonobjects.Character;
 import services.actionservice.*;
 import services.actionservice.bll.bo.*;
+import java.util.Map;
 
 public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConverter {
     public CharacterAndPlayerBo getCharacterAndPlayerBoFromActionsRequest(ActionsRequest actionsRequest) {
@@ -42,6 +43,28 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
                 .build();
     }
 
+    public ActionAndPlayerBo getActionAndPlayerBoFromUpdatedActionRequest(UpdatedActionRequest updatedActionRequest) {
+        Action action = updatedActionRequest.getAction();
+        Player player = updatedActionRequest.getPlayer();
+        return ActionAndPlayerBo
+                .builder()
+                .action(action)
+                .player(player)
+                .build();
+    }
+
+    public ActionAndVisibilityAndPlayerBo getActionAndVisibilityAndPlayerBoFromChangeVisibilityOfActionDetailsRequest(ChangeVisibilityOfActionDetailsRequest changeVisibilityOfActionDetailsRequest) {
+        Action action = changeVisibilityOfActionDetailsRequest.getAction();
+        Map<String, Visibility> visibilityMap = changeVisibilityOfActionDetailsRequest.getVisibilityMap();
+        Player player = changeVisibilityOfActionDetailsRequest.getPlayer();
+        return ActionAndVisibilityAndPlayerBo
+                .builder()
+                .action(action)
+                .visibilityMap(visibilityMap)
+                .player(player)
+                .build();
+    }
+
     public ActionsResponse getActionsResponseFromActionsBo(ActionsBo actionsBo) {
         Action[] actions = actionsBo.getActions();
         return ActionsResponse
@@ -63,6 +86,32 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
         return ActionFromNonStandardActionResponse
                 .builder()
                 .action(action)
+                .build();
+    }
+
+    public UpdatedActionResponse getUpdatedActionResponseFromActionAndVisibilityBo(ActionAndVisibilityBo actionAndVisibilityBo) {
+        Action action = actionAndVisibilityBo.getAction();
+        return UpdatedActionResponse
+                .builder()
+                .action(action)
+                .build();
+    }
+
+    public ChangeVisibilityOfActionDetailsResponse getChangeVisibilityOfActionDetailsResponseFromActionAndVisibilityBo(ActionAndVisibilityBo actionAndVisibilityBo) {
+        Map<String, Visibility> visibilityMap = actionAndVisibilityBo.getVisibilityMap();
+        return ChangeVisibilityOfActionDetailsResponse
+                .builder()
+                .visibilityMap(visibilityMap)
+                .build();
+    }
+
+    public ActionAndVisibilityBo getActionAndVisibilityBoFromActionAndVisibilityAndPlayerBo(ActionAndVisibilityAndPlayerBo actionAndVisibilityAndPlayerBo) {
+        Action action = actionAndVisibilityAndPlayerBo.getAction();
+        Map<String, Visibility> visibilityMap = actionAndVisibilityAndPlayerBo.getVisibilityMap();
+        return ActionAndVisibilityBo
+                .builder()
+                .action(action)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 }

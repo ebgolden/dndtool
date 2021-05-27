@@ -2,7 +2,7 @@ package services.partyservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import objects.DataOperator;
+import commonobjects.DataOperator;
 import services.partyservice.dal.dao.*;
 
 public class PartyDataAccessImpl implements PartyDataAccess {

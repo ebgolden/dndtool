@@ -1,7 +1,7 @@
 package services.characterservice.bll;
 
-import objects.*;
-import objects.Character;
+import commonobjects.*;
+import commonobjects.Character;
 import services.characterservice.*;
 import services.characterservice.bll.bo.*;
 import java.util.Map;
@@ -51,6 +51,16 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
                 .build();
     }
 
+    public CharacterAndPlayerBo getCharacterAndPlayerBoFromUpdatedCharacterRequest(UpdatedCharacterRequest updatedCharacterRequest) {
+        Character character = updatedCharacterRequest.getCharacter();
+        Player player = updatedCharacterRequest.getPlayer();
+        return CharacterAndPlayerBo
+                .builder()
+                .character(character)
+                .player(player)
+                .build();
+    }
+
     public CreateCharacterResponse getCreateCharacterResponseFromCharacterBo(CharacterBo characterBo) {
         Character character = characterBo.getCharacter();
         return CreateCharacterResponse
@@ -80,6 +90,44 @@ public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLog
         return ChangeNonPlayableCharacterToCharacterResponse
                 .builder()
                 .character(character)
+                .build();
+    }
+
+    public UpdatedCharacterResponse getUpdatedCharacterResponseFromCharacterBo(CharacterAndVisibilityBo characterAndVisibilityBo) {
+        Character character = characterAndVisibilityBo.getCharacter();
+        return UpdatedCharacterResponse
+                .builder()
+                .character(character)
+                .build();
+    }
+
+    public ChangeVisibilityOfCharacterDetailsResponse getChangeVisibilityOfCharacterDetailsResponseFromCharacterAndVisibilityBo(CharacterAndVisibilityBo characterAndVisibilityBo) {
+        Map<String, Visibility> visibilityMap = characterAndVisibilityBo.getVisibilityMap();
+        return ChangeVisibilityOfCharacterDetailsResponse
+                .builder()
+                .visibilityMap(visibilityMap)
+                .build();
+    }
+
+    public CharacterAndVisibilityAndPlayerBo getCharacterAndVisibilityAndPlayerBoFromChangeVisibilityOfCharacterDetailsRequest(ChangeVisibilityOfCharacterDetailsRequest changeVisibilityOfUpdatedCharacterRequest) {
+        Character character = changeVisibilityOfUpdatedCharacterRequest.getCharacter();
+        Map<String, Visibility> visibilityMap = changeVisibilityOfUpdatedCharacterRequest.getVisibilityMap();
+        Player player = changeVisibilityOfUpdatedCharacterRequest.getPlayer();
+        return CharacterAndVisibilityAndPlayerBo
+                .builder()
+                .character(character)
+                .visibilityMap(visibilityMap)
+                .player(player)
+                .build();
+    }
+
+    public CharacterAndVisibilityBo getCharacterAndVisibilityBoFromCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo) {
+        Character character = characterAndVisibilityAndPlayerBo.getCharacter();
+        Map<String, Visibility> visibilityMap = characterAndVisibilityAndPlayerBo.getVisibilityMap();
+        return CharacterAndVisibilityBo
+                .builder()
+                .character(character)
+                .visibilityMap(visibilityMap)
                 .build();
     }
 }

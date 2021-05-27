@@ -10,9 +10,19 @@ public interface ActionBusinessLogicConverter {
 
     NonStandardActionAndCharacterAndPlayerBo getNonStandardActionAndCharacterAndPlayerBoFromActionFromNonStandardActionRequest(ActionFromNonStandardActionRequest actionFromNonStandardActionRequest);
 
+    ActionAndPlayerBo getActionAndPlayerBoFromUpdatedActionRequest(UpdatedActionRequest updatedActionRequest);
+
+    ActionAndVisibilityAndPlayerBo getActionAndVisibilityAndPlayerBoFromChangeVisibilityOfActionDetailsRequest(ChangeVisibilityOfActionDetailsRequest changeVisibilityOfActionDetailsRequest);
+
     ActionsResponse getActionsResponseFromActionsBo(ActionsBo actionsBo);
 
     TakeActionResponse getTakeActionResponseFromResultBo(ResultBo resultBo);
 
     ActionFromNonStandardActionResponse getActionFromNonStandardActionResponseFromActionBo(ActionBo actionBo);
+
+    UpdatedActionResponse getUpdatedActionResponseFromActionAndVisibilityBo(ActionAndVisibilityBo actionAndVisibilityBo);
+
+    ChangeVisibilityOfActionDetailsResponse getChangeVisibilityOfActionDetailsResponseFromActionAndVisibilityBo(ActionAndVisibilityBo actionAndVisibilityBo);
+
+    ActionAndVisibilityBo getActionAndVisibilityBoFromActionAndVisibilityAndPlayerBo(ActionAndVisibilityAndPlayerBo actionAndVisibilityAndPlayerBo);
 }

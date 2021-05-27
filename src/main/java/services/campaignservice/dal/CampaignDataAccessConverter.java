@@ -1,14 +1,25 @@
 package services.campaignservice.dal;
 
-import services.campaignservice.bll.bo.CampaignAndVisibilityAndDungeonMasterBo;
-import services.campaignservice.bll.bo.CampaignBo;
+import services.campaignservice.bll.bo.*;
+import services.campaignservice.dal.dao.CampaignAndPlayerDao;
 import services.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
+import services.campaignservice.dal.dao.CampaignAndVisibilityDao;
 import services.campaignservice.dal.dao.CampaignDao;
 
 public interface CampaignDataAccessConverter {
     CampaignAndVisibilityAndDungeonMasterDao getCampaignAndVisibilityAndDungeonMasterDaoFromCampaignAndVisibilityAndDungeonMasterBo(CampaignAndVisibilityAndDungeonMasterBo campaignAndVisibilityAndDungeonMasterBo);
 
+    CampaignDao getCampaignDaoFromCampaignAndPlayerBo(CampaignAndPlayerBo campaignAndPlayerBo);
+
+    CampaignAndVisibilityDao getCampaignAndVisibilityDaoFromCampaignAndVisibilityBo(CampaignAndVisibilityBo campaignAndVisibilityBo);
+
+    CampaignAndPlayerDao getCampaignAndPlayerDaoFromCampaignAndPlayerAndDungeonMasterBo(CampaignAndPlayerAndDungeonMasterBo campaignAndPlayerAndDungeonMasterBo);
+
     CampaignBo getCampaignBoFromCampaignDao(CampaignDao campaignDao);
 
+    CampaignAndVisibilityBo getCampaignAndVisibilityBoFromCampaignAndVisibilityDao(CampaignAndVisibilityDao campaignAndVisibilityDao);
+
     CampaignDao getCampaignDaoFromCampaignJson(String campaignJson);
+
+    CampaignAndVisibilityDao getCampaignAndVisibilityDaoFromCampaignAndVisibilityJson(String campaignAndVisibilityJson);
 }

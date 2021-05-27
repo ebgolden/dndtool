@@ -2,8 +2,8 @@ package services.actionservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import objects.Character;
-import objects.Player;
+import commonobjects.Character;
+import commonobjects.Player;
 
 @Builder
 @Value

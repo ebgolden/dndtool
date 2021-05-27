@@ -2,8 +2,8 @@ package services.turnqueueservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import objects.Character;
-import objects.Encounter;
+import commonobjects.Character;
+import commonobjects.Encounter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

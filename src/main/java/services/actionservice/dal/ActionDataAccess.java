@@ -8,4 +8,8 @@ public interface ActionDataAccess {
     ResultDao getResultDao(ActionAndDiceAndCharacterDao actionAndDiceAndCharacterDao);
 
     ActionDao getActionDao(NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao);
+
+    ActionAndVisibilityDao getActionAndVisibilityDao(ActionDao actionDao);
+
+    ActionAndVisibilityDao getActionAndVisibilityDao(ActionAndVisibilityDao actionAndVisibilityDao);
 }
