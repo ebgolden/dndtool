@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.characterservice.module.CharacterModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
 import java.util.HashMap;
 import java.util.Map;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,20 +28,32 @@ public class CreateNonPlayableCharacterTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new CharacterModule(CreateNonPlayableCharacter.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new CharacterModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        CreateNonPlayableCharacter.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         createNonPlayableCharacter = injector.getInstance(CreateNonPlayableCharacter.class);
     }
 
     @Test
     public void shouldReturnNonPlayableCharacter() {
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJson(dungeonMasterId);
-        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithCharacter(dungeonMasterId);
+        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter null.");
     }
 
@@ -46,27 +61,29 @@ public class CreateNonPlayableCharacterTest {
     public void shouldReturnEmptyNonPlayableCharacterWhileDifferentDM() {
         String dungeonMasterId = "2";
         String nonPlayableCharacterDungeonMasterId = "1";
-        String responseJson = "{}";
-        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(responseJson, dungeonMasterId, nonPlayableCharacterDungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(dataOperatorResponseQuery, dungeonMasterId, nonPlayableCharacterDungeonMasterId);
         Assertions.assertNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
     @Test
-    public void shouldReturnEmptyNonPlayableCharacterWhenEmptyJson() {
+    public void shouldReturnEmptyNonPlayableCharacterWhenEmptyResponse() {
         String dungeonMasterId = "1";
-        String responseJson = "{}";
-        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
     @Test
-    public void shouldReturnEmptyNonPlayableCharacterWhenNullJson() {
+    public void shouldReturnEmptyNonPlayableCharacterWhenNullResponse() {
         String dungeonMasterId = "1";
-        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(null, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(createNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
-    private String createMockResponseJson(String nonPlayableCharacterDungeonMasterId) {
+    private DataOperatorResponseQuery createMockResponseWithCharacter(String nonPlayableCharacterDungeonMasterId) {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String nonPlayableCharacterJson;
         try {
@@ -77,11 +94,24 @@ public class CreateNonPlayableCharacterTest {
         } catch (JsonProcessingException e) {
             nonPlayableCharacterJson = "{}";
         }
-        return nonPlayableCharacterJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(nonPlayableCharacterJson)
+                .build();
     }
 
-    private CreateNonPlayableCharacterResponse mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(String responseJson, String dungeonMasterId, String nonPlayableCharacterDungeonMasterId) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private CreateNonPlayableCharacterResponse mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String dungeonMasterId, String nonPlayableCharacterDungeonMasterId) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
                 .id(dungeonMasterId)

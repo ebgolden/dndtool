@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import commonobjects.Campaign;
-import commonobjects.DataOperator;
-import commonobjects.DungeonMaster;
-import commonobjects.Player;
+import com.google.inject.util.Modules;
+import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.campaignservice.module.CampaignModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,12 +26,24 @@ public class RemovePlayerFromCampaignTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new CampaignModule(RemovePlayerFromCampaign.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new CampaignModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        RemovePlayerFromCampaign.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         removePlayerFromCampaign = injector.getInstance(RemovePlayerFromCampaign.class);
     }
 
@@ -39,8 +51,8 @@ public class RemovePlayerFromCampaignTest {
     public void shouldReturnCampaign() {
         String campaignId = "0";
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJson(campaignId);
-        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithCampaign(campaignId);
+        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign null.");
     }
 
@@ -48,27 +60,29 @@ public class RemovePlayerFromCampaignTest {
     public void shouldReturnEmptyCampaignWhileDifferentDM() {
         String dungeonMasterId = "2";
         String campaignDungeonMasterId = "1";
-        String responseJson = "{}";
-        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(responseJson, dungeonMasterId, campaignDungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(dataOperatorResponseQuery, dungeonMasterId, campaignDungeonMasterId);
         Assertions.assertNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
     @Test
-    public void shouldReturnEmptyCampaignWhenEmptyJson() {
+    public void shouldReturnEmptyCampaignWhenEmptyResponse() {
         String dungeonMasterId = "1";
-        String responseJson = "{}";
-        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
     @Test
-    public void shouldReturnEmptyCampaignWhenNullJson() {
+    public void shouldReturnEmptyCampaignWhenNullResponse() {
         String dungeonMasterId = "1";
-        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(null, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        RemovePlayerFromCampaignResponse removePlayerFromCampaignResponse = mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(removePlayerFromCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
-    private String createMockResponseJson(String campaignId) {
+    private DataOperatorResponseQuery createMockResponseWithCampaign(String campaignId) {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String campaignJson;
         try {
@@ -79,11 +93,24 @@ public class RemovePlayerFromCampaignTest {
         } catch (JsonProcessingException e) {
             campaignJson = "{}";
         }
-        return campaignJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(campaignJson)
+                .build();
     }
 
-    private RemovePlayerFromCampaignResponse mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(String responseJson, String dungeonMasterId, String campaignDungeonMasterId) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private RemovePlayerFromCampaignResponse mockJsonResponseAndReturnRemovePlayerFromCampaignResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String dungeonMasterId, String campaignDungeonMasterId) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
                 .id(dungeonMasterId)

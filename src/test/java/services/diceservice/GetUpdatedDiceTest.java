@@ -5,14 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
 import services.diceservice.module.DiceModule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,55 +27,69 @@ public class GetUpdatedDiceTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new DiceModule(GetUpdatedDice.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new DiceModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetUpdatedDice.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getUpdatedDice = injector.getInstance(GetUpdatedDice.class);
     }
 
     @Test
     public void shouldReturnThreeDiceWhilePlayer() {
         int dieCount = 3;
-        String responseJson = createMockResponseJson(dieCount);
-        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(responseJson, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithDice(dieCount);
+        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(dataOperatorResponseQuery, true);
         Assertions.assertEquals(dieCount, updatedDiceResponse.getDice().length, "Wrong amount of dice.");
     }
 
     @Test
     public void shouldReturnNoDiceWhileDungeonMaster() {
         int dieCount = 0;
-        String responseJson = "{}";
-        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(responseJson, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(dataOperatorResponseQuery, false);
         Assertions.assertEquals(dieCount, updatedDiceResponse.getDice().length, "Dice not empty.");
     }
 
     @Test
     public void shouldReturnNoDice() {
         int dieCount = 0;
-        String responseJson = createMockResponseJson(dieCount);
-        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(responseJson, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithDice(dieCount);
+        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(dataOperatorResponseQuery, true);
         Assertions.assertEquals(dieCount, updatedDiceResponse.getDice().length, "Dice not empty.");
     }
 
     @Test
-    public void shouldReturnNoDiceWhenEmptyJson() {
+    public void shouldReturnNoDiceWhenEmptyResponse() {
         int dieCount = 0;
-        String responseJson = "{}";
-        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(responseJson, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(dataOperatorResponseQuery, true);
         Assertions.assertEquals(dieCount, updatedDiceResponse.getDice().length, "Dice not empty.");
     }
 
     @Test
-    public void shouldReturnNoDiceWhenNullJson() {
+    public void shouldReturnNoDiceWhenNullResponse() {
         int dieCount = 0;
-        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(null, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(dataOperatorResponseQuery, true);
         Assertions.assertEquals(dieCount, updatedDiceResponse.getDice().length, "Dice not empty.");
     }
 
-    private String createMockResponseJson(int dieCount) {
+    private DataOperatorResponseQuery createMockResponseWithDice(int dieCount) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("[");
         ObjectMapper objectMapper = new ObjectMapper();
         String dieJson;
@@ -88,11 +106,24 @@ public class GetUpdatedDiceTest {
                 responseJson.append(",");
         }
         responseJson.append("]");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private UpdatedDiceResponse mockJsonResponseAndReturnUpdatedDiceResponse(String responseJson, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private UpdatedDiceResponse mockJsonResponseAndReturnUpdatedDiceResponse(DataOperatorResponseQuery dataOperatorResponseQuery, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

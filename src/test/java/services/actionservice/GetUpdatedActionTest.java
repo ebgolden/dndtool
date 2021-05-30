@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.actionservice.module.ActionModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,20 +26,32 @@ public class GetUpdatedActionTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new ActionModule(GetUpdatedAction.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new ActionModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetUpdatedAction.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getUpdatedAction = injector.getInstance(GetUpdatedAction.class);
     }
 
     @Test
     public void shouldReturnActionWithIdWhilePlayerWhileVisibilityEveryone() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.EVERYONE);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(playerId, Visibility.EVERYONE);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
@@ -44,8 +59,8 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithIdWhileDMWhileVisibilityEveryone() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.EVERYONE);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.EVERYONE);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, false);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
@@ -53,16 +68,16 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithIdWhileDifferentPlayerWhileVisibilityEveryone() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.EVERYONE);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.EVERYONE);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnActionWithIdWhilePlayerWhileVisibilityPlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.PLAYER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(playerId, Visibility.PLAYER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
@@ -70,8 +85,8 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithIdWhileDMWhileVisibilityPlayer() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.PLAYER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.PLAYER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, false);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
@@ -79,16 +94,16 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithoutIdWhileDifferentPlayerWhileVisibilityPlayer() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.PLAYER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.PLAYER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() == null)), "Action not null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnActionWithoutIdWhilePlayerWhileVisibilityDM() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.DUNGEON_MASTER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(playerId, Visibility.DUNGEON_MASTER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() == null)), "Action not null and/or wrong visibility.");
     }
 
@@ -96,8 +111,8 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithIdWhileDMWhileVisibilityDM() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.DUNGEON_MASTER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.DUNGEON_MASTER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, false);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() != null)), "Action null and/or wrong visibility.");
     }
 
@@ -105,27 +120,29 @@ public class GetUpdatedActionTest {
     public void shouldReturnActionWithoutIdWhileDifferentPlayerWhileVisibilityDM() {
         String playerId = "2";
         String actionPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(actionPlayerId, Visibility.DUNGEON_MASTER);
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, actionPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithActionWithVisibilityOfId(actionPlayerId, Visibility.DUNGEON_MASTER);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, actionPlayerId, true);
         Assertions.assertTrue(((updatedActionResponse.getAction() != null) && (updatedActionResponse.getAction().getId() == null)), "Action not null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenEmptyJson() {
+    public void shouldReturnNoActionWhenEmptyResponse() {
         String playerId = "0";
-        String responseJson = "{}";
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(updatedActionResponse.getAction(), "Action not null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenNullJson() {
+    public void shouldReturnNoActionWhenNullResponse() {
         String playerId = "1";
-        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        UpdatedActionResponse updatedActionResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(updatedActionResponse.getAction(), "Action not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String actionPlayerId, Visibility idVisibility) {
+    private DataOperatorResponseQuery createMockResponseWithActionWithVisibilityOfId(String actionPlayerId, Visibility idVisibility) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"action\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson;
@@ -147,11 +164,24 @@ public class GetUpdatedActionTest {
                 .append(",\"visibility\":{\"id\":")
                 .append(visibilityJson)
                 .append("}}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private UpdatedActionResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(String responseJson, String playerId, String actionPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private UpdatedActionResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedActionResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String actionPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

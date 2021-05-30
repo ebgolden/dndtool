@@ -4,7 +4,6 @@ import commonobjects.Action;
 import commonobjects.Visibility;
 import lombok.Builder;
 import lombok.Value;
-
 import java.util.Map;
 
 @Builder

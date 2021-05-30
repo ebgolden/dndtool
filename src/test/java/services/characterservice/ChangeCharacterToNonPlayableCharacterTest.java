@@ -5,10 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
+import commonobjects.*;
 import commonobjects.Character;
-import commonobjects.DataOperator;
-import commonobjects.DungeonMaster;
-import commonobjects.NonPlayableCharacter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.characterservice.module.CharacterModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,36 +27,50 @@ public class ChangeCharacterToNonPlayableCharacterTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new CharacterModule(ChangeCharacterToNonPlayableCharacter.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new CharacterModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        ChangeCharacterToNonPlayableCharacter.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         changeCharacterToNonPlayableCharacter = injector.getInstance(ChangeCharacterToNonPlayableCharacter.class);
     }
 
     @Test
     public void shouldReturnNonPlayableCharacter() {
-        String responseJson = createMockResponseJson();
-        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithNonPlayableCharacter();
+        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(dataOperatorResponseQuery);
         Assertions.assertNotNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter null.");
     }
 
     @Test
-    public void shouldReturnEmptyNonPlayableCharacterWhenEmptyJson() {
-        String responseJson = "{}";
-        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(responseJson);
+    public void shouldReturnEmptyNonPlayableCharacterWhenEmptyResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(dataOperatorResponseQuery);
         Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
     @Test
-    public void shouldReturnEmptyNonPlayableCharacterWhenNullJson() {
-        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(null);
+    public void shouldReturnEmptyNonPlayableCharacterWhenNullResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(dataOperatorResponseQuery);
         Assertions.assertNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter not null.");
     }
 
-    private String createMockResponseJson() {
+    private DataOperatorResponseQuery createMockResponseWithNonPlayableCharacter() {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String nonPlayableCharacterJson;
         try {
@@ -65,11 +80,24 @@ public class ChangeCharacterToNonPlayableCharacterTest {
         } catch (JsonProcessingException e) {
             nonPlayableCharacterJson = "{}";
         }
-        return nonPlayableCharacterJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(nonPlayableCharacterJson)
+                .build();
     }
 
-    private ChangeCharacterToNonPlayableCharacterResponse mockJsonResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(String responseJson) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private ChangeCharacterToNonPlayableCharacterResponse mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         ChangeCharacterToNonPlayableCharacterRequest changeCharacterToNonPlayableCharacterRequest = ChangeCharacterToNonPlayableCharacterRequest
                 .builder()
                 .character(Character

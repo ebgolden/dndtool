@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import commonobjects.Character;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.actionservice.module.ActionModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,20 +27,32 @@ public class GetActionFromNonStandardActionTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new ActionModule(GetActionFromNonStandardAction.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new ActionModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetActionFromNonStandardAction.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getActionFromNonStandardAction = injector.getInstance(GetActionFromNonStandardAction.class);
     }
 
     @Test
     public void shouldReturnActionWhilePlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJson();
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithAction();
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
@@ -45,8 +60,8 @@ public class GetActionFromNonStandardActionTest {
     public void shouldReturnActionWhileDM() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJson();
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, characterPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithAction();
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(dataOperatorResponseQuery, playerId, characterPlayerId, false);
         Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
@@ -54,27 +69,29 @@ public class GetActionFromNonStandardActionTest {
     public void shouldReturnNoActionWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = "{}";
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, characterPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(dataOperatorResponseQuery, playerId, characterPlayerId, true);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenEmptyJson() {
+    public void shouldReturnNoActionWhenEmptyResponse() {
         String playerId = "1";
-        String responseJson = "{}";
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenNullJson() {
+    public void shouldReturnNoActionWhenNullResponse() {
         String playerId = "1";
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
-    private String createMockResponseJson() {
+    private DataOperatorResponseQuery createMockResponseWithAction() {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson;
         try {
@@ -84,11 +101,24 @@ public class GetActionFromNonStandardActionTest {
         } catch (JsonProcessingException e) {
             actionJson = "{}";
         }
-        return actionJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(actionJson)
+                .build();
     }
 
-    private ActionFromNonStandardActionResponse mockJsonResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private ActionFromNonStandardActionResponse mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

@@ -1,0 +1,8 @@
+package services.dataoperatorservice.dal;
+
+import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
+import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
+
+public interface DataOperatorDataAccess {
+    QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
+}

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.partyservice.module.PartyModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,47 +26,61 @@ public class SplitPartyTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new PartyModule(SplitParty.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new PartyModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        SplitParty.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         splitParty = injector.getInstance(SplitParty.class);
     }
 
     @Test
     public void shouldReturnThreeParties() {
         int partyCount = 3;
-        String responseJson = createMockResponseJson(partyCount);
-        SplitPartyResponse splitPartyResponse = mockJsonResponseAndReturnSplitPartyResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithParty(partyCount);
+        SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(dataOperatorResponseQuery);
         Assertions.assertEquals(partyCount, splitPartyResponse.getSplitParties().length, "Wrong amount of parties.");
     }
 
     @Test
     public void shouldReturnNoParties() {
         int partyCount = 0;
-        String responseJson = createMockResponseJson(partyCount);
-        SplitPartyResponse splitPartyResponse = mockJsonResponseAndReturnSplitPartyResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithParty(partyCount);
+        SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(dataOperatorResponseQuery);
         Assertions.assertEquals(partyCount, splitPartyResponse.getSplitParties().length, "Wrong amount of parties.");
     }
 
     @Test
-    public void shouldReturnNoPartiesWhenEmptyJson() {
+    public void shouldReturnNoPartiesWhenEmptyResponse() {
         int partyCount = 0;
-        String responseJson = "{}";
-        SplitPartyResponse splitPartyResponse = mockJsonResponseAndReturnSplitPartyResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(dataOperatorResponseQuery);
         Assertions.assertEquals(partyCount, splitPartyResponse.getSplitParties().length, "Wrong amount of parties.");
     }
 
     @Test
-    public void shouldReturnNoPartiesWhenNullJson() {
+    public void shouldReturnNoPartiesWhenNullResponse() {
         int partyCount = 0;
-        SplitPartyResponse splitPartyResponse = mockJsonResponseAndReturnSplitPartyResponse(null);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(dataOperatorResponseQuery);
         Assertions.assertEquals(partyCount, splitPartyResponse.getSplitParties().length, "Wrong amount of parties.");
     }
 
-    private String createMockResponseJson(int partyCount) {
+    private DataOperatorResponseQuery createMockResponseWithParty(int partyCount) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("[");
         ObjectMapper objectMapper = new ObjectMapper();
         String partyJson;
@@ -80,11 +97,24 @@ public class SplitPartyTest {
                 responseJson.append(",");
         }
         responseJson.append("]");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private SplitPartyResponse mockJsonResponseAndReturnSplitPartyResponse(String responseJson) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private SplitPartyResponse mockResponseAndReturnSplitPartyResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         SplitPartyRequest splitPartyRequest = SplitPartyRequest
                 .builder()
                 .party(Party

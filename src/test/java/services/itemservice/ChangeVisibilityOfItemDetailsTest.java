@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.itemservice.module.ItemModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
 import java.util.HashMap;
 import java.util.Map;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,20 +28,32 @@ public class ChangeVisibilityOfItemDetailsTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new ItemModule(ChangeVisibilityOfItemDetails.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new ItemModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        ChangeVisibilityOfItemDetails.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         changeVisibilityOfItemDetails = injector.getInstance(ChangeVisibilityOfItemDetails.class);
     }
 
     @Test
     public void shouldReturnVisibilityMapWithIdWhilePlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId);
-        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithItemWithVisibilityOfId(playerId);
+        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNotNull(changeVisibilityOfUpdatedItemResponse.getVisibilityMap(), "Visibility null.");
     }
 
@@ -46,8 +61,8 @@ public class ChangeVisibilityOfItemDetailsTest {
     public void shouldReturnVisibilityMapWithIdWhileDM() {
         String playerId = "2";
         String itemPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(itemPlayerId);
-        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(responseJson, playerId, itemPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithItemWithVisibilityOfId(itemPlayerId);
+        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(dataOperatorResponseQuery, playerId, itemPlayerId, false);
         Assertions.assertNotNull(changeVisibilityOfUpdatedItemResponse.getVisibilityMap(), "Visibility null.");
     }
 
@@ -55,27 +70,29 @@ public class ChangeVisibilityOfItemDetailsTest {
     public void shouldReturnEmptyVisibilityMapWhileDifferentPlayer() {
         String playerId = "2";
         String itemPlayerId = "1";
-        String responseJson = "{}";
-        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(responseJson, playerId, itemPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(dataOperatorResponseQuery, playerId, itemPlayerId, true);
         Assertions.assertNull(changeVisibilityOfUpdatedItemResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityMapWhenEmptyJson() {
+    public void shouldReturnEmptyVisibilityMapWhenEmptyResponse() {
         String playerId = "1";
-        String responseJson = "{}";
-        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(changeVisibilityOfUpdatedItemResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyVisibilityMapWhenNullJson() {
+    public void shouldReturnEmptyVisibilityMapWhenNullResponse() {
         String playerId = "1";
-        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        ChangeVisibilityOfItemDetailsResponse changeVisibilityOfUpdatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(changeVisibilityOfUpdatedItemResponse.getVisibilityMap(), "Visibility not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String itemPlayerId) {
+    private DataOperatorResponseQuery createMockResponseWithItemWithVisibilityOfId(String itemPlayerId) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"item\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String itemJson;
@@ -97,11 +114,24 @@ public class ChangeVisibilityOfItemDetailsTest {
                 .append(",\"visibility\":{\"id\":")
                 .append(visibilityJson)
                 .append("}}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private ChangeVisibilityOfItemDetailsResponse mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(String responseJson, String playerId, String itemPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private ChangeVisibilityOfItemDetailsResponse mockJsonResponseAsPlayerOrDMAndReturnChangeVisibilityOfItemDetailsResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String itemPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

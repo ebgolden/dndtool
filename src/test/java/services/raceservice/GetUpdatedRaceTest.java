@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import commonobjects.DataOperator;
-import commonobjects.Race;
+import com.google.inject.util.Modules;
+import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.raceservice.module.RaceModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,36 +26,50 @@ public class GetUpdatedRaceTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new RaceModule(GetUpdatedRace.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new RaceModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetUpdatedRace.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getUpdatedRace = injector.getInstance(GetUpdatedRace.class);
     }
 
     @Test
     public void shouldReturnRace() {
-        String responseJson = createMockResponseJson();
-        UpdatedRaceResponse updatedRaceResponse = mockJsonResponseAndReturnUpdatedRaceResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithRace();
+        UpdatedRaceResponse updatedRaceResponse = mockResponseAndReturnUpdatedRaceResponse(dataOperatorResponseQuery);
         Assertions.assertNotNull(updatedRaceResponse.getRace(), "Race null.");
     }
 
     @Test
-    public void shouldReturnNoRaceWhenEmptyJson() {
-        String responseJson = "{}";
-        UpdatedRaceResponse updatedRaceResponse = mockJsonResponseAndReturnUpdatedRaceResponse(responseJson);
+    public void shouldReturnNoRaceWhenEmptyResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedRaceResponse updatedRaceResponse = mockResponseAndReturnUpdatedRaceResponse(dataOperatorResponseQuery);
         Assertions.assertNull(updatedRaceResponse.getRace(), "Race not null.");
     }
 
     @Test
-    public void shouldReturnNoRaceWhenNullJson() {
-        UpdatedRaceResponse updatedRaceResponse = mockJsonResponseAndReturnUpdatedRaceResponse(null);
+    public void shouldReturnNoRaceWhenNullResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        UpdatedRaceResponse updatedRaceResponse = mockResponseAndReturnUpdatedRaceResponse(dataOperatorResponseQuery);
         Assertions.assertNull(updatedRaceResponse.getRace(), "Race not null.");
     }
 
-    private String createMockResponseJson() {
+    private DataOperatorResponseQuery createMockResponseWithRace() {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String raceJson;
         try {
@@ -63,11 +79,24 @@ public class GetUpdatedRaceTest {
         } catch (JsonProcessingException e) {
             raceJson = "{}";
         }
-        return raceJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(raceJson)
+                .build();
     }
 
-    private UpdatedRaceResponse mockJsonResponseAndReturnUpdatedRaceResponse(String responseJson) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private UpdatedRaceResponse mockResponseAndReturnUpdatedRaceResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         UpdatedRaceRequest updatedRaceRequest = UpdatedRaceRequest
                 .builder()
                 .race(Race

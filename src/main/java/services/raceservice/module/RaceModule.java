@@ -1,8 +1,6 @@
 package services.raceservice.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.name.Named;
 import services.raceservice.GetUpdatedRace;
 import services.raceservice.GetUpdatedRaceImpl;
 import services.raceservice.bll.RaceBusinessLogic;
@@ -15,12 +13,6 @@ import services.raceservice.dal.RaceDataAccessConverterImpl;
 import services.raceservice.dal.RaceDataAccessImpl;
 
 public class RaceModule extends AbstractModule {
-    private final Object API;
-
-    public RaceModule(Object api) {
-        API = api;
-    }
-
     @Override
     protected void configure() {
         bind(GetUpdatedRace.class).to(GetUpdatedRaceImpl.class);
@@ -28,11 +20,5 @@ public class RaceModule extends AbstractModule {
         bind(RaceBusinessLogic.class).to(RaceBusinessLogicImpl.class);
         bind(RaceDataAccessConverter.class).to(RaceDataAccessConverterImpl.class);
         bind(RaceDataAccess.class).to(RaceDataAccessImpl.class);
-    }
-
-    @Provides
-    @Named("api")
-    public Object provideAPIClass() {
-        return API;
     }
 }

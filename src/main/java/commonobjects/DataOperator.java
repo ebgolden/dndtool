@@ -1,7 +1,7 @@
 package commonobjects;
 
 public interface DataOperator {
-    void sendRequestJson(Object api, String requestJson);
+    DataOperatorResponseQuery getResponseJson(DataOperatorRequestQuery dataOperatorRequestQuery);
 
-    String getResponseJson();
+    DataOperatorResponseQuery getResponseJson(DataOperatorResponseQuery dataOperatorResponseQuery);
 }

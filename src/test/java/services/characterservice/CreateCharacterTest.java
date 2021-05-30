@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import commonobjects.Character;
 import org.junit.jupiter.api.Assertions;
@@ -14,8 +15,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.characterservice.module.CharacterModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
 import java.util.HashMap;
 import java.util.Map;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,20 +29,32 @@ public class CreateCharacterTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new CharacterModule(CreateCharacter.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new CharacterModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        CreateCharacter.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         createCharacter = injector.getInstance(CreateCharacter.class);
     }
 
     @Test
     public void shouldReturnCharacterWhilePlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJson(playerId);
-        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithCharacter(playerId);
+        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNotNull(createCharacterResponse.getCharacter(), "Character null.");
     }
 
@@ -47,8 +62,8 @@ public class CreateCharacterTest {
     public void shouldReturnCharacterWhileDM() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = createMockResponseJson(characterPlayerId);
-        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, characterPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithCharacter(characterPlayerId);
+        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(dataOperatorResponseQuery, playerId, characterPlayerId, false);
         Assertions.assertNotNull(createCharacterResponse.getCharacter(), "Character null.");
     }
 
@@ -56,27 +71,29 @@ public class CreateCharacterTest {
     public void shouldReturnEmptyCharacterWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
-        String responseJson = "{}";
-        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, characterPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(dataOperatorResponseQuery, playerId, characterPlayerId, true);
         Assertions.assertNull(createCharacterResponse.getCharacter(), "Character not null.");
     }
 
     @Test
-    public void shouldReturnEmptyCharacterWhenEmptyJson() {
+    public void shouldReturnEmptyCharacterWhenEmptyResponse() {
         String playerId = "1";
-        String responseJson = "{}";
-        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(createCharacterResponse.getCharacter(), "Character not null.");
     }
 
     @Test
-    public void shouldReturnEmptyCharacterWhenNullJson() {
+    public void shouldReturnEmptyCharacterWhenNullResponse() {
         String playerId = "1";
-        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        CreateCharacterResponse createCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(createCharacterResponse.getCharacter(), "Character not null.");
     }
 
-    private String createMockResponseJson(String characterPlayerId) {
+    private DataOperatorResponseQuery createMockResponseWithCharacter(String characterPlayerId) {
+        String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
         try {
@@ -87,11 +104,24 @@ public class CreateCharacterTest {
         } catch (JsonProcessingException e) {
             characterJson = "{}";
         }
-        return characterJson;
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(characterJson)
+                .build();
     }
 
-    private CreateCharacterResponse mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private CreateCharacterResponse mockJsonResponseAsPlayerOrDMAndReturnCreateCharacterResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

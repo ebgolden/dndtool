@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.locationservice.module.LocationModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
 import java.util.HashMap;
 import java.util.Map;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,12 +28,24 @@ public class ChangeVisibilityOfLocationDetailsTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new LocationModule(ChangeVisibilityOfLocationDetails.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new LocationModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        ChangeVisibilityOfLocationDetails.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         changeVisibilityOfLocationDetails = injector.getInstance(ChangeVisibilityOfLocationDetails.class);
     }
 
@@ -38,8 +53,8 @@ public class ChangeVisibilityOfLocationDetailsTest {
     public void shouldReturnVisibilityMapWithId() {
         String locationId = "0";
         String dungeonMasterId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId);
-        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithLocationWithVisibilityOfId(locationId);
+        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNotNull(changeVisibilityOfUpdatedLocationResponse.getVisibilityMap(), "Visibility null.");
     }
 
@@ -47,27 +62,29 @@ public class ChangeVisibilityOfLocationDetailsTest {
     public void shouldReturnEmptyVisibilityMapWhileDifferentDM() {
         String dungeonMasterId = "2";
         String locationDungeonMasterId = "1";
-        String responseJson = "{}";
-        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(responseJson, dungeonMasterId, locationDungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(dataOperatorResponseQuery, dungeonMasterId, locationDungeonMasterId);
         Assertions.assertNull(changeVisibilityOfUpdatedLocationResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyMapWhenEmptyJson() {
+    public void shouldReturnEmptyMapWhenEmptyResponse() {
         String dungeonMasterId = "1";
-        String responseJson = "{}";
-        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(responseJson, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(changeVisibilityOfUpdatedLocationResponse.getVisibilityMap(), "Visibility not null.");
     }
 
     @Test
-    public void shouldReturnEmptyMapWhenNullJson() {
+    public void shouldReturnEmptyMapWhenNullResponse() {
         String dungeonMasterId = "1";
-        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(null, dungeonMasterId, dungeonMasterId);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        ChangeVisibilityOfLocationDetailsResponse changeVisibilityOfUpdatedLocationResponse = mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(dataOperatorResponseQuery, dungeonMasterId, dungeonMasterId);
         Assertions.assertNull(changeVisibilityOfUpdatedLocationResponse.getVisibilityMap(), "Visibility not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String locationId) {
+    private DataOperatorResponseQuery createMockResponseWithLocationWithVisibilityOfId(String locationId) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"location\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String locationJson;
@@ -87,11 +104,24 @@ public class ChangeVisibilityOfLocationDetailsTest {
                 .append(",\"visibility\":{\"id\":")
                 .append(visibilityJson)
                 .append("}}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private ChangeVisibilityOfLocationDetailsResponse mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(String responseJson, String dungeonMasterId, String locationDungeonMasterId) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private ChangeVisibilityOfLocationDetailsResponse mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String dungeonMasterId, String locationDungeonMasterId) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
                 .id(dungeonMasterId)

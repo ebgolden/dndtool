@@ -1,8 +1,6 @@
 package services.worldservice.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.name.Named;
 import services.worldservice.GetUpdatedWorldDetails;
 import services.worldservice.GetUpdatedWorldDetailsImpl;
 import services.worldservice.ChangeVisibilityOfWorldDetails;
@@ -17,12 +15,6 @@ import services.worldservice.dal.WorldDataAccessConverterImpl;
 import services.worldservice.dal.WorldDataAccessImpl;
 
 public class WorldModule extends AbstractModule {
-    private final Object API;
-
-    public WorldModule(Object api) {
-        API = api;
-    }
-
     @Override
     protected void configure() {
         bind(GetUpdatedWorldDetails.class).to(GetUpdatedWorldDetailsImpl.class);
@@ -31,11 +23,5 @@ public class WorldModule extends AbstractModule {
         bind(WorldBusinessLogic.class).to(WorldBusinessLogicImpl.class);
         bind(WorldDataAccessConverter.class).to(WorldDataAccessConverterImpl.class);
         bind(WorldDataAccess.class).to(WorldDataAccessImpl.class);
-    }
-
-    @Provides
-    @Named("api")
-    public Object provideAPIClass() {
-        return API;
     }
 }

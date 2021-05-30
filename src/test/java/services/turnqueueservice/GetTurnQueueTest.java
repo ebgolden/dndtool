@@ -5,10 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
+import commonobjects.*;
 import commonobjects.Character;
-import commonobjects.DataOperator;
-import commonobjects.Encounter;
-import commonobjects.Party;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.turnqueueservice.module.TurnQueueModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,12 +27,24 @@ public class GetTurnQueueTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new TurnQueueModule(GetTurnQueue.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new TurnQueueModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetTurnQueue.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getTurnQueue = injector.getInstance(GetTurnQueue.class);
     }
 
@@ -39,8 +52,8 @@ public class GetTurnQueueTest {
     public void shouldReturnThreeCharactersWithCurrentTurnIndexTwo() {
         int characterCount = 3;
         int currentTurnIndex = 2;
-        String responseJson = createMockResponseJson(characterCount, currentTurnIndex);
-        TurnQueueResponse turnQueueResponse = mockJsonResponseAndReturnTurnQueueResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithTurnQueue(characterCount, currentTurnIndex);
+        TurnQueueResponse turnQueueResponse = mockResponseAndReturnTurnQueueResponse(dataOperatorResponseQuery);
         Assertions.assertTrue(((turnQueueResponse.getCharacters().length == characterCount) && (turnQueueResponse.getCurrentTurnIndex() == currentTurnIndex)), "Wrong amount of characters and/or wrong current turn index.");
     }
 
@@ -48,8 +61,8 @@ public class GetTurnQueueTest {
     public void shouldReturnNoCharactersWithCurrentTurnIndexZero() {
         int characterCount = 0;
         int currentTurnIndex = 0;
-        String responseJson = createMockResponseJson(characterCount, currentTurnIndex);
-        TurnQueueResponse turnQueueResponse = mockJsonResponseAndReturnTurnQueueResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithTurnQueue(characterCount, currentTurnIndex);
+        TurnQueueResponse turnQueueResponse = mockResponseAndReturnTurnQueueResponse(dataOperatorResponseQuery);
         Assertions.assertTrue(((turnQueueResponse.getCharacters().length == characterCount) && (turnQueueResponse.getCurrentTurnIndex() == currentTurnIndex)), "Wrong amount of characters and/or wrong current turn index.");
     }
 
@@ -57,29 +70,31 @@ public class GetTurnQueueTest {
     public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenNoCharactersKey() {
         int characterCount = 0;
         int currentTurnIndex = 0;
-        String responseJson = createMockResponseJsonNoCharactersKey(currentTurnIndex);
-        TurnQueueResponse turnQueueResponse = mockJsonResponseAndReturnTurnQueueResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithTurnQueueNoCharactersKey(currentTurnIndex);
+        TurnQueueResponse turnQueueResponse = mockResponseAndReturnTurnQueueResponse(dataOperatorResponseQuery);
         Assertions.assertTrue(((turnQueueResponse.getCharacters().length == characterCount) && (turnQueueResponse.getCurrentTurnIndex() == currentTurnIndex)), "Wrong amount of characters and/or wrong current turn index.");
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenEmptyJson() {
+    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenEmptyResponse() {
         int characterCount = 0;
         int currentTurnIndex = 0;
-        String responseJson = "{}";
-        TurnQueueResponse turnQueueResponse = mockJsonResponseAndReturnTurnQueueResponse(responseJson);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        TurnQueueResponse turnQueueResponse = mockResponseAndReturnTurnQueueResponse(dataOperatorResponseQuery);
         Assertions.assertTrue(((turnQueueResponse.getCharacters().length == characterCount) && (turnQueueResponse.getCurrentTurnIndex() == currentTurnIndex)), "Wrong amount of characters and/or wrong current turn index.");
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenNullJson() {
+    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenNullResponse() {
         int characterCount = 0;
         int currentTurnIndex = 0;
-        TurnQueueResponse turnQueueResponse = mockJsonResponseAndReturnTurnQueueResponse(null);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        TurnQueueResponse turnQueueResponse = mockResponseAndReturnTurnQueueResponse(dataOperatorResponseQuery);
         Assertions.assertTrue(((turnQueueResponse.getCharacters().length == characterCount) && (turnQueueResponse.getCurrentTurnIndex() == currentTurnIndex)), "Wrong amount of characters and/or wrong current turn index.");
     }
 
-    private String createMockResponseJson(int characterCount, int currentTurnIndex) {
+    private DataOperatorResponseQuery createMockResponseWithTurnQueue(int characterCount, int currentTurnIndex) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"characters\":[");
         ObjectMapper objectMapper = new ObjectMapper();
         String characterJson;
@@ -99,15 +114,34 @@ public class GetTurnQueueTest {
                 .append("],\"currentTurnIndex\":")
                 .append(currentTurnIndex)
                 .append("}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private String createMockResponseJsonNoCharactersKey(int currentTurnIndex) {
-        return "{\"currentTurnIndex\":" + currentTurnIndex + "}";
+    private DataOperatorResponseQuery createMockResponseWithTurnQueueNoCharactersKey(int currentTurnIndex) {
+        String queryId = "123";
+        String responseJson = "{\"currentTurnIndex\":" + currentTurnIndex + "}";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
     }
 
-    private TurnQueueResponse mockJsonResponseAndReturnTurnQueueResponse(String responseJson) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private TurnQueueResponse mockResponseAndReturnTurnQueueResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         TurnQueueRequest turnQueueRequest = TurnQueueRequest
                 .builder()
                 .party(Party

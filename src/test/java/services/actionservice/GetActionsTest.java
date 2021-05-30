@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import commonobjects.Character;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.actionservice.module.ActionModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,12 +27,24 @@ public class GetActionsTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new ActionModule(GetActions.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new ActionModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetActions.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getActions = injector.getInstance(GetActions.class);
     }
 
@@ -37,8 +52,8 @@ public class GetActionsTest {
     public void shouldReturnThreeActionsWhilePlayer() {
         String playerId = "1";
         int actionCount = 3;
-        String responseJson = createMockResponseJson(actionCount);
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithAction(actionCount);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
@@ -47,8 +62,8 @@ public class GetActionsTest {
         String playerId = "2";
         String characterPlayerId = "1";
         int actionCount = 3;
-        String responseJson = createMockResponseJson(actionCount);
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, characterPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithAction(actionCount);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, characterPlayerId, false);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Wrong amount of actions.");
     }
 
@@ -57,8 +72,8 @@ public class GetActionsTest {
         String playerId = "2";
         String characterPlayerId = "1";
         int actionCount = 0;
-        String responseJson = "{}";
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, characterPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, characterPlayerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
@@ -66,29 +81,31 @@ public class GetActionsTest {
     public void shouldReturnNoActions() {
         String playerId = "1";
         int actionCount = 0;
-        String responseJson = createMockResponseJson(actionCount);
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithAction(actionCount);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
-    public void shouldReturnNoActionsWhenEmptyJson() {
+    public void shouldReturnNoActionsWhenEmptyResponse() {
         String playerId = "1";
         int actionCount = 0;
-        String responseJson = "{}";
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
     @Test
-    public void shouldReturnNoActionsWhenNullJson() {
+    public void shouldReturnNoActionsWhenNullResponse() {
         String playerId = "1";
         int actionCount = 0;
-        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        ActionsResponse actionsResponse = mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertEquals(actionCount, actionsResponse.getActions().length, "Actions not empty.");
     }
 
-    private String createMockResponseJson(int actionCount) {
+    private DataOperatorResponseQuery createMockResponseWithAction(int actionCount) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("[");
         ObjectMapper objectMapper = new ObjectMapper();
         String actionJson;
@@ -105,11 +122,24 @@ public class GetActionsTest {
                 responseJson.append(",");
         }
         responseJson.append("]");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private ActionsResponse mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(String responseJson, String playerId, String characterPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private ActionsResponse mockJsonResponseAsPlayerOrDMAndReturnActionsResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

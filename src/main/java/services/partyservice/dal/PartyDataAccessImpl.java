@@ -2,36 +2,58 @@ package services.partyservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import commonobjects.DataOperator;
+import commonobjects.Campaign;
+import commonobjects.Player;
+import commonobjects.QueryType;
+import services.dataoperatorservice.QueryRequest;
+import services.dataoperatorservice.QueryResponse;
+import services.dataoperatorservice.SendQuery;
 import services.partyservice.dal.dao.*;
 
 public class PartyDataAccessImpl implements PartyDataAccess {
     @Inject
-    @Named("api")
-    private Object api;
+    @Named("queryRequest")
+    private QueryRequest queryRequest;
     @Inject
-    private DataOperator dataOperator;
+    private SendQuery sendQuery;
     @Inject
     private PartyDataAccessConverter partyDataAccessConverter;
 
     public PartyDao getPartyDao(PartyAndCharacterDao partyAndCharacterDao) {
         String partyAndCharacterJson = partyAndCharacterDao.getPartyAndCharacterJson();
-        dataOperator.sendRequestJson(api, partyAndCharacterJson);
-        String partyJson = dataOperator.getResponseJson();
+        queryRequest = constructQueryRequest(partyAndCharacterJson);
+        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
+        String partyJson = queryResponse.getResponseJson();
         return partyDataAccessConverter.getPartyDaoFromPartyJson(partyJson);
     }
 
     public SplitPartiesDao getSplitPartiesDao(PartyAndSplitPartiesDao partyAndSplitPartiesDao) {
         String partyAndSplitPartiesJson = partyAndSplitPartiesDao.getPartyAndSplitPartiesJson();
-        dataOperator.sendRequestJson(api, partyAndSplitPartiesJson);
-        String splitPartiesJson = dataOperator.getResponseJson();
+        queryRequest = constructQueryRequest(partyAndSplitPartiesJson);
+        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
+        String splitPartiesJson = queryResponse.getResponseJson();
         return partyDataAccessConverter.getSplitPartiesDaoFromSplitPartiesJson(splitPartiesJson);
     }
 
     public PartyDao getPartyDao(PartiesDao partiesDao) {
         String partiesJson = partiesDao.getPartiesJson();
-        dataOperator.sendRequestJson(api, partiesJson);
-        String partyJson = dataOperator.getResponseJson();
+        queryRequest = constructQueryRequest(partiesJson);
+        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
+        String partyJson = queryResponse.getResponseJson();
         return partyDataAccessConverter.getPartyDaoFromPartyJson(partyJson);
+    }
+
+    private QueryRequest constructQueryRequest(String requestJson) {
+        Campaign campaign = queryRequest.getCampaign();
+        Player senderPlayer = queryRequest.getSenderPlayer();
+        Object api = queryRequest.getApi();
+        return QueryRequest
+                .builder()
+                .campaign(campaign)
+                .senderPlayer(senderPlayer)
+                .api(api)
+                .queryType(QueryType.PUSH)
+                .requestJson(requestJson)
+                .build();
     }
 }

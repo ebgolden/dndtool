@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.locationservice.module.LocationModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,61 +26,75 @@ public class GetUpdatedLocationTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new LocationModule(GetUpdatedLocation.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new LocationModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetUpdatedLocation.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getUpdatedLocation = injector.getInstance(GetUpdatedLocation.class);
     }
 
     @Test
     public void shouldReturnLocationWithIdWhilePlayer() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.EVERYONE);
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(responseJson, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithLocationWithVisibilityOfId(locationId, Visibility.EVERYONE);
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, true);
         Assertions.assertTrue(((updatedLocationResponse.getLocation() != null) && (updatedLocationResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnLocationWithIdWhileDM() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.EVERYONE);
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(responseJson, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithLocationWithVisibilityOfId(locationId, Visibility.EVERYONE);
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, false);
         Assertions.assertTrue(((updatedLocationResponse.getLocation() != null) && (updatedLocationResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnLocationWithIdWhileDMWhileVisibilityFalse() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(responseJson, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithLocationWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, false);
         Assertions.assertTrue(((updatedLocationResponse.getLocation() != null) && (updatedLocationResponse.getLocation().getId() != null)), "Location null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnLocationWithoutIdWhilePlayerWhileVisibilityFalse() {
         String locationId = "0";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(responseJson, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithLocationWithVisibilityOfId(locationId, Visibility.DUNGEON_MASTER);
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, true);
         Assertions.assertTrue(((updatedLocationResponse.getLocation() != null) && (updatedLocationResponse.getLocation().getId() == null)), "Location null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnNoLocationWhenEmptyJson() {
-        String responseJson = "{}";
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(responseJson, true);
+    public void shouldReturnNoLocationWhenEmptyResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, true);
         Assertions.assertNull(updatedLocationResponse.getLocation(), "Location not null.");
     }
 
     @Test
-    public void shouldReturnNoLocationWhenNullJson() {
-        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(null, true);
+    public void shouldReturnNoLocationWhenNullResponse() {
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(dataOperatorResponseQuery, true);
         Assertions.assertNull(updatedLocationResponse.getLocation(), "Location not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String locationId, Visibility idVisibility) {
+    private DataOperatorResponseQuery createMockResponseWithLocationWithVisibilityOfId(String locationId, Visibility idVisibility) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"location\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String locationJson;
@@ -97,11 +114,24 @@ public class GetUpdatedLocationTest {
                 .append(",\"visibility\":{\"id\":")
                 .append(visibilityJson)
                 .append("}}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private UpdatedLocationResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(String responseJson, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private UpdatedLocationResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(DataOperatorResponseQuery dataOperatorResponseQuery, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Modules;
 import commonobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import services.spellservice.module.SpellModule;
+import services.dataoperatorservice.module.GlobalNetworkOperatorModule;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,20 +26,32 @@ public class GetUpdatedSpellTest {
 
     @BeforeEach
     public void setup() {
-        Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(DataOperator.class).toInstance(mockDataOperator);
-            }
-        }, new SpellModule(GetUpdatedSpell.class));
+        Campaign campaign = Campaign
+                .builder()
+                .id("1")
+                .build();
+        Player senderPlayer = Player
+                .builder()
+                .id("1")
+                .build();
+        Injector injector = Guice.createInjector(new SpellModule(),
+                Modules.override(new GlobalNetworkOperatorModule(campaign,
+                        senderPlayer,
+                        GetUpdatedSpell.class))
+                        .with(new AbstractModule() {
+                            @Override
+                            protected void configure() {
+                                bind(DataOperator.class).toInstance(mockDataOperator);
+                            }
+                        }));
         getUpdatedSpell = injector.getInstance(GetUpdatedSpell.class);
     }
 
     @Test
     public void shouldReturnSpellWithIdWhilePlayerWhileVisibilityEveryone() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.EVERYONE);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(playerId, Visibility.EVERYONE);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
@@ -44,8 +59,8 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithIdWhileDMWhileVisibilityEveryone() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.EVERYONE);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.EVERYONE);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, false);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
@@ -53,16 +68,16 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithIdWhileDifferentPlayerWhileVisibilityEveryone() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.EVERYONE);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.EVERYONE);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnSpellWithIdWhilePlayerWhileVisibilityPlayer() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.PLAYER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(playerId, Visibility.PLAYER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
@@ -70,8 +85,8 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithIdWhileDMWhileVisibilityPlayer() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.PLAYER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.PLAYER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, false);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
@@ -79,16 +94,16 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithoutIdWhileDifferentPlayerWhileVisibilityPlayer() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.PLAYER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.PLAYER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() == null)), "Spell not null and/or wrong visibility.");
     }
 
     @Test
     public void shouldReturnSpellWithoutIdWhilePlayerWhileVisibilityDM() {
         String playerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(playerId, Visibility.DUNGEON_MASTER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(playerId, Visibility.DUNGEON_MASTER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() == null)), "Spell not null and/or wrong visibility.");
     }
 
@@ -96,8 +111,8 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithIdWhileDMWhileVisibilityDM() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.DUNGEON_MASTER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, false);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.DUNGEON_MASTER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, false);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() != null)), "Spell null and/or wrong visibility.");
     }
 
@@ -105,27 +120,29 @@ public class GetUpdatedSpellTest {
     public void shouldReturnSpellWithoutIdWhileDifferentPlayerWhileVisibilityDM() {
         String playerId = "2";
         String spellPlayerId = "1";
-        String responseJson = createMockResponseJsonWithVisibilityOfId(spellPlayerId, Visibility.DUNGEON_MASTER);
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, spellPlayerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponseWithSpellWithVisibilityOfId(spellPlayerId, Visibility.DUNGEON_MASTER);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, spellPlayerId, true);
         Assertions.assertTrue(((updatedSpellResponse.getSpell() != null) && (updatedSpellResponse.getSpell().getId() == null)), "Spell not null and/or wrong visibility.");
     }
 
     @Test
-    public void shouldReturnNoSpellWhenEmptyJson() {
+    public void shouldReturnNoSpellWhenEmptyResponse() {
         String playerId = "0";
-        String responseJson = "{}";
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(responseJson, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse("{}");
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(updatedSpellResponse.getSpell(), "Spell not null.");
     }
 
     @Test
-    public void shouldReturnNoSpellWhenNullJson() {
+    public void shouldReturnNoSpellWhenNullResponse() {
         String playerId = "1";
-        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(null, playerId, playerId, true);
+        DataOperatorResponseQuery dataOperatorResponseQuery = createMockResponse(null);
+        UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(dataOperatorResponseQuery, playerId, playerId, true);
         Assertions.assertNull(updatedSpellResponse.getSpell(), "Spell not null.");
     }
 
-    private String createMockResponseJsonWithVisibilityOfId(String spellPlayerId, Visibility idVisibility) {
+    private DataOperatorResponseQuery createMockResponseWithSpellWithVisibilityOfId(String spellPlayerId, Visibility idVisibility) {
+        String queryId = "123";
         StringBuilder responseJson = new StringBuilder("{\"spell\":");
         ObjectMapper objectMapper = new ObjectMapper();
         String spellJson;
@@ -147,11 +164,24 @@ public class GetUpdatedSpellTest {
                 .append(",\"visibility\":{\"id\":")
                 .append(visibilityJson)
                 .append("}}");
-        return responseJson.toString();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson.toString())
+                .build();
     }
 
-    private UpdatedSpellResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(String responseJson, String playerId, String spellPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson()).thenReturn(responseJson);
+    private DataOperatorResponseQuery createMockResponse(String responseJson) {
+        String queryId = "123";
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    private UpdatedSpellResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String spellPlayerId, boolean isPlayer) {
+        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player
