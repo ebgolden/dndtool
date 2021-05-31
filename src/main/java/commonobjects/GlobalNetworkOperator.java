@@ -36,7 +36,7 @@ public class GlobalNetworkOperator implements DataOperator {
                 .withString("queryType", queryType)
                 .withString("request", requestJson)
                 .withString("response", "{}")
-                .withString("ttl", String.valueOf(System.currentTimeMillis() / 1000L + 60)));
+                .withLong("ttl", System.currentTimeMillis() / 1000L + 60));
         String responseJson = waitForResponseAndReturnResponseJson(queryId);
         return DataOperatorResponseQuery
                 .builder()
