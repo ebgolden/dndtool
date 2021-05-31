@@ -5,4 +5,6 @@ import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
 
 public interface DataOperatorDataAccess {
     QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
+
+    QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao);
 }

@@ -9,13 +9,19 @@ import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
 
 public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
     @Inject
-    private DataOperator dataOperator;
-    @Inject
     private DataOperatorDataAccessConverter dataOperatorDataAccessConverter;
+    @Inject
+    private DataOperator dataOperator;
 
     public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
         DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
         DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+        return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
+    }
+
+    public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao) {
+        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperatorDataAccessConverter.getDataOperatorResponseQueryFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
+        dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorResponseQuery);
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
 }

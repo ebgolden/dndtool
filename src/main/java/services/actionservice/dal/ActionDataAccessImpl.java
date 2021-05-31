@@ -6,64 +6,64 @@ import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
 import services.actionservice.dal.dao.*;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 
 public class ActionDataAccessImpl implements ActionDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private ActionDataAccessConverter actionDataAccessConverter;
 
     public ActionsDao getActionsDao(CharacterDao characterDao) {
         String characterJson = characterDao.getCharacterJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, characterJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String actionsJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, characterJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String actionsJson = requestQueryResponse.getResponseJson();
         return actionDataAccessConverter.getActionsDaoFromActionsJson(actionsJson);
     }
 
     public ResultDao getResultDao(ActionAndDiceAndCharacterDao actionAndDiceAndCharacterDao) {
         String actionAndDiceAndCharacterJson = actionAndDiceAndCharacterDao.getActionAndDiceAndCharacterJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, actionAndDiceAndCharacterJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String resultJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, actionAndDiceAndCharacterJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String resultJson = requestQueryResponse.getResponseJson();
         return actionDataAccessConverter.getResultDaoFromResultJson(resultJson);
     }
 
     public ActionDao getActionDao(NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao) {
         String nonStandardActionAndCharacterJson = nonStandardActionAndCharacterDao.getNonStandardActionAndCharacterJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, nonStandardActionAndCharacterJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String actionJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, nonStandardActionAndCharacterJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String actionJson = requestQueryResponse.getResponseJson();
         return actionDataAccessConverter.getActionDaoFromActionJson(actionJson);
     }
 
     public ActionAndVisibilityDao getActionAndVisibilityDao(ActionDao actionDao) {
         String actionJson = actionDao.getActionJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, actionJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String actionAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, actionJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String actionAndVisibilityJson = requestQueryResponse.getResponseJson();
         return actionDataAccessConverter.getActionAndVisibilityDaoFromActionAndVisibilityJson(actionAndVisibilityJson);
     }
 
     public ActionAndVisibilityDao getActionAndVisibilityDao(ActionAndVisibilityDao actionAndVisibilityDao) {
         String actionAndVisibilityJson = actionAndVisibilityDao.getActionAndVisibilityJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, actionAndVisibilityJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        actionAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, actionAndVisibilityJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        actionAndVisibilityJson = requestQueryResponse.getResponseJson();
         return actionDataAccessConverter.getActionAndVisibilityDaoFromActionAndVisibilityJson(actionAndVisibilityJson);
     }
 
-    private QueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

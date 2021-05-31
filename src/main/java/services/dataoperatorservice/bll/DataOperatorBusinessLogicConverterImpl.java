@@ -3,21 +3,23 @@ package services.dataoperatorservice.bll;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.ResponseQueryRequest;
+import services.dataoperatorservice.ResponseQueryResponse;
 import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
 import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
 
 public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusinessLogicConverter {
-    public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromQueryRequest(QueryRequest queryRequest) {
-        Campaign campaign = queryRequest.getCampaign();
+    public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
+        Campaign campaign = requestQueryRequest.getCampaign();
         String campaignId = campaign.getId();
-        Player senderPlayer = queryRequest.getSenderPlayer();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
         String senderPlayerId = senderPlayer.getId();
-        Object api = queryRequest.getApi();
+        Object api = requestQueryRequest.getApi();
         String apiName = api.toString();
-        QueryType queryType = queryRequest.getQueryType();
-        String requestJson = queryRequest.getRequestJson();
+        QueryType queryType = requestQueryRequest.getQueryType();
+        String requestJson = requestQueryRequest.getRequestJson();
         return CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo
                 .builder()
                 .campaignId(campaignId)
@@ -28,10 +30,30 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .build();
     }
 
-    public QueryResponse getQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
+    public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromResponseQueryRequest(ResponseQueryRequest responseQueryRequest) {
+        String queryId = responseQueryRequest.getQueryId();
+        String responseJson = responseQueryRequest.getResponseJson();
+        return QueryIdAndResponseJsonBo
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    public RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
         String queryId = queryIdAndResponseJsonBo.getQueryId();
         String responseJson = queryIdAndResponseJsonBo.getResponseJson();
-        return QueryResponse
+        return RequestQueryResponse
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
+    public ResponseQueryResponse getResponseQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
+        String queryId = queryIdAndResponseJsonBo.getQueryId();
+        String responseJson = queryIdAndResponseJsonBo.getResponseJson();
+        return ResponseQueryResponse
                 .builder()
                 .queryId(queryId)
                 .responseJson(responseJson)

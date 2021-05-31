@@ -5,33 +5,33 @@ import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 import services.raceservice.dal.dao.RaceDao;
 
 public class RaceDataAccessImpl implements RaceDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private RaceDataAccessConverter raceDataAccessConverter;
 
     public RaceDao getRaceDao(RaceDao raceDao) {
         String raceJson = raceDao.getRaceJson();
-        queryRequest = constructQueryRequest(raceJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        raceJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(raceJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        raceJson = requestQueryResponse.getResponseJson();
         return raceDataAccessConverter.getRaceDaoFromRaceJson(raceJson);
     }
 
-    private QueryRequest constructQueryRequest(String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

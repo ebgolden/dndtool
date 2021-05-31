@@ -5,34 +5,34 @@ import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 import services.diceservice.dal.dao.DiceAndPlayerDao;
 import services.diceservice.dal.dao.DiceDao;
 
 public class DiceDataAccessImpl implements DiceDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private DiceDataAccessConverter diceDataAccessConverter;
 
     public DiceDao getDiceDao(DiceAndPlayerDao diceAndPlayerDao) {
         String diceAndPlayerJson = diceAndPlayerDao.getDiceAndPlayerJson();
-        queryRequest = constructQueryRequest(diceAndPlayerJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String diceJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(diceAndPlayerJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String diceJson = requestQueryResponse.getResponseJson();
         return diceDataAccessConverter.getDiceDaoFromDiceJson(diceJson);
     }
 
-    private QueryRequest constructQueryRequest(String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

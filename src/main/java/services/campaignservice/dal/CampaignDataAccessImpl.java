@@ -9,56 +9,56 @@ import services.campaignservice.dal.dao.CampaignAndPlayerDao;
 import services.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
 import services.campaignservice.dal.dao.CampaignAndVisibilityDao;
 import services.campaignservice.dal.dao.CampaignDao;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 
 public class CampaignDataAccessImpl implements CampaignDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private CampaignDataAccessConverter campaignDataAccessConverter;
 
     public CampaignDao getCampaignDao(CampaignAndVisibilityAndDungeonMasterDao campaignAndVisibilityAndDungeonMasterDao) {
         String campaignAndDungeonMasterJson = campaignAndVisibilityAndDungeonMasterDao.getCampaignAndVisibilityAndDungeonMasterJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, campaignAndDungeonMasterJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String campaignJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, campaignAndDungeonMasterJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String campaignJson = requestQueryResponse.getResponseJson();
         return campaignDataAccessConverter.getCampaignDaoFromCampaignJson(campaignJson);
     }
 
     public CampaignAndVisibilityDao getCampaignAndVisibilityDao(CampaignDao campaignDao) {
         String campaignJson = campaignDao.getCampaignJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, campaignJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String campaignAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, campaignJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String campaignAndVisibilityJson = requestQueryResponse.getResponseJson();
         return campaignDataAccessConverter.getCampaignAndVisibilityDaoFromCampaignAndVisibilityJson(campaignAndVisibilityJson);
     }
 
     public CampaignAndVisibilityDao getCampaignAndVisibilityDao(CampaignAndVisibilityDao campaignAndVisibilityDao) {
         String campaignAndVisibilityJson = campaignAndVisibilityDao.getCampaignAndVisibilityJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, campaignAndVisibilityJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        campaignAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, campaignAndVisibilityJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        campaignAndVisibilityJson = requestQueryResponse.getResponseJson();
         return campaignDataAccessConverter.getCampaignAndVisibilityDaoFromCampaignAndVisibilityJson(campaignAndVisibilityJson);
     }
 
     public CampaignDao getCampaignDao(CampaignAndPlayerDao campaignAndPlayerDao) {
         String campaignAndPlayerJson = campaignAndPlayerDao.getCampaignAndPlayerJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, campaignAndPlayerJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String campaignJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, campaignAndPlayerJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String campaignJson = requestQueryResponse.getResponseJson();
         return campaignDataAccessConverter.getCampaignDaoFromCampaignJson(campaignJson);
     }
 
-    private QueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

@@ -7,7 +7,7 @@ import lombok.*;
 
 @Builder
 @Value
-public class QueryRequest {
+public class RequestQueryRequest {
     Campaign campaign;
     Player senderPlayer;
     Object api;

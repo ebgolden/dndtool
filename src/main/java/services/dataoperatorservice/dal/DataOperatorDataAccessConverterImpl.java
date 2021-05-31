@@ -26,6 +26,16 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .build();
     }
 
+    public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDaoFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
+        String queryId = queryIdAndResponseJsonBo.getQueryId();
+        String responseJson = queryIdAndResponseJsonBo.getResponseJson();
+        return QueryIdAndResponseJsonDao
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
+                .build();
+    }
+
     public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao) {
         String queryId = queryIdAndResponseJsonDao.getQueryId();
         String responseJson = queryIdAndResponseJsonDao.getResponseJson();
@@ -49,6 +59,16 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .apiName(apiName)
                 .queryType(queryType)
                 .requestJson(requestJson)
+                .build();
+    }
+
+    public DataOperatorResponseQuery getDataOperatorResponseQueryFromQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao) {
+        String queryId = queryIdAndResponseJsonDao.getQueryId();
+        String responseJson = queryIdAndResponseJsonDao.getResponseJson();
+        return DataOperatorResponseQuery
+                .builder()
+                .queryId(queryId)
+                .responseJson(responseJson)
                 .build();
     }
 

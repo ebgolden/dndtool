@@ -6,15 +6,15 @@ import services.dataoperatorservice.bll.DataOperatorBusinessLogicConverter;
 import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
 import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
 
-public class SendQueryImpl implements SendQuery {
+public class SendRequestQueryImpl implements SendRequestQuery {
     @Inject
     private DataOperatorBusinessLogicConverter dataOperatorBusinessLogicConverter;
     @Inject
     private DataOperatorBusinessLogic dataOperatorBusinessLogic;
 
-    public QueryResponse getQueryResponse(QueryRequest queryRequest) {
-        CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo = dataOperatorBusinessLogicConverter.getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromQueryRequest(queryRequest);
+    public RequestQueryResponse getRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
+        CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo = dataOperatorBusinessLogicConverter.getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(requestQueryRequest);
         QueryIdAndResponseJsonBo queryIdAndResponseJsonBo = dataOperatorBusinessLogic.getQueryIdAndResponseJsonBo(campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
-        return dataOperatorBusinessLogicConverter.getQueryResponseFromQueryIdAndResponseJsonBo(queryIdAndResponseJsonBo);
+        return dataOperatorBusinessLogicConverter.getRequestQueryResponseFromQueryIdAndResponseJsonBo(queryIdAndResponseJsonBo);
     }
 }

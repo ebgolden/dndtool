@@ -22,6 +22,12 @@ public class DataOperatorBusinessLogicImpl implements DataOperatorBusinessLogic 
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
     }
 
+    public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
+        QueryIdAndResponseJsonDao queryIdAndResponseJsonDao = dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromQueryIdAndResponseJsonBo(queryIdAndResponseJsonBo);
+        queryIdAndResponseJsonDao = dataOperatorDataAccess.getQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
+        return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
+    }
+
     private CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filterCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
         String campaignId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
         String senderPlayerId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getSenderPlayerId();

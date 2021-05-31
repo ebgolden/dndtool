@@ -5,9 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.SendQuery;
-import services.dataoperatorservice.SendQueryImpl;
+import services.dataoperatorservice.*;
 import services.dataoperatorservice.bll.DataOperatorBusinessLogic;
 import services.dataoperatorservice.bll.DataOperatorBusinessLogicConverter;
 import services.dataoperatorservice.bll.DataOperatorBusinessLogicConverterImpl;
@@ -30,7 +28,8 @@ public abstract class DataOperatorModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(SendQuery.class).to(SendQueryImpl.class);
+        bind(SendRequestQuery.class).to(SendRequestQueryImpl.class);
+        bind(SendResponseQuery.class).to(SendResponseQueryImpl.class);
         bind(DataOperatorBusinessLogicConverter.class).to(DataOperatorBusinessLogicConverterImpl.class);
         bind(DataOperatorBusinessLogic.class).to(DataOperatorBusinessLogicImpl.class);
         bind(DataOperatorDataAccessConverter.class).to(DataOperatorDataAccessConverterImpl.class);
@@ -39,8 +38,8 @@ public abstract class DataOperatorModule extends AbstractModule {
 
     @Provides
     @Named("queryRequest")
-    public QueryRequest provideQueryRequestClass() {
-        return QueryRequest
+    public RequestQueryRequest provideQueryRequestClass() {
+        return RequestQueryRequest
                 .builder()
                 .campaign(CAMPAIGN)
                 .senderPlayer(SENDER_PLAYER)

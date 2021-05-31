@@ -5,4 +5,6 @@ import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
 
 public interface DataOperatorBusinessLogic {
     QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
+
+    QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
 }

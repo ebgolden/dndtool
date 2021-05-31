@@ -17,55 +17,50 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SendQueryTest {
-    private Campaign campaign;
-    private Player senderPlayer;
-    private Object api;
+public class SendResponseQueryTest {
+    private String queryId;
     @Mock
     private DataOperator mockDataOperator;
-    private SendQuery sendQuery;
+    private SendResponseQuery sendResponseQuery;
 
     @BeforeEach
     public void setup() {
-        campaign = Campaign
+        queryId = "1";
+        Campaign campaign = Campaign
                 .builder()
                 .id("1")
                 .build();
-        senderPlayer = Player
+        Player senderPlayer = Player
                 .builder()
                 .id("1")
                 .build();
-        api = JoinParty.class;
+        Object api = JoinParty.class;
         Injector injector = Guice.createInjector(Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                senderPlayer,
                 api))
-                        .with(new AbstractModule() {
-                            @Override
-                            protected void configure() {
-                                bind(DataOperator.class).toInstance(mockDataOperator);
-                            }
-                        }));
-        sendQuery = injector.getInstance(SendQuery.class);
+                .with(new AbstractModule() {
+                    @Override
+                    protected void configure() {
+                        bind(DataOperator.class).toInstance(mockDataOperator);
+                    }
+                }));
+        sendResponseQuery = injector.getInstance(SendResponseQuery.class);
     }
 
     @Test
-    public void shouldReturnSuccessfulMessage() {
+    public void shouldReturnResponse() {
         DataOperatorResponseQuery dataOperatorResponseQuery = DataOperatorResponseQuery
                 .builder()
                 .responseJson("{}")
                 .build();
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
-        QueryType queryType = QueryType.PUSH;
-        String requestJson = "{\"party\":{},\"character\":{}}";
-        QueryRequest queryRequest = QueryRequest
+        when(mockDataOperator.getResponseJson(any(DataOperatorResponseQuery.class))).thenReturn(dataOperatorResponseQuery);
+        String responseJson = "{\"party\":{},\"character\":{}}";
+        ResponseQueryRequest responseQueryRequest = ResponseQueryRequest
                 .builder()
-                .campaign(campaign)
-                .senderPlayer(senderPlayer)
-                .api(api)
-                .queryType(queryType)
-                .requestJson(requestJson)
+                .queryId(queryId)
+                .responseJson(responseJson)
                 .build();
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        Assertions.assertNotNull(queryResponse.getResponseJson(), "Response json null.");
+        ResponseQueryResponse responseQueryResponse = sendResponseQuery.getResponseQueryResponse(responseQueryRequest);
+        Assertions.assertNotNull(responseQueryResponse.getResponseJson(), "Response json null.");
     }
 }

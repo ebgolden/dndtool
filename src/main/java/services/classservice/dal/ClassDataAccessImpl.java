@@ -6,32 +6,32 @@ import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
 import services.classservice.dal.dao.ClassDao;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 
 public class ClassDataAccessImpl implements ClassDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private ClassDataAccessConverter classDataAccessConverter;
 
     public ClassDao getClassDao(ClassDao classDao) {
         String classJson = classDao.getClassJson();
-        queryRequest = constructQueryRequest(classJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        classJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(classJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        classJson = requestQueryResponse.getResponseJson();
         return classDataAccessConverter.getClassDaoFromClassJson(classJson);
     }
 
-    private QueryRequest constructQueryRequest(String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

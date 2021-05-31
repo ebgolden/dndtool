@@ -5,42 +5,42 @@ import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 import services.worldservice.dal.dao.WorldDao;
 import services.worldservice.dal.dao.WorldAndVisibilityDao;
 
 public class WorldDataAccessImpl implements WorldDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private WorldDataAccessConverter worldDataAccessConverter;
 
     public WorldAndVisibilityDao getWorldAndVisibilityDao(WorldDao worldDao) {
         String worldJson = worldDao.getWorldJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, worldJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String worldAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, worldJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String worldAndVisibilityJson = requestQueryResponse.getResponseJson();
         return worldDataAccessConverter.getWorldAndVisibilityDaoFromWorldAndVisibilityJson(worldAndVisibilityJson);
     }
 
     public WorldAndVisibilityDao getWorldAndVisibilityDao(WorldAndVisibilityDao worldAndVisibilityDao) {
         String worldAndVisibilityJson = worldAndVisibilityDao.getWorldAndVisibilityJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, worldAndVisibilityJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        worldAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, worldAndVisibilityJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        worldAndVisibilityJson = requestQueryResponse.getResponseJson();
         return worldDataAccessConverter.getWorldAndVisibilityDaoFromWorldAndVisibilityJson(worldAndVisibilityJson);
     }
 
-    private QueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

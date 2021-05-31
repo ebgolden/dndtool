@@ -5,42 +5,42 @@ import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 import services.resultservice.dal.dao.ResultDao;
 import services.resultservice.dal.dao.ResultAndVisibilityDao;
 
 public class ResultDataAccessImpl implements ResultDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private ResultDataAccessConverter resultDataAccessConverter;
 
     public ResultAndVisibilityDao getResultAndVisibilityDao(ResultDao resultDao) {
         String resultJson = resultDao.getResultJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, resultJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String resultAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, resultJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String resultAndVisibilityJson = requestQueryResponse.getResponseJson();
         return resultDataAccessConverter.getResultAndVisibilityDaoFromResultAndVisibilityJson(resultAndVisibilityJson);
     }
 
     public ResultAndVisibilityDao getResultAndVisibilityDao(ResultAndVisibilityDao resultAndVisibilityDao) {
         String resultAndVisibilityJson = resultAndVisibilityDao.getResultAndVisibilityJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, resultAndVisibilityJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        resultAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, resultAndVisibilityJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        resultAndVisibilityJson = requestQueryResponse.getResponseJson();
         return resultDataAccessConverter.getResultAndVisibilityDaoFromResultAndVisibilityJson(resultAndVisibilityJson);
     }
 
-    private QueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)

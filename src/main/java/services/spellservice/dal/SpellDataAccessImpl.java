@@ -5,42 +5,42 @@ import com.google.inject.name.Named;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.QueryRequest;
-import services.dataoperatorservice.QueryResponse;
-import services.dataoperatorservice.SendQuery;
+import services.dataoperatorservice.RequestQueryRequest;
+import services.dataoperatorservice.RequestQueryResponse;
+import services.dataoperatorservice.SendRequestQuery;
 import services.spellservice.dal.dao.SpellDao;
 import services.spellservice.dal.dao.SpellAndVisibilityDao;
 
 public class SpellDataAccessImpl implements SpellDataAccess {
     @Inject
-    @Named("queryRequest")
-    private QueryRequest queryRequest;
+    @Named("requestQueryRequest")
+    private RequestQueryRequest requestQueryRequest;
     @Inject
-    private SendQuery sendQuery;
+    private SendRequestQuery sendRequestQuery;
     @Inject
     private SpellDataAccessConverter spellDataAccessConverter;
 
     public SpellAndVisibilityDao getSpellAndVisibilityDao(SpellDao spellDao) {
         String spellJson = spellDao.getSpellJson();
-        queryRequest = constructQueryRequest(QueryType.PULL, spellJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        String spellAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PULL, spellJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        String spellAndVisibilityJson = requestQueryResponse.getResponseJson();
         return spellDataAccessConverter.getSpellAndVisibilityDaoFromSpellAndVisibilityJson(spellAndVisibilityJson);
     }
 
     public SpellAndVisibilityDao getSpellAndVisibilityDao(SpellAndVisibilityDao spellAndVisibilityDao) {
         String spellAndVisibilityJson = spellAndVisibilityDao.getSpellAndVisibilityJson();
-        queryRequest = constructQueryRequest(QueryType.PUSH, spellAndVisibilityJson);
-        QueryResponse queryResponse = sendQuery.getQueryResponse(queryRequest);
-        spellAndVisibilityJson = queryResponse.getResponseJson();
+        requestQueryRequest = constructQueryRequest(QueryType.PUSH, spellAndVisibilityJson);
+        RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
+        spellAndVisibilityJson = requestQueryResponse.getResponseJson();
         return spellDataAccessConverter.getSpellAndVisibilityDaoFromSpellAndVisibilityJson(spellAndVisibilityJson);
     }
 
-    private QueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
-        Campaign campaign = queryRequest.getCampaign();
-        Player senderPlayer = queryRequest.getSenderPlayer();
-        Object api = queryRequest.getApi();
-        return QueryRequest
+    private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
+        Campaign campaign = requestQueryRequest.getCampaign();
+        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Object api = requestQueryRequest.getApi();
+        return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
                 .senderPlayer(senderPlayer)
