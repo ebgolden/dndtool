@@ -3,12 +3,13 @@ package services.dataoperatorservice.bll;
 import commonobjects.Campaign;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.RequestQueryRequest;
-import services.dataoperatorservice.RequestQueryResponse;
-import services.dataoperatorservice.ResponseQueryRequest;
-import services.dataoperatorservice.ResponseQueryResponse;
+import services.dataoperatorservice.*;
 import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
+import services.dataoperatorservice.bll.bo.PlayerBo;
 import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
+import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
+import java.net.ServerSocket;
+import java.util.Map;
 
 public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusinessLogicConverter {
     public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
@@ -40,6 +41,14 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .build();
     }
 
+    public PlayerBo getPlayerBoFromCampaignListOnNetworkRequest(CampaignListOnNetworkRequest campaignListOnNetworkRequest) {
+        Player player = campaignListOnNetworkRequest.getPlayer();
+        return PlayerBo
+                .builder()
+                .player(player)
+                .build();
+    }
+
     public RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
         String queryId = queryIdAndResponseJsonBo.getQueryId();
         String responseJson = queryIdAndResponseJsonBo.getResponseJson();
@@ -57,6 +66,14 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .builder()
                 .queryId(queryId)
                 .responseJson(responseJson)
+                .build();
+    }
+
+    public CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromServerSocketCampaignMapBo(ServerSocketCampaignMapBo serverSocketCampaignMapBo) {
+        Map<ServerSocket, Campaign> serverSocketCampaignMap = serverSocketCampaignMapBo.getServerSocketCampaignMap();
+        return CampaignListOnNetworkResponse
+                .builder()
+                .serverSocketCampaignMap(serverSocketCampaignMap)
                 .build();
     }
 }

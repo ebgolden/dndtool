@@ -1,18 +1,21 @@
 package services.dataoperatorservice.bll;
 
-import services.dataoperatorservice.RequestQueryRequest;
-import services.dataoperatorservice.RequestQueryResponse;
-import services.dataoperatorservice.ResponseQueryRequest;
-import services.dataoperatorservice.ResponseQueryResponse;
+import services.dataoperatorservice.*;
 import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
+import services.dataoperatorservice.bll.bo.PlayerBo;
 import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
+import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
 
 public interface DataOperatorBusinessLogicConverter {
     CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest);
 
     QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromResponseQueryRequest(ResponseQueryRequest responseQueryRequest);
 
+    PlayerBo getPlayerBoFromCampaignListOnNetworkRequest(CampaignListOnNetworkRequest campaignListOnNetworkRequest);
+
     RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
 
     ResponseQueryResponse getResponseQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
+
+    CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromServerSocketCampaignMapBo(ServerSocketCampaignMapBo serverSocketCampaignMapBo);
 }

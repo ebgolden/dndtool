@@ -1,12 +1,17 @@
 package services.dataoperatorservice.dal;
 
+import commonobjects.Campaign;
 import commonobjects.DataOperatorRequestQuery;
 import commonobjects.DataOperatorResponseQuery;
 import commonobjects.QueryType;
 import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
 import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
+import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
 import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
 import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
+import services.dataoperatorservice.dal.dao.ServerSocketCampaignMapDao;
+import java.net.ServerSocket;
+import java.util.Map;
 
 public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAccessConverter {
     public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
@@ -43,6 +48,14 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .builder()
                 .queryId(queryId)
                 .responseJson(responseJson)
+                .build();
+    }
+
+    public ServerSocketCampaignMapBo getServerSocketCampaignMapBoFromServerSocketCampaignMapDao(ServerSocketCampaignMapDao serverSocketCampaignMapDao) {
+        Map<ServerSocket, Campaign> serverSocketCampaignMap = serverSocketCampaignMapDao.getServerSocketCampaignMap();
+        return ServerSocketCampaignMapBo
+                .builder()
+                .serverSocketCampaignMap(serverSocketCampaignMap)
                 .build();
     }
 

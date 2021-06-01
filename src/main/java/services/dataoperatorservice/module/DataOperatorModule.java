@@ -30,6 +30,7 @@ public abstract class DataOperatorModule extends AbstractModule {
     protected void configure() {
         bind(SendRequestQuery.class).to(SendRequestQueryImpl.class);
         bind(SendResponseQuery.class).to(SendResponseQueryImpl.class);
+        bind(GetCampaignListOnNetwork.class).to(GetCampaignListOnNetworkImpl.class);
         bind(DataOperatorBusinessLogicConverter.class).to(DataOperatorBusinessLogicConverterImpl.class);
         bind(DataOperatorBusinessLogic.class).to(DataOperatorBusinessLogicImpl.class);
         bind(DataOperatorDataAccessConverter.class).to(DataOperatorDataAccessConverterImpl.class);

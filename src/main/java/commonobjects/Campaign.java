@@ -9,4 +9,6 @@ import lombok.*;
 public class Campaign {
     String id;
     String dungeonMasterId;
+    CampaignStatus campaignStatus;
+    Player[] players;
 }
