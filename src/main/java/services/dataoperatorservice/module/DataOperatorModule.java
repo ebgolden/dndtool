@@ -20,9 +20,15 @@ public abstract class DataOperatorModule extends AbstractModule {
     private final Player SENDER_PLAYER;
     private final Object API;
 
-    public DataOperatorModule(Campaign campaign, Player senderPlayer, Object api) {
+    public DataOperatorModule(Campaign campaign, Player player, Object api) {
         CAMPAIGN = campaign;
-        SENDER_PLAYER = senderPlayer;
+        SENDER_PLAYER = player;
+        API = api;
+    }
+
+    public DataOperatorModule(Player player, Object api) {
+        CAMPAIGN = null;
+        SENDER_PLAYER = player;
         API = api;
     }
 
@@ -31,6 +37,8 @@ public abstract class DataOperatorModule extends AbstractModule {
         bind(SendRequestQuery.class).to(SendRequestQueryImpl.class);
         bind(SendResponseQuery.class).to(SendResponseQueryImpl.class);
         bind(GetCampaignListOnNetwork.class).to(GetCampaignListOnNetworkImpl.class);
+        bind(GetCampaignOnNetwork.class).to(GetCampaignOnNetworkImpl.class);
+        bind(OpenCampaignOnNetwork.class).to(OpenCampaignOnNetworkImpl.class);
         bind(DataOperatorBusinessLogicConverter.class).to(DataOperatorBusinessLogicConverterImpl.class);
         bind(DataOperatorBusinessLogic.class).to(DataOperatorBusinessLogicImpl.class);
         bind(DataOperatorDataAccessConverter.class).to(DataOperatorDataAccessConverterImpl.class);
@@ -38,13 +46,15 @@ public abstract class DataOperatorModule extends AbstractModule {
     }
 
     @Provides
-    @Named("queryRequest")
-    public RequestQueryRequest provideQueryRequestClass() {
+    @Named("requestQueryRequest")
+    public RequestQueryRequest provideRequestQueryRequestClass() {
         return RequestQueryRequest
                 .builder()
                 .campaign(CAMPAIGN)
-                .senderPlayer(SENDER_PLAYER)
+                .player(SENDER_PLAYER)
                 .api(API)
                 .build();
     }
+
+    public abstract int provideTimeout();
 }

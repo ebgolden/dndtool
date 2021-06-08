@@ -30,13 +30,13 @@ public class GetUpdatedLocationTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Injector injector = Guice.createInjector(new LocationModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                        player,
                         GetUpdatedLocation.class))
                         .with(new AbstractModule() {
                             @Override

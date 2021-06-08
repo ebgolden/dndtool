@@ -30,13 +30,13 @@ public class MergePartiesTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Injector injector = Guice.createInjector(new PartyModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                        player,
                         MergeParties.class))
                         .with(new AbstractModule() {
                             @Override

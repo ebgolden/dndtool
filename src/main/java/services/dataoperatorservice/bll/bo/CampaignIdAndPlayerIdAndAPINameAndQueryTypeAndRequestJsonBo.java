@@ -6,9 +6,9 @@ import lombok.Value;
 
 @Builder
 @Value
-public class CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo {
+public class CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo {
     String campaignId;
-    String senderPlayerId;
+    String playerId;
     String apiName;
     QueryType queryType;
     String requestJson;

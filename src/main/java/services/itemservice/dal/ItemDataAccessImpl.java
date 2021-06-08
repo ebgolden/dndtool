@@ -38,12 +38,12 @@ public class ItemDataAccessImpl implements ItemDataAccess {
 
     private RequestQueryRequest constructQueryRequest(QueryType queryType, String requestJson) {
         Campaign campaign = requestQueryRequest.getCampaign();
-        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Player player = requestQueryRequest.getPlayer();
         Object api = requestQueryRequest.getApi();
         return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
-                .senderPlayer(senderPlayer)
+                .player(player)
                 .api(api)
                 .queryType(queryType)
                 .requestJson(requestJson)

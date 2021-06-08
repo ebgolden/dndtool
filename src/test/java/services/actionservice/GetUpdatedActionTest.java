@@ -30,13 +30,13 @@ public class GetUpdatedActionTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Injector injector = Guice.createInjector(new ActionModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                        player,
                         GetUpdatedAction.class))
                         .with(new AbstractModule() {
                             @Override

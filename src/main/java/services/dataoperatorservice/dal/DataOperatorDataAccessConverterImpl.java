@@ -1,30 +1,24 @@
 package services.dataoperatorservice.dal;
 
-import commonobjects.Campaign;
-import commonobjects.DataOperatorRequestQuery;
-import commonobjects.DataOperatorResponseQuery;
-import commonobjects.QueryType;
-import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
-import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
-import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
-import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
-import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
-import services.dataoperatorservice.dal.dao.ServerSocketCampaignMapDao;
-import java.net.ServerSocket;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import commonobjects.*;
+import services.dataoperatorservice.bll.bo.*;
+import services.dataoperatorservice.dal.dao.*;
 import java.util.Map;
 
 public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAccessConverter {
-    public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
-        String campaignId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
-        String senderPlayerId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getSenderPlayerId();
-        String apiName = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getApiName();
-        QueryType queryType = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getQueryType();
+    public CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
+        String campaignId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
+        String playerId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getPlayerId();
+        String apiName = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getApiName();
+        QueryType queryType = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getQueryType();
         String queryTypeName = queryType.getQueryType();
-        String requestJson = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getRequestJson();
-        return CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao
+        String requestJson = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getRequestJson();
+        return CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao
                 .builder()
                 .campaignId(campaignId)
-                .senderPlayerId(senderPlayerId)
+                .playerId(playerId)
                 .apiName(apiName)
                 .queryType(queryTypeName)
                 .requestJson(requestJson)
@@ -41,6 +35,24 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .build();
     }
 
+    public PlayerIdDao getPlayerIdDaoFromPlayerBo(PlayerBo playerBo) {
+        Player player = playerBo.getPlayer();
+        String playerId = player.getId();
+        return PlayerIdDao
+                .builder()
+                .playerId(playerId)
+                .build();
+    }
+
+    public DungeonMasterIdDao getDungeonMasterIdDaoFromDungeonMasterBo(DungeonMasterBo dungeonMasterBo) {
+        DungeonMaster dungeonMaster = dungeonMasterBo.getDungeonMaster();
+        String dungeonMasterId = dungeonMaster.getId();
+        return DungeonMasterIdDao
+                .builder()
+                .dungeonMasterId(dungeonMasterId)
+                .build();
+    }
+
     public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao) {
         String queryId = queryIdAndResponseJsonDao.getQueryId();
         String responseJson = queryIdAndResponseJsonDao.getResponseJson();
@@ -51,27 +63,59 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .build();
     }
 
-    public ServerSocketCampaignMapBo getServerSocketCampaignMapBoFromServerSocketCampaignMapDao(ServerSocketCampaignMapDao serverSocketCampaignMapDao) {
-        Map<ServerSocket, Campaign> serverSocketCampaignMap = serverSocketCampaignMapDao.getServerSocketCampaignMap();
-        return ServerSocketCampaignMapBo
+    public PortCampaignMapBo getPortCampaignMapBoFromPortCampaignMapDao(PortCampaignMapDao portCampaignMapDao) {
+        Map<Integer, Campaign> portCampaignMap = portCampaignMapDao.getPortCampaignMap();
+        return PortCampaignMapBo
                 .builder()
-                .serverSocketCampaignMap(serverSocketCampaignMap)
+                .portCampaignMap(portCampaignMap)
                 .build();
     }
 
-    public DataOperatorRequestQuery getDataOperatorRequestQueryFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
-        String campaignId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getCampaignId();
-        String senderPlayerId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getSenderPlayerId();
-        String apiName = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getApiName();
-        String queryType = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getQueryType();
-        String requestJson = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getRequestJson();
+    public CampaignBo getCampaignBoFromCampaignDao(CampaignDao campaignDao) {
+        Campaign campaign = campaignDao.getCampaign();
+        return CampaignBo
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
+    public PortBo getPortBoFromPortDao(PortDao portDao) {
+        int port = portDao.getPort();
+        return PortBo
+                .builder()
+                .port(port)
+                .build();
+    }
+
+    public DataOperatorRequestQuery getDataOperatorRequestQueryFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
+        String campaignId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getCampaignId();
+        String playerId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getPlayerId();
+        String apiName = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getApiName();
+        String queryType = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getQueryType();
+        String requestJson = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getRequestJson();
         return DataOperatorRequestQuery
                 .builder()
                 .campaignId(campaignId)
-                .senderPlayerId(senderPlayerId)
+                .playerId(playerId)
                 .apiName(apiName)
                 .queryType(queryType)
                 .requestJson(requestJson)
+                .build();
+    }
+
+    public DataOperatorRequestQuery getDataOperatorRequestQueryFromPlayerIdDao(PlayerIdDao playerIdDao) {
+        String playerId = playerIdDao.getPlayerId();
+        return DataOperatorRequestQuery
+                .builder()
+                .playerId(playerId)
+                .build();
+    }
+
+    public DataOperatorRequestQuery getDataOperatorRequestQueryFromDungeonMasterIdDao(DungeonMasterIdDao dungeonMasterIdDao) {
+        String dungeonMasterId = dungeonMasterIdDao.getDungeonMasterId();
+        return DataOperatorRequestQuery
+                .builder()
+                .playerId(dungeonMasterId)
                 .build();
     }
 
@@ -92,6 +136,35 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .builder()
                 .queryId(queryId)
                 .responseJson(responseJson)
+                .build();
+    }
+
+    public CampaignDao getCampaignDaoFromDataOperatorResponseQuery(DataOperatorResponseQuery dataOperatorResponseQuery) {
+        String responseJson = dataOperatorResponseQuery.getResponseJson();
+        if (responseJson == null)
+            responseJson = "{}";
+        Campaign campaign = null;
+        if (!responseJson.equals("{}")) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            campaign = Campaign
+                    .builder()
+                    .build();
+            try {
+                campaign = objectMapper.readValue(responseJson, Campaign.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return CampaignDao
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
+    public PortDao getPortDaoFromPort(int port) {
+        return PortDao
+                .builder()
+                .port(port)
                 .build();
     }
 }

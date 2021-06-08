@@ -1,13 +1,15 @@
 package services.dataoperatorservice.dal;
 
-import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
-import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
-import services.dataoperatorservice.dal.dao.ServerSocketCampaignMapDao;
+import services.dataoperatorservice.dal.dao.*;
 
 public interface DataOperatorDataAccess {
-    QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
+    QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
 
     QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao);
 
-    ServerSocketCampaignMapDao getServerSocketCampaignMapDao();
+    PortCampaignMapDao getPortCampaignMapDao(PlayerIdDao playerIdDao);
+
+    CampaignDao getCampaignDao(PlayerIdDao playerIdDao);
+
+    PortDao getPortDao(DungeonMasterIdDao dungeonMasterIdDao);
 }

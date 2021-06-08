@@ -5,16 +5,10 @@ import commonobjects.Campaign;
 import commonobjects.CampaignStatus;
 import commonobjects.Player;
 import commonobjects.QueryType;
-import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
-import services.dataoperatorservice.bll.bo.PlayerBo;
-import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
-import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
+import services.dataoperatorservice.bll.bo.*;
 import services.dataoperatorservice.dal.DataOperatorDataAccess;
 import services.dataoperatorservice.dal.DataOperatorDataAccessConverter;
-import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
-import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
-import services.dataoperatorservice.dal.dao.ServerSocketCampaignMapDao;
-import java.net.ServerSocket;
+import services.dataoperatorservice.dal.dao.*;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,10 +19,10 @@ public class DataOperatorBusinessLogicImpl implements DataOperatorBusinessLogic 
     @Inject
     private DataOperatorDataAccess dataOperatorDataAccess;
 
-    public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
-        CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filteredCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo = filterCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
-        CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao = dataOperatorDataAccessConverter.getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(filteredCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
-        QueryIdAndResponseJsonDao queryIdAndResponseJsonDao = dataOperatorDataAccess.getQueryIdAndResponseJsonDao(campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
+    public QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
+        CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filteredCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo = filterCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
+        CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao = dataOperatorDataAccessConverter.getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(filteredCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);
+        QueryIdAndResponseJsonDao queryIdAndResponseJsonDao = dataOperatorDataAccess.getQueryIdAndResponseJsonDao(campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
     }
 
@@ -38,45 +32,58 @@ public class DataOperatorBusinessLogicImpl implements DataOperatorBusinessLogic 
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonBoFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
     }
 
-    public ServerSocketCampaignMapBo getServerSocketCampaignMapBo(PlayerBo playerBo) {
+    public PortCampaignMapBo getPortCampaignMapBo(PlayerBo playerBo) {
         Player player = playerBo.getPlayer();
-        ServerSocketCampaignMapDao serverSocketCampaignMapDao = dataOperatorDataAccess.getServerSocketCampaignMapDao();
-        ServerSocketCampaignMapBo serverSocketCampaignMapBo = dataOperatorDataAccessConverter.getServerSocketCampaignMapBoFromServerSocketCampaignMapDao(serverSocketCampaignMapDao);
-        return filterServerSocketCampaignMapBo(serverSocketCampaignMapBo, player);
+        PlayerIdDao playerIdDao = dataOperatorDataAccessConverter.getPlayerIdDaoFromPlayerBo(playerBo);
+        PortCampaignMapDao portCampaignMapDao = dataOperatorDataAccess.getPortCampaignMapDao(playerIdDao);
+        PortCampaignMapBo portCampaignMapBo = dataOperatorDataAccessConverter.getPortCampaignMapBoFromPortCampaignMapDao(portCampaignMapDao);
+        return filterPortCampaignMapBo(portCampaignMapBo, player);
     }
 
-    private CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filterCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
-        String campaignId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
-        String senderPlayerId = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getSenderPlayerId();
-        String apiName = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getApiName();
-        QueryType queryType = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getQueryType();
-        String requestJson = campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getRequestJson();
+    public CampaignBo getCampaignBo(PlayerBo playerBo) {
+        PlayerIdDao playerIdDao = dataOperatorDataAccessConverter.getPlayerIdDaoFromPlayerBo(playerBo);
+        CampaignDao campaignDao = dataOperatorDataAccess.getCampaignDao(playerIdDao);
+        return dataOperatorDataAccessConverter.getCampaignBoFromCampaignDao(campaignDao);
+    }
+
+    public PortBo getPortBo(DungeonMasterBo dungeonMasterBo) {
+        DungeonMasterIdDao dungeonMasterIdDao = dataOperatorDataAccessConverter.getDungeonMasterIdDaoFromDungeonMasterBo(dungeonMasterBo);
+        PortDao portDao = dataOperatorDataAccess.getPortDao(dungeonMasterIdDao);
+        return dataOperatorDataAccessConverter.getPortBoFromPortDao(portDao);
+    }
+
+    private CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filterCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
+        String campaignId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
+        String playerId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getPlayerId();
+        String apiName = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getApiName();
+        QueryType queryType = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getQueryType();
+        String requestJson = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getRequestJson();
         String[] apiNameParts = apiName.split("\\.");
         int indexOfLastApiNamePart = apiNameParts.length - 1;
         String filteredApiName = apiNameParts[indexOfLastApiNamePart];
-        return CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo
+        return CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo
                 .builder()
                 .campaignId(campaignId)
-                .senderPlayerId(senderPlayerId)
+                .playerId(playerId)
                 .apiName(filteredApiName)
                 .queryType(queryType)
                 .requestJson(requestJson)
                 .build();
     }
 
-    private ServerSocketCampaignMapBo filterServerSocketCampaignMapBo(ServerSocketCampaignMapBo serverSocketCampaignMapBo, Player player) {
+    private PortCampaignMapBo filterPortCampaignMapBo(PortCampaignMapBo portCampaignMapBo, Player player) {
         String playerId = player.getId();
-        Map<ServerSocket, Campaign> serverSocketCampaignMap = serverSocketCampaignMapBo.getServerSocketCampaignMap();
-        Map<ServerSocket, Campaign> filteredServerSocketCampaignMap = serverSocketCampaignMap
+        Map<Integer, Campaign> portCampaignMap = portCampaignMapBo.getPortCampaignMap();
+        Map<Integer, Campaign> filteredPortCampaignMap = portCampaignMap
                 .entrySet()
                 .stream()
                 .filter(map -> ((map.getValue().getCampaignStatus() == CampaignStatus.SETUP) ||
                         Arrays.stream(map.getValue().getPlayers())
                                 .anyMatch(p -> (p.getId().equals(playerId)))))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return ServerSocketCampaignMapBo
+        return PortCampaignMapBo
                 .builder()
-                .serverSocketCampaignMap(filteredServerSocketCampaignMap)
+                .portCampaignMap(filteredPortCampaignMap)
                 .build();
     }
 }

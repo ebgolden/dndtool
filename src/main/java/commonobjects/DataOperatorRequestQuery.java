@@ -1,13 +1,13 @@
 package commonobjects;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Data
 public class DataOperatorRequestQuery implements DataOperatorQuery {
     String campaignId;
-    String senderPlayerId;
+    String playerId;
     String apiName;
     String queryType;
     String requestJson;

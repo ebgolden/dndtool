@@ -9,7 +9,7 @@ import lombok.*;
 @Value
 public class RequestQueryRequest {
     Campaign campaign;
-    Player senderPlayer;
+    Player player;
     Object api;
     QueryType queryType;
     String requestJson;

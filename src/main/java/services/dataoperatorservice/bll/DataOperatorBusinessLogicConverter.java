@@ -1,21 +1,26 @@
 package services.dataoperatorservice.bll;
 
 import services.dataoperatorservice.*;
-import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
-import services.dataoperatorservice.bll.bo.PlayerBo;
-import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
-import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
+import services.dataoperatorservice.bll.bo.*;
 
 public interface DataOperatorBusinessLogicConverter {
-    CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest);
+    CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest);
 
     QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromResponseQueryRequest(ResponseQueryRequest responseQueryRequest);
 
     PlayerBo getPlayerBoFromCampaignListOnNetworkRequest(CampaignListOnNetworkRequest campaignListOnNetworkRequest);
 
+    PlayerBo getPlayerBoFromCampaignOnNetworkRequest(CampaignOnNetworkRequest campaignOnNetworkRequest);
+
+    DungeonMasterBo getDungeonMasterBoFromOpenCampaignOnNetworkRequest(OpenCampaignOnNetworkRequest openCampaignOnNetworkRequest);
+
     RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
 
     ResponseQueryResponse getResponseQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
 
-    CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromServerSocketCampaignMapBo(ServerSocketCampaignMapBo serverSocketCampaignMapBo);
+    CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromPortCampaignMapBo(PortCampaignMapBo portCampaignMapBo);
+
+    CampaignOnNetworkResponse getCampaignOnNetworkResponseFromCampaignBo(CampaignBo campaignBo);
+
+    OpenCampaignOnNetworkResponse getOpenCampaignOnNetworkResponseFromPortBo(PortBo portBo);
 }

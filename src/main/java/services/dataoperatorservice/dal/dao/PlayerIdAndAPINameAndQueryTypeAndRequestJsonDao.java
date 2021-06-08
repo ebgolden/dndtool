@@ -5,9 +5,8 @@ import lombok.Value;
 
 @Builder
 @Value
-public class CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao {
-    String campaignId;
-    String senderPlayerId;
+public class PlayerIdAndAPINameAndQueryTypeAndRequestJsonDao {
+    String playerId;
     String apiName;
     String queryType;
     String requestJson;

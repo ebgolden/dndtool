@@ -1,30 +1,27 @@
 package services.dataoperatorservice.bll;
 
 import commonobjects.Campaign;
+import commonobjects.DungeonMaster;
 import commonobjects.Player;
 import commonobjects.QueryType;
 import services.dataoperatorservice.*;
-import services.dataoperatorservice.bll.bo.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo;
-import services.dataoperatorservice.bll.bo.PlayerBo;
-import services.dataoperatorservice.bll.bo.QueryIdAndResponseJsonBo;
-import services.dataoperatorservice.bll.bo.ServerSocketCampaignMapBo;
-import java.net.ServerSocket;
+import services.dataoperatorservice.bll.bo.*;
 import java.util.Map;
 
 public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusinessLogicConverter {
-    public CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
+    public CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
         Campaign campaign = requestQueryRequest.getCampaign();
         String campaignId = campaign.getId();
-        Player senderPlayer = requestQueryRequest.getSenderPlayer();
-        String senderPlayerId = senderPlayer.getId();
+        Player player = requestQueryRequest.getPlayer();
+        String playerId = player.getId();
         Object api = requestQueryRequest.getApi();
         String apiName = api.toString();
         QueryType queryType = requestQueryRequest.getQueryType();
         String requestJson = requestQueryRequest.getRequestJson();
-        return CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo
+        return CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo
                 .builder()
                 .campaignId(campaignId)
-                .senderPlayerId(senderPlayerId)
+                .playerId(playerId)
                 .apiName(apiName)
                 .queryType(queryType)
                 .requestJson(requestJson)
@@ -49,6 +46,22 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .build();
     }
 
+    public PlayerBo getPlayerBoFromCampaignOnNetworkRequest(CampaignOnNetworkRequest campaignOnNetworkRequest) {
+        Player player = campaignOnNetworkRequest.getPlayer();
+        return PlayerBo
+                .builder()
+                .player(player)
+                .build();
+    }
+
+    public DungeonMasterBo getDungeonMasterBoFromOpenCampaignOnNetworkRequest(OpenCampaignOnNetworkRequest openCampaignOnNetworkRequest) {
+        DungeonMaster dungeonMaster = openCampaignOnNetworkRequest.getDungeonMaster();
+        return DungeonMasterBo
+                .builder()
+                .dungeonMaster(dungeonMaster)
+                .build();
+    }
+
     public RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
         String queryId = queryIdAndResponseJsonBo.getQueryId();
         String responseJson = queryIdAndResponseJsonBo.getResponseJson();
@@ -69,11 +82,27 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .build();
     }
 
-    public CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromServerSocketCampaignMapBo(ServerSocketCampaignMapBo serverSocketCampaignMapBo) {
-        Map<ServerSocket, Campaign> serverSocketCampaignMap = serverSocketCampaignMapBo.getServerSocketCampaignMap();
+    public CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromPortCampaignMapBo(PortCampaignMapBo portCampaignMapBo) {
+        Map<Integer, Campaign> portCampaignMap = portCampaignMapBo.getPortCampaignMap();
         return CampaignListOnNetworkResponse
                 .builder()
-                .serverSocketCampaignMap(serverSocketCampaignMap)
+                .portCampaignMap(portCampaignMap)
+                .build();
+    }
+
+    public CampaignOnNetworkResponse getCampaignOnNetworkResponseFromCampaignBo(CampaignBo campaignBo) {
+        Campaign campaign = campaignBo.getCampaign();
+        return CampaignOnNetworkResponse
+                .builder()
+                .campaign(campaign)
+                .build();
+    }
+
+    public OpenCampaignOnNetworkResponse getOpenCampaignOnNetworkResponseFromPortBo(PortBo portBo) {
+        int port = portBo.getPort();
+        return OpenCampaignOnNetworkResponse
+                .builder()
+                .port(port)
                 .build();
     }
 }

@@ -30,12 +30,12 @@ public class TurnQueueDataAccessImpl implements TurnQueueDataAccess {
 
     private RequestQueryRequest constructQueryRequest(String requestJson) {
         Campaign campaign = requestQueryRequest.getCampaign();
-        Player senderPlayer = requestQueryRequest.getSenderPlayer();
+        Player player = requestQueryRequest.getPlayer();
         Object api = requestQueryRequest.getApi();
         return RequestQueryRequest
                 .builder()
                 .campaign(campaign)
-                .senderPlayer(senderPlayer)
+                .player(player)
                 .api(api)
                 .queryType(QueryType.PULL)
                 .requestJson(requestJson)

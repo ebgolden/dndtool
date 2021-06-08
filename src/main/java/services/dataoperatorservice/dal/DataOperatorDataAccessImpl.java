@@ -5,10 +5,8 @@ import commonobjects.Campaign;
 import commonobjects.DataOperator;
 import commonobjects.DataOperatorRequestQuery;
 import commonobjects.DataOperatorResponseQuery;
-import services.dataoperatorservice.dal.dao.CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao;
-import services.dataoperatorservice.dal.dao.QueryIdAndResponseJsonDao;
-import services.dataoperatorservice.dal.dao.ServerSocketCampaignMapDao;
-import java.net.ServerSocket;
+import services.dataoperatorservice.dal.dao.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
@@ -17,8 +15,8 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
     @Inject
     private DataOperator dataOperator;
 
-    public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
-        DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromCampaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(campaignIdAndSenderPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
+    public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
+        DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
         DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
@@ -29,19 +27,37 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
 
-    public ServerSocketCampaignMapDao getServerSocketCampaignMapDao() {
-        Map<ServerSocket, Campaign> serverSocketCampaignMap = searchSocketsForCampaignsAndReturnInMap();
-        return ServerSocketCampaignMapDao
+    public PortCampaignMapDao getPortCampaignMapDao(PlayerIdDao playerIdDao) {
+        Map<Integer, Campaign> portCampaignMap = searchSocketsForCampaignsAndReturnInMap(playerIdDao);
+        return PortCampaignMapDao
                 .builder()
-                .serverSocketCampaignMap(serverSocketCampaignMap)
+                .portCampaignMap(portCampaignMap)
                 .build();
     }
 
-    private Map<ServerSocket, Campaign> searchSocketsForCampaignsAndReturnInMap() {
-        //search sockets for campaigns and return as map.
-        /*
-         * must be able to send request to sockets that returns a Campaign object or
-         * json that can be converted to Campaign object
-        */
+    public CampaignDao getCampaignDao(PlayerIdDao playerIdDao) {
+        DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromPlayerIdDao(playerIdDao);
+        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+        return dataOperatorDataAccessConverter.getCampaignDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
+    }
+
+    public PortDao getPortDao(DungeonMasterIdDao dungeonMasterIdDao) {
+        int port = dataOperator.openAndReturnUnusedPort();
+        return dataOperatorDataAccessConverter.getPortDaoFromPort(port);
+    }
+
+    private Map<Integer, Campaign> searchSocketsForCampaignsAndReturnInMap(PlayerIdDao playerIdDao) {
+        Map<Integer, Campaign> portCampaignMap = new HashMap<>();
+        int[] openPorts = dataOperator.getOpenPorts();
+        for (int port : openPorts) {
+            DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromPlayerIdDao(playerIdDao);
+            dataOperator.setPort(port);
+            DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+            CampaignDao campaignDao = dataOperatorDataAccessConverter.getCampaignDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
+            Campaign campaign = campaignDao.getCampaign();
+            if (campaign != null)
+                portCampaignMap.put(port, campaign);
+        }
+        return portCampaignMap;
     }
 }

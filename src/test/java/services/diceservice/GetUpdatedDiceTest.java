@@ -31,13 +31,13 @@ public class GetUpdatedDiceTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Injector injector = Guice.createInjector(new DiceModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                        player,
                         GetUpdatedDice.class))
                         .with(new AbstractModule() {
                             @Override

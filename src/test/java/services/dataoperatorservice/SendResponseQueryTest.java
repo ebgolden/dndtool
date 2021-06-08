@@ -30,13 +30,13 @@ public class SendResponseQueryTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Object api = JoinParty.class;
         Injector injector = Guice.createInjector(Modules.override(new GlobalNetworkOperatorModule(campaign,
-                senderPlayer,
+                player,
                 api))
                 .with(new AbstractModule() {
                     @Override

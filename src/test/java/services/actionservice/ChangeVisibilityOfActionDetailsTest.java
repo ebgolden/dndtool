@@ -32,13 +32,13 @@ public class ChangeVisibilityOfActionDetailsTest {
                 .builder()
                 .id("1")
                 .build();
-        Player senderPlayer = Player
+        Player player = Player
                 .builder()
                 .id("1")
                 .build();
         Injector injector = Guice.createInjector(new ActionModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                        player,
                         ChangeVisibilityOfActionDetails.class))
                         .with(new AbstractModule() {
                             @Override

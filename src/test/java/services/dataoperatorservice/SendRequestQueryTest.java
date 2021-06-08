@@ -19,8 +19,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class SendRequestQueryTest {
     private Campaign campaign;
-    private Player senderPlayer;
+    private Player player;
     private Object api;
+    private QueryType queryType;
     @Mock
     private DataOperator mockDataOperator;
     private SendRequestQuery sendRequestQuery;
@@ -31,20 +32,21 @@ public class SendRequestQueryTest {
                 .builder()
                 .id("1")
                 .build();
-        senderPlayer = Player
+        player = Player
                 .builder()
                 .id("1")
                 .build();
         api = JoinParty.class;
+        queryType = QueryType.PUSH;
         Injector injector = Guice.createInjector(Modules.override(new GlobalNetworkOperatorModule(campaign,
-                        senderPlayer,
+                player,
                 api))
-                        .with(new AbstractModule() {
-                            @Override
-                            protected void configure() {
-                                bind(DataOperator.class).toInstance(mockDataOperator);
-                            }
-                        }));
+                .with(new AbstractModule() {
+                    @Override
+                    protected void configure() {
+                        bind(DataOperator.class).toInstance(mockDataOperator);
+                    }
+                }));
         sendRequestQuery = injector.getInstance(SendRequestQuery.class);
     }
 
@@ -55,12 +57,11 @@ public class SendRequestQueryTest {
                 .responseJson("{}")
                 .build();
         when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
-        QueryType queryType = QueryType.PUSH;
         String requestJson = "{\"party\":{},\"character\":{}}";
         RequestQueryRequest requestQueryRequest = RequestQueryRequest
                 .builder()
                 .campaign(campaign)
-                .senderPlayer(senderPlayer)
+                .player(player)
                 .api(api)
                 .queryType(queryType)
                 .requestJson(requestJson)
