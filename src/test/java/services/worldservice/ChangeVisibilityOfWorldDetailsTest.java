@@ -121,7 +121,7 @@ public class ChangeVisibilityOfWorldDetailsTest {
     }
 
     private ChangeVisibilityOfWorldDetailsResponse mockJsonResponseAndReturnGetUpdatedWorldResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String dungeonMasterId, String worldDungeonMasterId) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
                 .id(dungeonMasterId)

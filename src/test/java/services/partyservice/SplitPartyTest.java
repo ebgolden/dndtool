@@ -114,7 +114,7 @@ public class SplitPartyTest {
     }
 
     private SplitPartyResponse mockResponseAndReturnSplitPartyResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         SplitPartyRequest splitPartyRequest = SplitPartyRequest
                 .builder()
                 .party(Party

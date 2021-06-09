@@ -131,7 +131,7 @@ public class ChangeVisibilityOfActionDetailsTest {
     }
 
     private ChangeVisibilityOfActionDetailsResponse mockResponseAsPlayerOrDMAndReturnChangeVisibilityOfActionDetailsResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String actionPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

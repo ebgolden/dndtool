@@ -97,7 +97,7 @@ public class GetUpdatedClassTest {
     }
 
     private UpdatedClassResponse mockResponseAndReturnClassDetailsResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         UpdatedClassRequest updatedClassRequest = UpdatedClassRequest
                 .builder()
                 .cClass(Class

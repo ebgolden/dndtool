@@ -163,7 +163,7 @@ public class JoinPartyTest {
     }
 
     private JoinPartyResponse mockJsonResponseAsPlayerOrDMAndReturnJoinPartyResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer, boolean acceptedByParty) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

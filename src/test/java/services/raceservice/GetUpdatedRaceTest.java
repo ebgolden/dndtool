@@ -96,7 +96,7 @@ public class GetUpdatedRaceTest {
     }
 
     private UpdatedRaceResponse mockResponseAndReturnUpdatedRaceResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         UpdatedRaceRequest updatedRaceRequest = UpdatedRaceRequest
                 .builder()
                 .race(Race

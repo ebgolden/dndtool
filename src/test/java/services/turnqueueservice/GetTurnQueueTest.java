@@ -141,7 +141,7 @@ public class GetTurnQueueTest {
     }
 
     private TurnQueueResponse mockResponseAndReturnTurnQueueResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         TurnQueueRequest turnQueueRequest = TurnQueueRequest
                 .builder()
                 .party(Party

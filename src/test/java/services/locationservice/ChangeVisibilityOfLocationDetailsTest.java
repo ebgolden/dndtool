@@ -121,7 +121,7 @@ public class ChangeVisibilityOfLocationDetailsTest {
     }
 
     private ChangeVisibilityOfLocationDetailsResponse mockJsonResponseAndReturnChangeVisibilityOfLocationDetailsResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String dungeonMasterId, String locationDungeonMasterId) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         DungeonMaster dungeonMaster = DungeonMaster
                 .builder()
                 .id(dungeonMasterId)

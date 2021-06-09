@@ -96,7 +96,7 @@ public class MergePartiesTest {
     }
 
     private MergePartiesResponse mockResponseAndReturnMergePartiesResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         MergePartiesRequest mergePartiesRequest = MergePartiesRequest
                 .builder()
                 .parties(new Party[] {})

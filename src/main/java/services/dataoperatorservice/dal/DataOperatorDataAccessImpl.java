@@ -17,13 +17,13 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
 
     public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
         DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
-        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getDataOperatorResponseQuery(dataOperatorRequestQuery);
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
 
     public QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(QueryIdAndResponseJsonDao queryIdAndResponseJsonDao) {
         DataOperatorResponseQuery dataOperatorResponseQuery = dataOperatorDataAccessConverter.getDataOperatorResponseQueryFromQueryIdAndResponseJsonDao(queryIdAndResponseJsonDao);
-        dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorResponseQuery);
+        dataOperatorResponseQuery = dataOperator.getDataOperatorResponseQuery(dataOperatorResponseQuery);
         return dataOperatorDataAccessConverter.getQueryIdAndResponseJsonDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
 
@@ -37,7 +37,7 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
 
     public CampaignDao getCampaignDao(PlayerIdDao playerIdDao) {
         DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromPlayerIdDao(playerIdDao);
-        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+        DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getDataOperatorResponseQuery(dataOperatorRequestQuery);
         return dataOperatorDataAccessConverter.getCampaignDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
     }
 
@@ -57,7 +57,7 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
         for (int port : openPorts) {
             DataOperatorRequestQuery dataOperatorRequestQuery = dataOperatorDataAccessConverter.getDataOperatorRequestQueryFromPlayerIdDao(playerIdDao);
             dataOperator.setPort(port);
-            DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getResponseJson(dataOperatorRequestQuery);
+            DataOperatorResponseQuery dataOperatorResponseQuery = dataOperator.getDataOperatorResponseQuery(dataOperatorRequestQuery);
             CampaignDao campaignDao = dataOperatorDataAccessConverter.getCampaignDaoFromDataOperatorResponseQuery(dataOperatorResponseQuery);
             Campaign campaign = campaignDao.getCampaign();
             if (campaign != null)

@@ -97,7 +97,7 @@ public class ChangeCharacterToNonPlayableCharacterTest {
     }
 
     private ChangeCharacterToNonPlayableCharacterResponse mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(DataOperatorResponseQuery dataOperatorResponseQuery) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         ChangeCharacterToNonPlayableCharacterRequest changeCharacterToNonPlayableCharacterRequest = ChangeCharacterToNonPlayableCharacterRequest
                 .builder()
                 .character(Character

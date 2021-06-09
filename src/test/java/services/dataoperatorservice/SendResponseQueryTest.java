@@ -53,7 +53,7 @@ public class SendResponseQueryTest {
                 .builder()
                 .responseJson("{}")
                 .build();
-        when(mockDataOperator.getResponseJson(any(DataOperatorResponseQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorResponseQuery.class))).thenReturn(dataOperatorResponseQuery);
         String responseJson = "{\"party\":{},\"character\":{}}";
         ResponseQueryRequest responseQueryRequest = ResponseQueryRequest
                 .builder()

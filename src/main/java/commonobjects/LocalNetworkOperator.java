@@ -33,7 +33,7 @@ public class LocalNetworkOperator implements DataOperator {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    public DataOperatorResponseQuery getResponseJson(DataOperatorRequestQuery dataOperatorRequestQuery) {
+    public DataOperatorResponseQuery getDataOperatorResponseQuery(DataOperatorRequestQuery dataOperatorRequestQuery) {
         UUID uuid = UUID.randomUUID();
         String queryId = uuid.toString();
         String playerId = dataOperatorRequestQuery.getPlayerId();
@@ -64,7 +64,7 @@ public class LocalNetworkOperator implements DataOperator {
                 .build();
     }
 
-    public DataOperatorResponseQuery getResponseJson(DataOperatorResponseQuery dataOperatorResponseQuery) {
+    public DataOperatorResponseQuery getDataOperatorResponseQuery(DataOperatorResponseQuery dataOperatorResponseQuery) {
         String queryId = dataOperatorResponseQuery.getQueryId();
         String responseJson;
         try {
@@ -121,7 +121,6 @@ public class LocalNetworkOperator implements DataOperator {
         return port;
     }
 
-    @Override
     public String findAndReturnIPAddress() {
         return ipAddress;
     }

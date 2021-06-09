@@ -12,7 +12,6 @@ public class WideNetworkOperator extends LocalNetworkOperator {
     @Named("ipCheckerURL")
     private String ipCheckerURL;
 
-    @Override
     public String findAndReturnIPAddress() {
         try {
             URL url = new URL(ipCheckerURL);

@@ -48,7 +48,7 @@ public class GetCampaignOnNetworkTest {
                 .builder()
                 .responseJson("{\"id\":\"123\"}")
                 .build();
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         CampaignOnNetworkRequest campaignOnNetworkRequest = CampaignOnNetworkRequest
                 .builder()
                 .player(player)

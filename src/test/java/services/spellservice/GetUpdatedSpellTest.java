@@ -181,7 +181,7 @@ public class GetUpdatedSpellTest {
     }
 
     private UpdatedSpellResponse mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(DataOperatorResponseQuery dataOperatorResponseQuery, String playerId, String spellPlayerId, boolean isPlayer) {
-        when(mockDataOperator.getResponseJson(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
+        when(mockDataOperator.getDataOperatorResponseQuery(any(DataOperatorRequestQuery.class))).thenReturn(dataOperatorResponseQuery);
         Player player;
         if (isPlayer)
             player = Player

@@ -36,7 +36,7 @@ public class GlobalNetworkOperator implements DataOperator {
         TABLE = dynamoDB.getTable(tableName);
     }
 
-    public DataOperatorResponseQuery getResponseJson(DataOperatorRequestQuery dataOperatorRequestQuery) {
+    public DataOperatorResponseQuery getDataOperatorResponseQuery(DataOperatorRequestQuery dataOperatorRequestQuery) {
         UUID uuid = UUID.randomUUID();
         String queryId = uuid.toString();
         String campaignId = dataOperatorRequestQuery.getCampaignId();
@@ -61,7 +61,7 @@ public class GlobalNetworkOperator implements DataOperator {
                 .build();
     }
 
-    public DataOperatorResponseQuery getResponseJson(DataOperatorResponseQuery dataOperatorResponseQuery) {
+    public DataOperatorResponseQuery getDataOperatorResponseQuery(DataOperatorResponseQuery dataOperatorResponseQuery) {
         String queryId = dataOperatorResponseQuery.getQueryId();
         String responseJson = dataOperatorResponseQuery.getResponseJson();
         UpdateItemSpec updateItemSpec = new UpdateItemSpec()
@@ -92,7 +92,6 @@ public class GlobalNetworkOperator implements DataOperator {
         return 0;
     }
 
-    @Override
     public String findAndReturnIPAddress() {
         return null;
     }
