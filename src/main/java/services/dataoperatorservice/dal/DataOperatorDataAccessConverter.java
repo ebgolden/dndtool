@@ -22,6 +22,8 @@ public interface DataOperatorDataAccessConverter {
 
     PortBo getPortBoFromPortDao(PortDao portDao);
 
+    IPAddressBo getIPAddressBoFromIPAddressDao(IPAddressDao ipAddressDao);
+
     DataOperatorRequestQuery getDataOperatorRequestQueryFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);
 
     DataOperatorRequestQuery getDataOperatorRequestQueryFromPlayerIdDao(PlayerIdDao playerIdDao);
@@ -35,4 +37,6 @@ public interface DataOperatorDataAccessConverter {
     CampaignDao getCampaignDaoFromDataOperatorResponseQuery(DataOperatorResponseQuery dataOperatorResponseQuery);
 
     PortDao getPortDaoFromPort(int port);
+
+    IPAddressDao getIPAddressDaoFromIPAddress(String ipAddress);
 }

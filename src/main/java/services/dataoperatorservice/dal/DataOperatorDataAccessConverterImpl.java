@@ -87,6 +87,14 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
                 .build();
     }
 
+    public IPAddressBo getIPAddressBoFromIPAddressDao(IPAddressDao ipAddressDao) {
+        String ipAddress = ipAddressDao.getIPAddress();
+        return IPAddressBo
+                .builder()
+                .ipAddress(ipAddress)
+                .build();
+    }
+
     public DataOperatorRequestQuery getDataOperatorRequestQueryFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao) {
         String campaignId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getCampaignId();
         String playerId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao.getPlayerId();
@@ -165,6 +173,13 @@ public class DataOperatorDataAccessConverterImpl implements DataOperatorDataAcce
         return PortDao
                 .builder()
                 .port(port)
+                .build();
+    }
+
+    public IPAddressDao getIPAddressDaoFromIPAddress(String ipAddress) {
+        return IPAddressDao
+                .builder()
+                .ipAddress(ipAddress)
                 .build();
     }
 }

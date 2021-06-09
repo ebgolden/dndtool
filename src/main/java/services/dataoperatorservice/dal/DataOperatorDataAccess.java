@@ -12,4 +12,6 @@ public interface DataOperatorDataAccess {
     CampaignDao getCampaignDao(PlayerIdDao playerIdDao);
 
     PortDao getPortDao(DungeonMasterIdDao dungeonMasterIdDao);
+
+    IPAddressDao getIPAddressDao(PlayerIdDao playerIdDao);
 }

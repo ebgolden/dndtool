@@ -10,4 +10,6 @@ public interface DataOperator {
     void setPort(int port);
 
     int openAndReturnUnusedPort();
+
+    String findAndReturnIPAddress();
 }

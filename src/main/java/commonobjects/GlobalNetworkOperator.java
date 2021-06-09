@@ -92,6 +92,11 @@ public class GlobalNetworkOperator implements DataOperator {
         return 0;
     }
 
+    @Override
+    public String findAndReturnIPAddress() {
+        return null;
+    }
+
     private String waitForResponseAndReturnResponseJson(String queryId) {
         String responseJson = "{}";
         int interval = timeout / retries;

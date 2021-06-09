@@ -46,6 +46,11 @@ public class DataOperatorDataAccessImpl implements DataOperatorDataAccess {
         return dataOperatorDataAccessConverter.getPortDaoFromPort(port);
     }
 
+    public IPAddressDao getIPAddressDao(PlayerIdDao playerIdDao) {
+        String ipAddress = dataOperator.findAndReturnIPAddress();
+        return dataOperatorDataAccessConverter.getIPAddressDaoFromIPAddress(ipAddress);
+    }
+
     private Map<Integer, Campaign> searchSocketsForCampaignsAndReturnInMap(PlayerIdDao playerIdDao) {
         Map<Integer, Campaign> portCampaignMap = new HashMap<>();
         int[] openPorts = dataOperator.getOpenPorts();

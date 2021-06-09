@@ -62,6 +62,14 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
                 .build();
     }
 
+    public PlayerBo getPlayerBoFromCampaignNetworkAddressRequest(CampaignNetworkAddressRequest campaignNetworkAddressRequest) {
+        Player player = campaignNetworkAddressRequest.getPlayer();
+        return PlayerBo
+                .builder()
+                .player(player)
+                .build();
+    }
+
     public RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo) {
         String queryId = queryIdAndResponseJsonBo.getQueryId();
         String responseJson = queryIdAndResponseJsonBo.getResponseJson();
@@ -103,6 +111,14 @@ public class DataOperatorBusinessLogicConverterImpl implements DataOperatorBusin
         return OpenCampaignOnNetworkResponse
                 .builder()
                 .port(port)
+                .build();
+    }
+
+    public CampaignNetworkAddressResponse getCampaignNetworkAddressResponseFromIPAddressBo(IPAddressBo ipAddressBo) {
+        String ipAddress = ipAddressBo.getIPAddress();
+        return CampaignNetworkAddressResponse
+                .builder()
+                .ipAddress(ipAddress)
                 .build();
     }
 }

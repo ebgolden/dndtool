@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 public class LocalNetworkOperator implements DataOperator {
     @Inject
     @Named("ipAddress")
-    private String ipAddress;
+    protected String ipAddress;
     @Inject
     @Named("port")
     private int port;
@@ -119,6 +119,11 @@ public class LocalNetworkOperator implements DataOperator {
             e.printStackTrace();
         }
         return port;
+    }
+
+    @Override
+    public String findAndReturnIPAddress() {
+        return ipAddress;
     }
 
     private void init() {

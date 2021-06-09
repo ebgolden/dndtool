@@ -14,6 +14,8 @@ public interface DataOperatorBusinessLogicConverter {
 
     DungeonMasterBo getDungeonMasterBoFromOpenCampaignOnNetworkRequest(OpenCampaignOnNetworkRequest openCampaignOnNetworkRequest);
 
+    PlayerBo getPlayerBoFromCampaignNetworkAddressRequest(CampaignNetworkAddressRequest campaignNetworkAddressRequest);
+
     RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
 
     ResponseQueryResponse getResponseQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
@@ -23,4 +25,6 @@ public interface DataOperatorBusinessLogicConverter {
     CampaignOnNetworkResponse getCampaignOnNetworkResponseFromCampaignBo(CampaignBo campaignBo);
 
     OpenCampaignOnNetworkResponse getOpenCampaignOnNetworkResponseFromPortBo(PortBo portBo);
+
+    CampaignNetworkAddressResponse getCampaignNetworkAddressResponseFromIPAddressBo(IPAddressBo ipAddressBo);
 }

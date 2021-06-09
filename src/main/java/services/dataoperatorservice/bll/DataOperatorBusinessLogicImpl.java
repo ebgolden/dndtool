@@ -52,6 +52,12 @@ public class DataOperatorBusinessLogicImpl implements DataOperatorBusinessLogic 
         return dataOperatorDataAccessConverter.getPortBoFromPortDao(portDao);
     }
 
+    public IPAddressBo getIPAddressBo(PlayerBo playerBo) {
+        PlayerIdDao playerIdDao = dataOperatorDataAccessConverter.getPlayerIdDaoFromPlayerBo(playerBo);
+        IPAddressDao ipAddressDao = dataOperatorDataAccess.getIPAddressDao(playerIdDao);
+        return dataOperatorDataAccessConverter.getIPAddressBoFromIPAddressDao(ipAddressDao);
+    }
+
     private CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo filterCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo) {
         String campaignId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getCampaignId();
         String playerId = campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo.getPlayerId();

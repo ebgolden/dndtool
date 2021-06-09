@@ -6,7 +6,7 @@ public interface GetCampaignListOnNetwork {
      * Accepts a Player object in a CampaignListOnNetworkRequest.
      * @param campaignListOnNetworkRequest CampaignListOnNetworkRequest containing
      *                                     Player object
-     * @return CampaignListOnNetworkResponse containing Socket to Campaign map
+     * @return CampaignListOnNetworkResponse containing port to Campaign map
      */
     CampaignListOnNetworkResponse getCampaignListOnNetworkResponse(CampaignListOnNetworkRequest campaignListOnNetworkRequest);
 }

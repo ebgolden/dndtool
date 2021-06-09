@@ -39,6 +39,7 @@ public abstract class DataOperatorModule extends AbstractModule {
         bind(GetCampaignListOnNetwork.class).to(GetCampaignListOnNetworkImpl.class);
         bind(GetCampaignOnNetwork.class).to(GetCampaignOnNetworkImpl.class);
         bind(OpenCampaignOnNetwork.class).to(OpenCampaignOnNetworkImpl.class);
+        bind(GetCampaignNetworkAddress.class).to(GetCampaignNetworkAddressImpl.class);
         bind(DataOperatorBusinessLogicConverter.class).to(DataOperatorBusinessLogicConverterImpl.class);
         bind(DataOperatorBusinessLogic.class).to(DataOperatorBusinessLogicImpl.class);
         bind(DataOperatorDataAccessConverter.class).to(DataOperatorDataAccessConverterImpl.class);
@@ -56,5 +57,6 @@ public abstract class DataOperatorModule extends AbstractModule {
                 .build();
     }
 
+    @SuppressWarnings("unused")
     public abstract int provideTimeout();
 }

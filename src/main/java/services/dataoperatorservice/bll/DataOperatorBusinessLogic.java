@@ -12,4 +12,6 @@ public interface DataOperatorBusinessLogic {
     CampaignBo getCampaignBo(PlayerBo playerBo);
 
     PortBo getPortBo(DungeonMasterBo dungeonMasterBo);
+
+    IPAddressBo getIPAddressBo(PlayerBo playerBo);
 }
