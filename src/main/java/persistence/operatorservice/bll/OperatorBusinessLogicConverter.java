@@ -1,0 +1,30 @@
+package persistence.operatorservice.bll;
+
+import persistence.operatorservice.*;
+import persistence.operatorservice.bll.bo.*;
+
+public interface OperatorBusinessLogicConverter {
+    CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest);
+
+    QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBoFromResponseQueryRequest(ResponseQueryRequest responseQueryRequest);
+
+    PlayerBo getPlayerBoFromCampaignListOnNetworkRequest(CampaignListOnNetworkRequest campaignListOnNetworkRequest);
+
+    PlayerBo getPlayerBoFromCampaignOnNetworkRequest(CampaignOnNetworkRequest campaignOnNetworkRequest);
+
+    DungeonMasterBo getDungeonMasterBoFromOpenCampaignOnNetworkRequest(OpenCampaignOnNetworkRequest openCampaignOnNetworkRequest);
+
+    PlayerBo getPlayerBoFromCampaignNetworkAddressRequest(CampaignNetworkAddressRequest campaignNetworkAddressRequest);
+
+    RequestQueryResponse getRequestQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
+
+    ResponseQueryResponse getResponseQueryResponseFromQueryIdAndResponseJsonBo(QueryIdAndResponseJsonBo queryIdAndResponseJsonBo);
+
+    CampaignListOnNetworkResponse getCampaignListOnNetworkResponseFromPortCampaignMapBo(PortCampaignMapBo portCampaignMapBo);
+
+    CampaignOnNetworkResponse getCampaignOnNetworkResponseFromCampaignBo(CampaignBo campaignBo);
+
+    OpenCampaignOnNetworkResponse getOpenCampaignOnNetworkResponseFromPortBo(PortBo portBo);
+
+    CampaignNetworkAddressResponse getCampaignNetworkAddressResponseFromIPAddressBo(IPAddressBo ipAddressBo);
+}

@@ -1,0 +1,21 @@
+package domain.itemservice.bll;
+
+import domain.itemservice.ChangeVisibilityOfItemDetailsRequest;
+import domain.itemservice.UpdatedItemRequest;
+import domain.itemservice.UpdatedItemResponse;
+import domain.itemservice.ChangeVisibilityOfItemDetailsResponse;
+import domain.itemservice.bll.bo.ItemAndPlayerBo;
+import domain.itemservice.bll.bo.ItemAndVisibilityAndPlayerBo;
+import domain.itemservice.bll.bo.ItemAndVisibilityBo;
+
+public interface ItemBusinessLogicConverter {
+    ItemAndPlayerBo getItemAndPlayerBoFromUpdatedItemRequest(UpdatedItemRequest updatedItemRequest);
+
+    ItemAndVisibilityAndPlayerBo getItemAndVisibilityAndPlayerBoFromChangeVisibilityOfItemDetailsRequest(ChangeVisibilityOfItemDetailsRequest changeVisibilityOfUpdatedItemRequest);
+
+    UpdatedItemResponse getUpdatedItemResponseFromItemAndVisibilityBo(ItemAndVisibilityBo itemAndVisibilityBo);
+
+    ChangeVisibilityOfItemDetailsResponse getChangeVisibilityOfItemDetailsResponseFromItemAndVisibilityBo(ItemAndVisibilityBo itemAndVisibilityBo);
+
+    ItemAndVisibilityBo getItemAndVisibilityBoFromItemAndVisibilityAndPlayerBo(ItemAndVisibilityAndPlayerBo itemAndVisibilityAndPlayerBo);
+}

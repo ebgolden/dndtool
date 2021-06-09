@@ -1,0 +1,21 @@
+package domain.resultservice.bll;
+
+import domain.resultservice.ChangeVisibilityOfResultDetailsRequest;
+import domain.resultservice.ChangeVisibilityOfResultDetailsResponse;
+import domain.resultservice.UpdatedResultRequest;
+import domain.resultservice.UpdatedResultResponse;
+import domain.resultservice.bll.bo.ResultAndPlayerBo;
+import domain.resultservice.bll.bo.ResultAndVisibilityAndPlayerBo;
+import domain.resultservice.bll.bo.ResultAndVisibilityBo;
+
+public interface ResultBusinessLogicConverter {
+    ResultAndPlayerBo getResultAndPlayerBoFromUpdatedResultRequest(UpdatedResultRequest updatedResultRequest);
+
+    ResultAndVisibilityAndPlayerBo getResultAndVisibilityAndPlayerBoFromChangeVisibilityOfResultDetailsRequest(ChangeVisibilityOfResultDetailsRequest changeVisibilityOfUpdatedResultRequest);
+
+    UpdatedResultResponse getUpdatedResultResponseFromResultAndVisibilityBo(ResultAndVisibilityBo resultAndVisibilityBo);
+
+    ChangeVisibilityOfResultDetailsResponse getChangeVisibilityOfResultDetailsResponseFromResultAndVisibilityBo(ResultAndVisibilityBo resultAndVisibilityBo);
+
+    ResultAndVisibilityBo getResultAndVisibilityBoFromResultAndVisibilityAndPlayerBo(ResultAndVisibilityAndPlayerBo resultAndVisibilityAndPlayerBo);
+}

@@ -1,0 +1,21 @@
+package domain.worldservice.bll;
+
+import domain.worldservice.ChangeVisibilityOfWorldDetailsRequest;
+import domain.worldservice.ChangeVisibilityOfWorldDetailsResponse;
+import domain.worldservice.GetUpdatedWorldRequest;
+import domain.worldservice.GetUpdatedWorldResponse;
+import domain.worldservice.bll.bo.WorldAndPlayerBo;
+import domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
+import domain.worldservice.bll.bo.WorldAndVisibilityBo;
+
+public interface WorldBusinessLogicConverter {
+    WorldAndPlayerBo getWorldAndPlayerBoFromGetUpdatedWorldRequest(GetUpdatedWorldRequest getUpdatedWorldRequest);
+
+    GetUpdatedWorldResponse getGetUpdatedWorldResponseFromWorldAndVisibilityBo(WorldAndVisibilityBo worldAndVisibilityBo);
+
+    ChangeVisibilityOfWorldDetailsResponse getChangeVisibilityOfWorldDetailsResponseFromWorldAndVisibilityBo(WorldAndVisibilityBo worldAndVisibilityBo);
+
+    WorldAndVisibilityAndDungeonMasterBo getWorldAndVisibilityAndDungeonMasterBoFromChangeVisibilityOfWorldDetailsRequest(ChangeVisibilityOfWorldDetailsRequest changeVisibilityOfGetUpdatedWorldRequest);
+
+    WorldAndVisibilityBo getWorldAndVisibilityBoFromWorldAndVisibilityAndDungeonMasterBo(WorldAndVisibilityAndDungeonMasterBo worldAndVisibilityAndDungeonMasterBo);
+}
