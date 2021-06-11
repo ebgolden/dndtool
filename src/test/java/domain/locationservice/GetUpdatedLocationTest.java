@@ -80,14 +80,14 @@ public class GetUpdatedLocationTest {
     }
 
     @Test
-    public void shouldReturnNoLocationWhenEmptyResponse() {
+    public void shouldReturnEmptyLocationWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(operatorResponseQuery, true);
         Assertions.assertNull(updatedLocationResponse.getLocation(), "Location not null.");
     }
 
     @Test
-    public void shouldReturnNoLocationWhenNullResponse() {
+    public void shouldReturnEmptyLocationWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedLocationResponse updatedLocationResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedLocationResponse(operatorResponseQuery, true);
         Assertions.assertNull(updatedLocationResponse.getLocation(), "Location not null.");

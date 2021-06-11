@@ -58,7 +58,7 @@ public class GetTurnQueueTest {
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZero() {
+    public void shouldReturnEmptyCharactersWithCurrentTurnIndexZero() {
         int characterCount = 0;
         int currentTurnIndex = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithTurnQueue(characterCount, currentTurnIndex);
@@ -67,7 +67,7 @@ public class GetTurnQueueTest {
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenNoCharactersKey() {
+    public void shouldReturnEmptyCharactersWithCurrentTurnIndexZeroWhenNoCharactersKey() {
         int characterCount = 0;
         int currentTurnIndex = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithTurnQueueNoCharactersKey(currentTurnIndex);
@@ -76,7 +76,7 @@ public class GetTurnQueueTest {
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenEmptyResponse() {
+    public void shouldReturnEmptyCharactersWithCurrentTurnIndexZeroWhenEmptyResponse() {
         int characterCount = 0;
         int currentTurnIndex = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
@@ -85,7 +85,7 @@ public class GetTurnQueueTest {
     }
 
     @Test
-    public void shouldReturnNoCharactersWithCurrentTurnIndexZeroWhenNullResponse() {
+    public void shouldReturnEmptyCharactersWithCurrentTurnIndexZeroWhenNullResponse() {
         int characterCount = 0;
         int currentTurnIndex = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);

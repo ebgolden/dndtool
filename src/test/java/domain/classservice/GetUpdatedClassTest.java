@@ -56,14 +56,14 @@ public class GetUpdatedClassTest {
     }
 
     @Test
-    public void shouldReturnNoClassWhenEmptyResponse() {
+    public void shouldReturnEmptyClassWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedClassResponse updatedClassResponse = mockResponseAndReturnClassDetailsResponse(operatorResponseQuery);
         Assertions.assertNull(updatedClassResponse.getCClass(), "Class not null.");
     }
 
     @Test
-    public void shouldReturnNoClassWhenNullResponse() {
+    public void shouldReturnEmptyClassWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedClassResponse updatedClassResponse = mockResponseAndReturnClassDetailsResponse(operatorResponseQuery);
         Assertions.assertNull(updatedClassResponse.getCClass(), "Class not null.");

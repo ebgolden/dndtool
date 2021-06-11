@@ -31,15 +31,17 @@ public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConv
                 .build();
     }
 
-    public NonStandardActionAndCharacterAndPlayerBo getNonStandardActionAndCharacterAndPlayerBoFromActionFromNonStandardActionRequest(ActionFromNonStandardActionRequest actionFromNonStandardActionRequest) {
+    public NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo getNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBoFromActionFromNonStandardActionRequest(ActionFromNonStandardActionRequest actionFromNonStandardActionRequest) {
         NonStandardAction nonStandardAction = actionFromNonStandardActionRequest.getNonStandardAction();
         Character character = actionFromNonStandardActionRequest.getCharacter();
         Player player = actionFromNonStandardActionRequest.getPlayer();
-        return NonStandardActionAndCharacterAndPlayerBo
+        boolean acceptedByDungeonMaster = actionFromNonStandardActionRequest.isApprovedByDungeonMaster();
+        return NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo
                 .builder()
                 .nonStandardAction(nonStandardAction)
                 .character(character)
                 .player(player)
+                .acceptedByDungeonMaster(acceptedByDungeonMaster)
                 .build();
     }
 

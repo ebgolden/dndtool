@@ -126,7 +126,7 @@ public class GetUpdatedSpellTest {
     }
 
     @Test
-    public void shouldReturnNoSpellWhenEmptyResponse() {
+    public void shouldReturnEmptySpellWhenEmptyResponse() {
         String playerId = "0";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(operatorResponseQuery, playerId, playerId, true);
@@ -134,7 +134,7 @@ public class GetUpdatedSpellTest {
     }
 
     @Test
-    public void shouldReturnNoSpellWhenNullResponse() {
+    public void shouldReturnEmptySpellWhenNullResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedSpellResponse updatedSpellResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedSpellResponse(operatorResponseQuery, playerId, playerId, true);

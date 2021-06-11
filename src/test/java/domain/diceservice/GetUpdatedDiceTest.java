@@ -57,7 +57,7 @@ public class GetUpdatedDiceTest {
     }
 
     @Test
-    public void shouldReturnNoDiceWhileDungeonMaster() {
+    public void shouldReturnEmptyDiceWhileDungeonMaster() {
         int dieCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(operatorResponseQuery, false);
@@ -65,7 +65,7 @@ public class GetUpdatedDiceTest {
     }
 
     @Test
-    public void shouldReturnNoDice() {
+    public void shouldReturnEmptyDice() {
         int dieCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithDice(dieCount);
         UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(operatorResponseQuery, true);
@@ -73,7 +73,7 @@ public class GetUpdatedDiceTest {
     }
 
     @Test
-    public void shouldReturnNoDiceWhenEmptyResponse() {
+    public void shouldReturnEmptyDiceWhenEmptyResponse() {
         int dieCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(operatorResponseQuery, true);
@@ -81,7 +81,7 @@ public class GetUpdatedDiceTest {
     }
 
     @Test
-    public void shouldReturnNoDiceWhenNullResponse() {
+    public void shouldReturnEmptyDiceWhenNullResponse() {
         int dieCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedDiceResponse updatedDiceResponse = mockJsonResponseAndReturnUpdatedDiceResponse(operatorResponseQuery, true);

@@ -126,7 +126,7 @@ public class GetUpdatedItemTest {
     }
 
     @Test
-    public void shouldReturnNoItemWhenEmptyResponse() {
+    public void shouldReturnEmptyItemWhenEmptyResponse() {
         String playerId = "0";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedItemResponse updatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedItemResponse(operatorResponseQuery, playerId, playerId, true);
@@ -134,7 +134,7 @@ public class GetUpdatedItemTest {
     }
 
     @Test
-    public void shouldReturnNoItemWhenNullResponse() {
+    public void shouldReturnEmptyItemWhenNullResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedItemResponse updatedItemResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedItemResponse(operatorResponseQuery, playerId, playerId, true);

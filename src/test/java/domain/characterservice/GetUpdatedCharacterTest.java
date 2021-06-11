@@ -127,7 +127,7 @@ public class GetUpdatedCharacterTest {
     }
 
     @Test
-    public void shouldReturnNoCharacterWhenEmptyResponse() {
+    public void shouldReturnEmptyCharacterWhenEmptyResponse() {
         String playerId = "0";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedCharacterResponse updatedCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedCharacterResponse(operatorResponseQuery, playerId, playerId, true);
@@ -135,7 +135,7 @@ public class GetUpdatedCharacterTest {
     }
 
     @Test
-    public void shouldReturnNoCharacterWhenNullResponse() {
+    public void shouldReturnEmptyCharacterWhenNullResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedCharacterResponse updatedCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedCharacterResponse(operatorResponseQuery, playerId, playerId, true);

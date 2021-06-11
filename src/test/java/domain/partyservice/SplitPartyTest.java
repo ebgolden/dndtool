@@ -56,7 +56,7 @@ public class SplitPartyTest {
     }
 
     @Test
-    public void shouldReturnNoParties() {
+    public void shouldReturnEmptyParties() {
         int partyCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithParty(partyCount);
         SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(operatorResponseQuery);
@@ -64,7 +64,7 @@ public class SplitPartyTest {
     }
 
     @Test
-    public void shouldReturnNoPartiesWhenEmptyResponse() {
+    public void shouldReturnEmptyPartiesWhenEmptyResponse() {
         int partyCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(operatorResponseQuery);
@@ -72,7 +72,7 @@ public class SplitPartyTest {
     }
 
     @Test
-    public void shouldReturnNoPartiesWhenNullResponse() {
+    public void shouldReturnEmptyPartiesWhenNullResponse() {
         int partyCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         SplitPartyResponse splitPartyResponse = mockResponseAndReturnSplitPartyResponse(operatorResponseQuery);

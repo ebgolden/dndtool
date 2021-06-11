@@ -55,14 +55,14 @@ public class GetUpdatedRaceTest {
     }
 
     @Test
-    public void shouldReturnNoRaceWhenEmptyResponse() {
+    public void shouldReturnEmptyRaceWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedRaceResponse updatedRaceResponse = mockResponseAndReturnUpdatedRaceResponse(operatorResponseQuery);
         Assertions.assertNull(updatedRaceResponse.getRace(), "Race not null.");
     }
 
     @Test
-    public void shouldReturnNoRaceWhenNullResponse() {
+    public void shouldReturnEmptyRaceWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedRaceResponse updatedRaceResponse = mockResponseAndReturnUpdatedRaceResponse(operatorResponseQuery);
         Assertions.assertNull(updatedRaceResponse.getRace(), "Race not null.");

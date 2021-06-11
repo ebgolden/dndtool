@@ -80,14 +80,14 @@ public class GetUpdatedWorldDetailsTest {
     }
 
     @Test
-    public void shouldReturnNoWorldWhenEmptyResponse() {
+    public void shouldReturnEmptyWorldWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         GetUpdatedWorldResponse getUpdatedWorldResponse = mockJsonResponseAsPlayerOrDMAndReturnGetUpdatedWorldResponse(operatorResponseQuery, true);
         Assertions.assertNull(getUpdatedWorldResponse.getWorld(), "World not null.");
     }
 
     @Test
-    public void shouldReturnNoWorldWhenNullResponse() {
+    public void shouldReturnEmptyWorldWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         GetUpdatedWorldResponse getUpdatedWorldResponse = mockJsonResponseAsPlayerOrDMAndReturnGetUpdatedWorldResponse(operatorResponseQuery, true);
         Assertions.assertNull(getUpdatedWorldResponse.getWorld(), "World not null.");

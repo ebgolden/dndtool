@@ -60,9 +60,9 @@ public class ActionDataAccessConverterImpl implements ActionDataAccessConverter 
                 .build();
     }
 
-    public NonStandardActionAndCharacterDao getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
-        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerBo.getNonStandardAction();
-        Character character = nonStandardActionAndCharacterAndPlayerBo.getCharacter();
+    public NonStandardActionAndCharacterDao getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo(NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo) {
+        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.getNonStandardAction();
+        Character character = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.getCharacter();
         ObjectMapper objectMapper = new ObjectMapper();
         String nonStandardActionJson = "{}";
         String characterJson = "{}";

@@ -66,7 +66,7 @@ public class JoinPartyTest {
     }
 
     @Test
-    public void shouldReturnEmptyPartyWhileOtherPlayer() {
+    public void shouldReturnEmptyPartyWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithPartyWithCharacterArrayInParty();
@@ -92,7 +92,7 @@ public class JoinPartyTest {
     }
 
     @Test
-    public void shouldReturnEmptyPartyWhileOtherPlayerNotAccepted() {
+    public void shouldReturnEmptyPartyWhileDifferentPlayerNotAccepted() {
         String playerId = "2";
         String characterPlayerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithPartyWithCharacterArrayInParty();

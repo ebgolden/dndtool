@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import domain.actionservice.bll.ActionBusinessLogic;
 import domain.actionservice.bll.ActionBusinessLogicConverter;
 import domain.actionservice.bll.bo.ActionBo;
-import domain.actionservice.bll.bo.NonStandardActionAndCharacterAndPlayerBo;
+import domain.actionservice.bll.bo.NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo;
 
 public class GetActionFromNonStandardActionImpl implements GetActionFromNonStandardAction {
     @Inject
@@ -13,8 +13,8 @@ public class GetActionFromNonStandardActionImpl implements GetActionFromNonStand
     private ActionBusinessLogic actionBusinessLogic;
 
     public ActionFromNonStandardActionResponse getActionFromNonStandardActionResponse(ActionFromNonStandardActionRequest actionFromNonStandardActionRequest) {
-        NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo = actionBusinessLogicConverter.getNonStandardActionAndCharacterAndPlayerBoFromActionFromNonStandardActionRequest(actionFromNonStandardActionRequest);
-        ActionBo actionBo = actionBusinessLogic.getActionBo(nonStandardActionAndCharacterAndPlayerBo);
+        NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo = actionBusinessLogicConverter.getNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBoFromActionFromNonStandardActionRequest(actionFromNonStandardActionRequest);
+        ActionBo actionBo = actionBusinessLogic.getActionBo(nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo);
         return actionBusinessLogicConverter.getActionFromNonStandardActionResponseFromActionBo(actionBo);
     }
 }

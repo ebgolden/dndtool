@@ -8,8 +8,9 @@ import common.Player;
 
 @Builder
 @Value
-public class NonStandardActionAndCharacterAndPlayerBo {
+public class NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo {
     NonStandardAction nonStandardAction;
     Character character;
     Player player;
+    boolean acceptedByDungeonMaster;
 }

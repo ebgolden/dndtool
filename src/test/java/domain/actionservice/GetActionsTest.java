@@ -68,7 +68,7 @@ public class GetActionsTest {
     }
 
     @Test
-    public void shouldReturnNoActionsWhileDifferentPlayer() {
+    public void shouldReturnEmptyActionsWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         int actionCount = 0;
@@ -78,7 +78,7 @@ public class GetActionsTest {
     }
 
     @Test
-    public void shouldReturnNoActions() {
+    public void shouldReturnEmptyActions() {
         String playerId = "1";
         int actionCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithAction(actionCount);
@@ -87,7 +87,7 @@ public class GetActionsTest {
     }
 
     @Test
-    public void shouldReturnNoActionsWhenEmptyResponse() {
+    public void shouldReturnEmptyActionsWhenEmptyResponse() {
         String playerId = "1";
         int actionCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
@@ -96,7 +96,7 @@ public class GetActionsTest {
     }
 
     @Test
-    public void shouldReturnNoActionsWhenNullResponse() {
+    public void shouldReturnEmptyActionsWhenNullResponse() {
         String playerId = "1";
         int actionCount = 0;
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);

@@ -66,7 +66,7 @@ public class TakeActionTest {
     }
 
     @Test
-    public void shouldReturnNoResultWhileDifferentPlayer() {
+    public void shouldReturnEmptyResultWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
@@ -75,7 +75,7 @@ public class TakeActionTest {
     }
 
     @Test
-    public void shouldReturnNoResultWhenEmptyResponse() {
+    public void shouldReturnEmptyResultWhenEmptyResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         TakeActionResponse takeActionResponse = mockJsonResponseAsPlayerOrDMAndReturnTakeActionResponse(operatorResponseQuery, playerId, playerId, true);
@@ -83,7 +83,7 @@ public class TakeActionTest {
     }
 
     @Test
-    public void shouldReturnNoResultWhenNullResponse() {
+    public void shouldReturnEmptyResultWhenNullResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         TakeActionResponse takeActionResponse = mockJsonResponseAsPlayerOrDMAndReturnTakeActionResponse(operatorResponseQuery, playerId, playerId, true);

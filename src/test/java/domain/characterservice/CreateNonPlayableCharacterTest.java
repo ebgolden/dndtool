@@ -50,7 +50,7 @@ public class CreateNonPlayableCharacterTest {
     }
 
     @Test
-    public void shouldReturnNonPlayableCharacter() {
+    public void shouldReturnEmptynPlayableCharacter() {
         String dungeonMasterId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithCharacter(dungeonMasterId);
         CreateNonPlayableCharacterResponse createNonPlayableCharacterResponse = mockJsonResponseAsPlayerOrDMAndReturnCreateNonPlayableCharacterResponse(operatorResponseQuery, dungeonMasterId, dungeonMasterId);

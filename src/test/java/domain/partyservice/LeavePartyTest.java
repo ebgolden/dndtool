@@ -66,7 +66,7 @@ public class LeavePartyTest {
     }
 
     @Test
-    public void shouldReturnEmptyPartyWhileOtherPlayer() {
+    public void shouldReturnEmptyPartyWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         String characterId = "0";

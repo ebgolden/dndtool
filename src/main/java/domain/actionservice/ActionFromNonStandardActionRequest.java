@@ -12,4 +12,5 @@ public class ActionFromNonStandardActionRequest {
     NonStandardAction nonStandardAction;
     Character character;
     Player player;
+    boolean approvedByDungeonMaster;
 }

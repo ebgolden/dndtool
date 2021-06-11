@@ -36,9 +36,9 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
         return actionDataAccessConverter.getResultBoFromResultDao(resultDao);
     }
 
-    public ActionBo getActionBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
-        NonStandardActionAndCharacterAndPlayerBo filteredNonStandardActionAndCharacterAndPlayerBo = filterNonStandardActionAndCharacterAndPlayerBo(nonStandardActionAndCharacterAndPlayerBo);
-        NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao = actionDataAccessConverter.getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerBo(filteredNonStandardActionAndCharacterAndPlayerBo);
+    public ActionBo getActionBo(NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo) {
+        NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo filteredNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo = filterNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo(nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo);
+        NonStandardActionAndCharacterDao nonStandardActionAndCharacterDao = actionDataAccessConverter.getNonStandardActionAndCharacterDaoFromNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo(filteredNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo);
         ActionDao actionDao = actionDataAccess.getActionDao(nonStandardActionAndCharacterDao);
         return actionDataAccessConverter.getActionBoFromActionDao(actionDao);
     }
@@ -96,17 +96,18 @@ public class ActionBusinessLogicImpl implements ActionBusinessLogic {
                 .build();
     }
 
-    private NonStandardActionAndCharacterAndPlayerBo filterNonStandardActionAndCharacterAndPlayerBo(NonStandardActionAndCharacterAndPlayerBo nonStandardActionAndCharacterAndPlayerBo) {
-        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerBo.getNonStandardAction();
-        Character character = nonStandardActionAndCharacterAndPlayerBo.getCharacter();
-        Player player = nonStandardActionAndCharacterAndPlayerBo.getPlayer();
+    private NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo filterNonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo(NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo) {
+        NonStandardAction nonStandardAction = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.getNonStandardAction();
+        Character character = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.getCharacter();
+        Player player = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.getPlayer();
+        boolean acceptedByDungeonMaster = nonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo.isAcceptedByDungeonMaster();
         String playerId = player.getId();
         String characterPlayerId = character.getPlayerId();
-        if (!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) {
+        if ((!playerId.equals(characterPlayerId) && (player.getClass() != DungeonMaster.class)) || !acceptedByDungeonMaster) {
             nonStandardAction = null;
             character = null;
         }
-        return NonStandardActionAndCharacterAndPlayerBo
+        return NonStandardActionAndCharacterAndPlayerAndAcceptedByDungeonMasterBo
                 .builder()
                 .nonStandardAction(nonStandardAction)
                 .character(character)

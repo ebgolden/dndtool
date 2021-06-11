@@ -80,14 +80,14 @@ public class GetUpdatedCampaignTest {
     }
 
     @Test
-    public void shouldReturnNoCampaignWhenEmptyResponse() {
+    public void shouldReturnEmptyCampaignWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
         UpdatedCampaignResponse updatedCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedCampaignResponse(operatorResponseQuery, true);
         Assertions.assertNull(updatedCampaignResponse.getCampaign(), "Campaign not null.");
     }
 
     @Test
-    public void shouldReturnNoCampaignWhenNullResponse() {
+    public void shouldReturnEmptyCampaignWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
         UpdatedCampaignResponse updatedCampaignResponse = mockJsonResponseAsPlayerOrDMAndReturnUpdatedCampaignResponse(operatorResponseQuery, true);
         Assertions.assertNull(updatedCampaignResponse.getCampaign(), "Campaign not null.");

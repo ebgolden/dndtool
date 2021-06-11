@@ -52,7 +52,7 @@ public class GetActionFromNonStandardActionTest {
     public void shouldReturnActionWhilePlayer() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithAction();
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true, true);
         Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
@@ -61,32 +61,58 @@ public class GetActionFromNonStandardActionTest {
         String playerId = "2";
         String characterPlayerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithAction();
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, false);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, false, true);
         Assertions.assertNotNull(actionFromNonStandardActionResponse.getAction(), "Action null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhileDifferentPlayer() {
+    public void shouldReturnEmptyActionWhileDifferentPlayer() {
         String playerId = "2";
         String characterPlayerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, true);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, true, true);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenEmptyResponse() {
+    public void shouldReturnEmptyActionWhilePlayerNotApproved() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true, false);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
     @Test
-    public void shouldReturnNoActionWhenNullResponse() {
+    public void shouldReturnEmptyActionPartyWhileDMNotApproved() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, false, false);
+        Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
+    }
+
+    @Test
+    public void shouldReturnEmptyActionWhileDifferentPlayerNotApproved() {
+        String playerId = "2";
+        String characterPlayerId = "1";
+        OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, characterPlayerId, true, false);
+        Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
+    }
+
+    @Test
+    public void shouldReturnEmptyActionWhenEmptyResponse() {
+        String playerId = "1";
+        OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true, true);
+        Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
+    }
+
+    @Test
+    public void shouldReturnEmptyActionWhenNullResponse() {
         String playerId = "1";
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
-        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true);
+        ActionFromNonStandardActionResponse actionFromNonStandardActionResponse = mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(operatorResponseQuery, playerId, playerId, true, true);
         Assertions.assertNull(actionFromNonStandardActionResponse.getAction(), "Action not null.");
     }
 
@@ -117,7 +143,7 @@ public class GetActionFromNonStandardActionTest {
                 .build();
     }
 
-    private ActionFromNonStandardActionResponse mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(OperatorResponseQuery operatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer) {
+    private ActionFromNonStandardActionResponse mockResponseAsPlayerOrDMAndReturnActionFromNonStandardActionResponse(OperatorResponseQuery operatorResponseQuery, String playerId, String characterPlayerId, boolean isPlayer, boolean approvedByDungeonMaster) {
         when(mockOperator.getOperatorResponseQuery(any(OperatorRequestQuery.class))).thenReturn(operatorResponseQuery);
         Player player;
         if (isPlayer)
@@ -139,6 +165,7 @@ public class GetActionFromNonStandardActionTest {
                         .playerId(characterPlayerId)
                         .build())
                 .player(player)
+                .approvedByDungeonMaster(approvedByDungeonMaster)
                 .build();
         return getActionFromNonStandardAction.getActionFromNonStandardActionResponse(actionFromNonStandardActionRequest);
     }

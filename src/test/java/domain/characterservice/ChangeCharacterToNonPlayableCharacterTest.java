@@ -49,7 +49,7 @@ public class ChangeCharacterToNonPlayableCharacterTest {
     }
 
     @Test
-    public void shouldReturnNonPlayableCharacter() {
+    public void shouldReturnEmptynPlayableCharacter() {
         OperatorResponseQuery operatorResponseQuery = createMockResponseWithNonPlayableCharacter();
         ChangeCharacterToNonPlayableCharacterResponse changeCharacterToNonPlayableCharacterResponse = mockResponseAndReturnChangeCharacterToNonPlayableCharacterResponse(operatorResponseQuery);
         Assertions.assertNotNull(changeCharacterToNonPlayableCharacterResponse.getNonPlayableCharacter(), "NonPlayableCharacter null.");
