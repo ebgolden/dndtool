@@ -1,0 +1,11 @@
+package domain.characterclassservice.bll;
+
+import domain.characterclassservice.UpdatedCharacterClassRequest;
+import domain.characterclassservice.UpdatedCharacterClassResponse;
+import domain.characterclassservice.bll.bo.CharacterClassBo;
+
+public interface CharacterClassBusinessLogicConverter {
+    CharacterClassBo getCharacterClassBoFromUpdatedCharacterClassRequest(UpdatedCharacterClassRequest updatedCharacterClassRequest);
+
+    UpdatedCharacterClassResponse getUpdatedCharacterClassResponseFromCharacterClassBo(CharacterClassBo characterClassBo);
+}

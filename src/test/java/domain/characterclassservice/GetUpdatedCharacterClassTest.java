@@ -1,4 +1,4 @@
-package domain.classservice;
+package domain.characterclassservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,23 +7,23 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
 import common.*;
-import common.Class;
+import common.CharacterClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import domain.classservice.module.ClassModule;
+import domain.characterclassservice.module.CharacterClassModule;
 import persistence.operatorservice.module.GlobalNetworkOperatorModule;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GetUpdatedClassTest {
+public class GetUpdatedCharacterClassTest {
     @Mock
     Operator mockOperator;
-    private GetUpdatedClass getUpdatedClass;
+    private GetUpdatedCharacterClass getUpdatedCharacterClass;
 
     @BeforeEach
     public void setup() {
@@ -35,55 +35,55 @@ public class GetUpdatedClassTest {
                 .builder()
                 .id("1")
                 .build();
-        Injector injector = Guice.createInjector(new ClassModule(),
+        Injector injector = Guice.createInjector(new CharacterClassModule(),
                 Modules.override(new GlobalNetworkOperatorModule(campaign,
                         player,
-                        GetUpdatedClass.class))
+                        GetUpdatedCharacterClass.class))
                         .with(new AbstractModule() {
                             @Override
                             protected void configure() {
                                 bind(Operator.class).toInstance(mockOperator);
                             }
                         }));
-        getUpdatedClass = injector.getInstance(GetUpdatedClass.class);
+        getUpdatedCharacterClass = injector.getInstance(GetUpdatedCharacterClass.class);
     }
 
     @Test
-    public void shouldReturnClass() {
-        OperatorResponseQuery operatorResponseQuery = createMockResponseWithClass();
-        UpdatedClassResponse updatedClassResponse = mockResponseAndReturnClassDetailsResponse(operatorResponseQuery);
-        Assertions.assertNotNull(updatedClassResponse.getCClass(), "Class null.");
+    public void shouldReturnCharacterClass() {
+        OperatorResponseQuery operatorResponseQuery = createMockResponseWithCharacterClass();
+        UpdatedCharacterClassResponse updatedCharacterClassResponse = mockResponseAndReturnUpdatedCharacterClassResponse(operatorResponseQuery);
+        Assertions.assertNotNull(updatedCharacterClassResponse.getCharacterClass(), "CharacterClass null.");
     }
 
     @Test
-    public void shouldReturnEmptyClassWhenEmptyResponse() {
+    public void shouldReturnEmptyCharacterClassWhenEmptyResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse("{}");
-        UpdatedClassResponse updatedClassResponse = mockResponseAndReturnClassDetailsResponse(operatorResponseQuery);
-        Assertions.assertNull(updatedClassResponse.getCClass(), "Class not null.");
+        UpdatedCharacterClassResponse updatedCharacterClassResponse = mockResponseAndReturnUpdatedCharacterClassResponse(operatorResponseQuery);
+        Assertions.assertNull(updatedCharacterClassResponse.getCharacterClass(), "CharacterClass not null.");
     }
 
     @Test
-    public void shouldReturnEmptyClassWhenNullResponse() {
+    public void shouldReturnEmptyCharacterClassWhenNullResponse() {
         OperatorResponseQuery operatorResponseQuery = createMockResponse(null);
-        UpdatedClassResponse updatedClassResponse = mockResponseAndReturnClassDetailsResponse(operatorResponseQuery);
-        Assertions.assertNull(updatedClassResponse.getCClass(), "Class not null.");
+        UpdatedCharacterClassResponse updatedCharacterClassResponse = mockResponseAndReturnUpdatedCharacterClassResponse(operatorResponseQuery);
+        Assertions.assertNull(updatedCharacterClassResponse.getCharacterClass(), "CharacterClass not null.");
     }
 
-    private OperatorResponseQuery createMockResponseWithClass() {
+    private OperatorResponseQuery createMockResponseWithCharacterClass() {
         String queryId = "123";
         ObjectMapper objectMapper = new ObjectMapper();
-        String classJson;
+        String characterClassJson;
         try {
-            classJson = objectMapper.writeValueAsString(Class
+            characterClassJson = objectMapper.writeValueAsString(CharacterClass
                     .builder()
                     .build());
         } catch (JsonProcessingException e) {
-            classJson = "{}";
+            characterClassJson = "{}";
         }
         return OperatorResponseQuery
                 .builder()
                 .queryId(queryId)
-                .responseJson(classJson)
+                .responseJson(characterClassJson)
                 .build();
     }
 
@@ -96,14 +96,14 @@ public class GetUpdatedClassTest {
                 .build();
     }
 
-    private UpdatedClassResponse mockResponseAndReturnClassDetailsResponse(OperatorResponseQuery operatorResponseQuery) {
+    private UpdatedCharacterClassResponse mockResponseAndReturnUpdatedCharacterClassResponse(OperatorResponseQuery operatorResponseQuery) {
         when(mockOperator.getOperatorResponseQuery(any(OperatorRequestQuery.class))).thenReturn(operatorResponseQuery);
-        UpdatedClassRequest updatedClassRequest = UpdatedClassRequest
+        UpdatedCharacterClassRequest updatedCharacterClassRequest = UpdatedCharacterClassRequest
                 .builder()
-                .cClass(Class
+                .characterClass(CharacterClass
                         .builder()
                         .build())
                 .build();
-        return getUpdatedClass.getUpdatedClassResponse(updatedClassRequest);
+        return getUpdatedCharacterClass.getUpdatedCharacterClassResponse(updatedCharacterClassRequest);
     }
 }

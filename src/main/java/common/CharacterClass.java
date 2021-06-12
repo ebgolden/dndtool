@@ -6,6 +6,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class Class {
+public class CharacterClass {
     String id;
 }

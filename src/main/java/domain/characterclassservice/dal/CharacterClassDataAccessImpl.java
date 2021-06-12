@@ -1,30 +1,30 @@
-package domain.classservice.dal;
+package domain.characterclassservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import common.Campaign;
 import common.Player;
 import common.QueryType;
-import domain.classservice.dal.dao.ClassDao;
+import domain.characterclassservice.dal.dao.CharacterClassDao;
 import persistence.operatorservice.RequestQueryRequest;
 import persistence.operatorservice.RequestQueryResponse;
 import persistence.operatorservice.SendRequestQuery;
 
-public class ClassDataAccessImpl implements ClassDataAccess {
+public class CharacterClassDataAccessImpl implements CharacterClassDataAccess {
     @Inject
     @Named("requestQueryRequest")
     private RequestQueryRequest requestQueryRequest;
     @Inject
     private SendRequestQuery sendRequestQuery;
     @Inject
-    private ClassDataAccessConverter classDataAccessConverter;
+    private CharacterClassDataAccessConverter characterClassDataAccessConverter;
 
-    public ClassDao getClassDao(ClassDao classDao) {
-        String classJson = classDao.getClassJson();
-        requestQueryRequest = constructQueryRequest(classJson);
+    public CharacterClassDao getCharacterClassDao(CharacterClassDao characterClassDao) {
+        String characterClassJson = characterClassDao.getCharacterClassJson();
+        requestQueryRequest = constructQueryRequest(characterClassJson);
         RequestQueryResponse requestQueryResponse = sendRequestQuery.getRequestQueryResponse(requestQueryRequest);
-        classJson = requestQueryResponse.getResponseJson();
-        return classDataAccessConverter.getClassDaoFromClassJson(classJson);
+        characterClassJson = requestQueryResponse.getResponseJson();
+        return characterClassDataAccessConverter.getCharacterClassDaoFromCharacterClassJson(characterClassJson);
     }
 
     private RequestQueryRequest constructQueryRequest(String requestJson) {
