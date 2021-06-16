@@ -1,0 +1,14 @@
+package application.characterclassreaderservice.dal;
+
+import application.characterclassreaderservice.bll.bo.CharacterClassBo;
+import application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
+import application.characterclassreaderservice.dal.dao.CharacterClassDao;
+import application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
+
+public interface CharacterClassReaderDataAccessConverter {
+    CharacterClassNameDao getCharacterClassNameDaoFromCharacterClassNameBo(CharacterClassNameBo characterClassNameBo);
+
+    CharacterClassBo getCharacterClassBoFromCharacterClassDao(CharacterClassDao characterClassDao);
+
+    CharacterClassDao getCharacterClassDaoFromCharacterClassJson(String characterClassJson);
+}
