@@ -1,0 +1,42 @@
+"Light Armor": {
+    "content": [
+        "Made from supple and thin materials, light armor favors agile adventurers since it offers some protection without sacrificing mobility. If you wear light armor, you add your Dexterity modifier to the base number from your armor type to determine your Armor Class.",
+        "***Padded.*** Padded armor consists of quilted layers of cloth and batting.",
+        "***Leather.*** The breastplate and shoulder protectors of this armor are made of leather that has been stiffened by being boiled in oil. The rest of the armor is made of softer and more flexible materials.",
+        "***Studded Leather.*** Made from tough but flexible leather, studded leather is reinforced with close-set rivets or spikes."
+    ],
+    "table": {
+        "Armor": [
+            "Padded",
+            "Leather",
+            "Studded leather"
+        ],
+        "Cost": [
+            "5 gp",
+            "10 gp",
+            "45 gp"
+        ],
+        "Armor Class (AC)": [
+            "11 + Dex modifier",
+            "11 + Dex modifier",
+            "12 + Dex modifier"
+        ],
+        "Strength": [
+            "—",
+            "—",
+            "—"
+        ],
+        "Stealth": [
+            "Disadvantage",
+            "—",
+            "—"
+        ],
+        "Weight": [
+            "8 lb.",
+            "10 lb.",
+            "13 lb."
+        ],
+        "Don": "1 minute",
+        "Doff": "1 minute"
+    }
+}

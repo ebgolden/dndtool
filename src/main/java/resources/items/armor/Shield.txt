@@ -1,0 +1,24 @@
+"Shield": {
+    "table": {
+        "Armor": [
+            "Shield"
+        ],
+        "Cost": [
+            "10 gp"
+        ],
+        "Armor Class (AC)": [
+            "+2"
+        ],
+        "Strength": [
+            "—"
+        ],
+        "Stealth": [
+            "—"
+        ],
+        "Weight": [
+            "6 lb."
+        ],
+        "Don": "1 action",
+        "Doff": "1 action"
+    }
+}
