@@ -28,7 +28,6 @@ public class GetArmorFromResourceTest {
                 .armorType(armorType)
                 .build();
         ArmorFromResourceResponse armorFromResourceResponse = getArmorFromResource.getArmorFromResourceResponse(armorFromResourceRequest);
-        System.out.println(armorFromResourceResponse.getArmor()[0].getId());
         Assertions.assertNotNull(armorFromResourceResponse.getArmor(), "Armor null.");
     }
 }

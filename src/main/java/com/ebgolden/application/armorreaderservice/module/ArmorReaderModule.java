@@ -27,7 +27,7 @@ public class ArmorReaderModule extends AbstractModule {
     @Provides
     @Named("armorDirectory")
     public String provideArmorDirectory() {
-        return "src/main/java/resources/items/armor/";
+        return "src/main/java/com/ebgolden/resources/items/armor/";
     }
 
     @Provides

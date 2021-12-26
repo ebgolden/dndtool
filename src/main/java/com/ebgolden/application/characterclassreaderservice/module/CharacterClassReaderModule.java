@@ -27,7 +27,7 @@ public class CharacterClassReaderModule extends AbstractModule {
     @Provides
     @Named("characterClassDirectory")
     public String provideCharacterClassDirectory() {
-        return "src/main/java/resources/characterclasses/";
+        return "src/main/java/com/ebgolden/resources/characterclasses/";
     }
 
     @Provides

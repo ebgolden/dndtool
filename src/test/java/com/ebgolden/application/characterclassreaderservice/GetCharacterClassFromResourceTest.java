@@ -28,8 +28,6 @@ public class GetCharacterClassFromResourceTest {
                 .characterClassName(characterClassName)
                 .build();
         CharacterClassFromResourceResponse characterClassFromResourceResponse = getCharacterClassFromResource.getCharacterClassFromResourceResponse(characterClassFromResourceRequest);
-        for (String equipment : characterClassFromResourceResponse.getCharacterClass().getEquipment())
-            System.out.println(equipment);
         Assertions.assertNotNull(characterClassFromResourceResponse.getCharacterClass(), "CharacterClass null.");
     }
 }

@@ -82,32 +82,40 @@ public class ArmorReaderDataAccessConverterImpl implements ArmorReaderDataAccess
 
     private Pair<Integer, Coin> parseArmorCostAndReturnCostAmountAndCoinPair(Object armorCost) {
         String[] armorCostAndUnit = ((String)armorCost).split(" ");
-        int armorCostAmount = Integer.parseInt(armorCostAndUnit[0]);
-        Coin coin = Coin.valueOf(armorCostAndUnit[1]);
+        int armorCostAmount = Integer.parseInt(removeNonNumericalCharacters(armorCostAndUnit[0]));
+        Coin coin = Coin.valueOf(formatAsConstantName(armorCostAndUnit[1]));
         return new ImmutablePair<>(armorCostAmount, coin);
     }
 
     private int parseBaseArmorClassAndReturnBaseArmorClassInteger(Object baseArmorClass) {
-        String baseArmorClassString = (String)baseArmorClass;
+        String baseArmorClassString = removeNonNumericalCharacters((String)baseArmorClass);
         return Integer.parseInt(baseArmorClassString);
     }
 
     private int parseStrengthAndReturnStrengthInteger(Object strength) {
-        String[] armorStrengthString = ((String)strength).split(" ");
+        String armorStrengthString = removeNonNumericalCharacters((String)strength);
         int armorStrengthNumber = 0;
-        if (armorStrengthString.length > 1)
-            armorStrengthNumber = Integer.parseInt(armorStrengthString[1]);
+        if (armorStrengthString.length() > 1)
+            armorStrengthNumber = Integer.parseInt(armorStrengthString);
         return armorStrengthNumber;
     }
 
     private Advantage parseStealthAndReturnStealthAdvantage(Object stealth) {
-        String armorStealthString = ((String)stealth).toLowerCase();
-        return Advantage.valueOf(armorStealthString);
+        String armorStealthString = (String)stealth;
+        return Advantage.valueOf(formatAsConstantName(armorStealthString));
     }
 
     private int parseWeightAndReturnWeightInteger(Object weight) {
-        String armorWeightString = (String)weight;
+        String armorWeightString = removeNonNumericalCharacters((String)weight);
         return Integer.parseInt(armorWeightString);
+    }
+
+    private String removeNonNumericalCharacters(String stringToFix) {
+        return stringToFix.replaceAll("[^\\d]", "");
+    }
+
+    private String formatAsConstantName(String stringToFormat) {
+        return stringToFormat.toUpperCase();
     }
 
     private Pair<Integer, Time> parseDonOrDoffAndReturnDonOrDoffAmountAndTimePair(Object donOrDoff) {
@@ -119,7 +127,7 @@ public class ArmorReaderDataAccessConverterImpl implements ArmorReaderDataAccess
             armorDonNumber = Integer.parseInt(armorDonString[0]);
             if (armorDonString[1].charAt(armorDonString[1].length() - 1) == 's')
                 armorDonString[1] = armorDonString[1].substring(0, armorDonString[1].length() - 1);
-            donTime = Time.valueOf(armorDonString[1]);
+            donTime = Time.valueOf(armorDonString[1].toUpperCase());
         }
         return new ImmutablePair<>(armorDonNumber, donTime);
     }
