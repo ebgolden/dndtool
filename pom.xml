@@ -6,7 +6,7 @@
 
   <groupId>com.ebgolden</groupId>
   <artifactId>dndtool</artifactId>
-  <version>0.1.0-alpha-SNAPSHOT</version>
+  <version>0.1.0-alpha</version>
 
   <name>dndtool</name>
   <url>https://github.com/ebgolden/dndtool</url>
