@@ -1,3 +1,3 @@
 D&D tool for creating, managing, and running campaigns.
 
-This project has been abandoned. Feel free to make something of it.
+This project is not being regularly worked on. Feel free to make something of it.
