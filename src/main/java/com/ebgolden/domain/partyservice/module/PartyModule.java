@@ -1,15 +1,15 @@
-package domain.partyservice.module;
+package com.ebgolden.domain.partyservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.partyservice.*;
-import domain.partyservice.bll.PartyBusinessLogic;
-import domain.partyservice.bll.PartyBusinessLogicConverter;
-import domain.partyservice.bll.PartyBusinessLogicConverterImpl;
-import domain.partyservice.bll.PartyBusinessLogicImpl;
-import domain.partyservice.dal.PartyDataAccess;
-import domain.partyservice.dal.PartyDataAccessConverter;
-import domain.partyservice.dal.PartyDataAccessConverterImpl;
-import domain.partyservice.dal.PartyDataAccessImpl;
+import com.ebgolden.domain.partyservice.*;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogic;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogicConverter;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogicConverterImpl;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogicImpl;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccess;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccessConverter;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccessConverterImpl;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccessImpl;
 
 public class PartyModule extends AbstractModule {
     @Override

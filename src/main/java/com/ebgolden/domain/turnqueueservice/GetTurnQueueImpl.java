@@ -1,10 +1,10 @@
-package domain.turnqueueservice;
+package com.ebgolden.domain.turnqueueservice;
 
 import com.google.inject.Inject;
-import domain.turnqueueservice.bll.TurnQueueBusinessLogic;
-import domain.turnqueueservice.bll.TurnQueueBusinessLogicConverter;
-import domain.turnqueueservice.bll.bo.EncounterBo;
-import domain.turnqueueservice.bll.bo.TurnQueueBo;
+import com.ebgolden.domain.turnqueueservice.bll.TurnQueueBusinessLogic;
+import com.ebgolden.domain.turnqueueservice.bll.TurnQueueBusinessLogicConverter;
+import com.ebgolden.domain.turnqueueservice.bll.bo.EncounterBo;
+import com.ebgolden.domain.turnqueueservice.bll.bo.TurnQueueBo;
 
 public class GetTurnQueueImpl implements GetTurnQueue {
     @Inject

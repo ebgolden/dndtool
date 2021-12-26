@@ -1,17 +1,17 @@
-package domain.spellservice.dal;
+package com.ebgolden.domain.spellservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Spell;
-import common.Visibility;
+import com.ebgolden.common.Spell;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.spellservice.bll.bo.SpellAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityBo;
-import domain.spellservice.dal.dao.SpellDao;
-import domain.spellservice.dal.dao.SpellAndVisibilityDao;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityBo;
+import com.ebgolden.domain.spellservice.dal.dao.SpellDao;
+import com.ebgolden.domain.spellservice.dal.dao.SpellAndVisibilityDao;
 import java.util.HashMap;
 import java.util.Map;
 

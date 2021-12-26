@@ -1,10 +1,10 @@
-package domain.raceservice.dal;
+package com.ebgolden.domain.raceservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Race;
-import domain.raceservice.bll.bo.RaceBo;
-import domain.raceservice.dal.dao.RaceDao;
+import com.ebgolden.common.Race;
+import com.ebgolden.domain.raceservice.bll.bo.RaceBo;
+import com.ebgolden.domain.raceservice.dal.dao.RaceDao;
 
 public class RaceDataAccessConverterImpl implements RaceDataAccessConverter {
     public RaceDao getRaceDaoFromRaceBo(RaceBo raceBo) {

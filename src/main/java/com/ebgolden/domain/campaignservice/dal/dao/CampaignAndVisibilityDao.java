@@ -1,4 +1,4 @@
-package domain.campaignservice.dal.dao;
+package com.ebgolden.domain.campaignservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

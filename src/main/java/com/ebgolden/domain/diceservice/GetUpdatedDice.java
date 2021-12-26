@@ -1,4 +1,4 @@
-package domain.diceservice;
+package com.ebgolden.domain.diceservice;
 
 public interface GetUpdatedDice {
     /**

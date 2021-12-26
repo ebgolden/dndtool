@@ -1,10 +1,10 @@
-package domain.locationservice;
+package com.ebgolden.domain.locationservice;
 
 import com.google.inject.Inject;
-import domain.locationservice.bll.LocationBusinessLogic;
-import domain.locationservice.bll.LocationBusinessLogicConverter;
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogic;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogicConverter;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
 
 public class GetUpdatedLocationImpl implements GetUpdatedLocation {
     @Inject

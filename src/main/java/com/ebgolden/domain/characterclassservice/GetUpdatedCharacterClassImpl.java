@@ -1,9 +1,9 @@
-package domain.characterclassservice;
+package com.ebgolden.domain.characterclassservice;
 
 import com.google.inject.Inject;
-import domain.characterclassservice.bll.CharacterClassBusinessLogic;
-import domain.characterclassservice.bll.CharacterClassBusinessLogicConverter;
-import domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.bll.CharacterClassBusinessLogic;
+import com.ebgolden.domain.characterclassservice.bll.CharacterClassBusinessLogicConverter;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
 
 public class GetUpdatedCharacterClassImpl implements GetUpdatedCharacterClass {
     @Inject

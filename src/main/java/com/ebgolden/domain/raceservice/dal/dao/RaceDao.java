@@ -1,4 +1,4 @@
-package domain.raceservice.dal.dao;
+package com.ebgolden.domain.raceservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

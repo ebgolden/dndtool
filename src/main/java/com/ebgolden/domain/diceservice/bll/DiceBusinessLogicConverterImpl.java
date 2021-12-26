@@ -1,11 +1,11 @@
-package domain.diceservice.bll;
+package com.ebgolden.domain.diceservice.bll;
 
-import common.Die;
-import common.Player;
-import domain.diceservice.UpdatedDiceResponse;
-import domain.diceservice.UpdatedDiceRequest;
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.common.Die;
+import com.ebgolden.common.Player;
+import com.ebgolden.domain.diceservice.UpdatedDiceResponse;
+import com.ebgolden.domain.diceservice.UpdatedDiceRequest;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
 
 public class DiceBusinessLogicConverterImpl implements DiceBusinessLogicConverter {
     public DiceAndPlayerBo getDiceAndPlayerBoFromUpdatedDiceRequest(UpdatedDiceRequest updatedDiceRequest) {

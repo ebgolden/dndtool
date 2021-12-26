@@ -1,4 +1,4 @@
-package application.armorreaderservice.dal.dao;
+package com.ebgolden.application.armorreaderservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

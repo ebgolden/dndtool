@@ -1,8 +1,8 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Action;
+import com.ebgolden.common.Action;
 
 @Builder
 @Value

@@ -1,18 +1,18 @@
-package domain.locationservice.module;
+package com.ebgolden.domain.locationservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.locationservice.GetUpdatedLocation;
-import domain.locationservice.GetUpdatedLocationImpl;
-import domain.locationservice.ChangeVisibilityOfLocationDetails;
-import domain.locationservice.ChangeVisibilityOfLocationDetailsImpl;
-import domain.locationservice.bll.LocationBusinessLogic;
-import domain.locationservice.bll.LocationBusinessLogicConverter;
-import domain.locationservice.bll.LocationBusinessLogicConverterImpl;
-import domain.locationservice.bll.LocationBusinessLogicImpl;
-import domain.locationservice.dal.LocationDataAccess;
-import domain.locationservice.dal.LocationDataAccessConverter;
-import domain.locationservice.dal.LocationDataAccessConverterImpl;
-import domain.locationservice.dal.LocationDataAccessImpl;
+import com.ebgolden.domain.locationservice.GetUpdatedLocation;
+import com.ebgolden.domain.locationservice.GetUpdatedLocationImpl;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetails;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetailsImpl;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogic;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogicConverter;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogicConverterImpl;
+import com.ebgolden.domain.locationservice.bll.LocationBusinessLogicImpl;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccess;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccessConverter;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccessConverterImpl;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccessImpl;
 
 public class LocationModule extends AbstractModule {
     @Override

@@ -1,9 +1,9 @@
-package persistence.operatorservice.dal;
+package com.ebgolden.persistence.operatorservice.dal;
 
-import common.OperatorRequestQuery;
-import common.OperatorResponseQuery;
-import persistence.operatorservice.bll.bo.*;
-import persistence.operatorservice.dal.dao.*;
+import com.ebgolden.common.OperatorRequestQuery;
+import com.ebgolden.common.OperatorResponseQuery;
+import com.ebgolden.persistence.operatorservice.bll.bo.*;
+import com.ebgolden.persistence.operatorservice.dal.dao.*;
 
 public interface OperatorDataAccessConverter {
     CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDaoFromCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);

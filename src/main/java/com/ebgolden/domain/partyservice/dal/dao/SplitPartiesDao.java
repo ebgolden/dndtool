@@ -1,4 +1,4 @@
-package domain.partyservice.dal.dao;
+package com.ebgolden.domain.partyservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Data;

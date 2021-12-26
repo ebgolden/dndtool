@@ -1,16 +1,16 @@
-package domain.locationservice.bll;
+package com.ebgolden.domain.locationservice.bll;
 
-import common.DungeonMaster;
-import common.Location;
-import common.Player;
-import common.Visibility;
-import domain.locationservice.ChangeVisibilityOfLocationDetailsRequest;
-import domain.locationservice.ChangeVisibilityOfLocationDetailsResponse;
-import domain.locationservice.UpdatedLocationRequest;
-import domain.locationservice.UpdatedLocationResponse;
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Location;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetailsRequest;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetailsResponse;
+import com.ebgolden.domain.locationservice.UpdatedLocationRequest;
+import com.ebgolden.domain.locationservice.UpdatedLocationResponse;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
 import java.util.Map;
 
 public class LocationBusinessLogicConverterImpl implements LocationBusinessLogicConverter {

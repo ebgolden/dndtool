@@ -1,8 +1,8 @@
-package domain.locationservice.bll;
+package com.ebgolden.domain.locationservice.bll;
 
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
 
 public interface LocationBusinessLogic {
     LocationAndVisibilityBo getLocationAndVisibilityBo(LocationAndPlayerBo locationAndPlayerBo);

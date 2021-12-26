@@ -1,9 +1,9 @@
-package domain.turnqueueservice.bll;
+package com.ebgolden.domain.turnqueueservice.bll;
 
-import domain.turnqueueservice.TurnQueueRequest;
-import domain.turnqueueservice.TurnQueueResponse;
-import domain.turnqueueservice.bll.bo.EncounterBo;
-import domain.turnqueueservice.bll.bo.TurnQueueBo;
+import com.ebgolden.domain.turnqueueservice.TurnQueueRequest;
+import com.ebgolden.domain.turnqueueservice.TurnQueueResponse;
+import com.ebgolden.domain.turnqueueservice.bll.bo.EncounterBo;
+import com.ebgolden.domain.turnqueueservice.bll.bo.TurnQueueBo;
 
 public interface TurnQueueBusinessLogicConverter {
     EncounterBo getEncounterBoFromTurnQueueRequest(TurnQueueRequest turnQueueRequest);

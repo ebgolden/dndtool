@@ -1,6 +1,6 @@
-package persistence.operatorservice.bll;
+package com.ebgolden.persistence.operatorservice.bll;
 
-import persistence.operatorservice.bll.bo.*;
+import com.ebgolden.persistence.operatorservice.bll.bo.*;
 
 public interface OperatorBusinessLogic {
     QueryIdAndResponseJsonBo getQueryIdAndResponseJsonBo(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo);

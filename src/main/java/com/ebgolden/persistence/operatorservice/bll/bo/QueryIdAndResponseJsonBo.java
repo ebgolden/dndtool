@@ -1,4 +1,4 @@
-package persistence.operatorservice.bll.bo;
+package com.ebgolden.persistence.operatorservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;

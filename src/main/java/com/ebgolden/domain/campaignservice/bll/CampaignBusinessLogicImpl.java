@@ -1,19 +1,19 @@
-package domain.campaignservice.bll;
+package com.ebgolden.domain.campaignservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.*;
+import com.ebgolden.common.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.campaignservice.bll.bo.*;
-import domain.campaignservice.dal.CampaignDataAccess;
-import domain.campaignservice.dal.CampaignDataAccessConverter;
-import domain.campaignservice.dal.dao.CampaignAndPlayerDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
-import domain.campaignservice.dal.dao.CampaignDao;
+import com.ebgolden.domain.campaignservice.bll.bo.*;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccess;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccessConverter;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndPlayerDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignDao;
 import java.util.Map;
 
 public class CampaignBusinessLogicImpl implements CampaignBusinessLogic {

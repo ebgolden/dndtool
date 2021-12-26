@@ -1,15 +1,15 @@
-package domain.diceservice.bll;
+package com.ebgolden.domain.diceservice.bll;
 
 import com.google.inject.Inject;
-import common.Die;
-import common.DungeonMaster;
-import common.Player;
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
-import domain.diceservice.dal.DiceDataAccess;
-import domain.diceservice.dal.DiceDataAccessConverter;
-import domain.diceservice.dal.dao.DiceAndPlayerDao;
-import domain.diceservice.dal.dao.DiceDao;
+import com.ebgolden.common.Die;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccess;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccessConverter;
+import com.ebgolden.domain.diceservice.dal.dao.DiceAndPlayerDao;
+import com.ebgolden.domain.diceservice.dal.dao.DiceDao;
 
 public class DiceBusinessLogicImpl implements DiceBusinessLogic {
     @Inject

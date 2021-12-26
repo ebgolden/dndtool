@@ -1,11 +1,11 @@
-package application.characterclassreaderservice.bll;
+package com.ebgolden.application.characterclassreaderservice.bll;
 
-import application.characterclassreaderservice.bll.bo.CharacterClassBo;
-import application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
-import application.characterclassreaderservice.dal.CharacterClassReaderDataAccess;
-import application.characterclassreaderservice.dal.CharacterClassReaderDataAccessConverter;
-import application.characterclassreaderservice.dal.dao.CharacterClassDao;
-import application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassBo;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
+import com.ebgolden.application.characterclassreaderservice.dal.CharacterClassReaderDataAccess;
+import com.ebgolden.application.characterclassreaderservice.dal.CharacterClassReaderDataAccessConverter;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassDao;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
 import com.google.inject.Inject;
 
 public class CharacterClassReaderBusinessLogicImpl implements CharacterClassReaderBusinessLogic {

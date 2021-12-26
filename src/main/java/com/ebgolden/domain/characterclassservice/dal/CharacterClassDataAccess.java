@@ -1,6 +1,6 @@
-package domain.characterclassservice.dal;
+package com.ebgolden.domain.characterclassservice.dal;
 
-import domain.characterclassservice.dal.dao.CharacterClassDao;
+import com.ebgolden.domain.characterclassservice.dal.dao.CharacterClassDao;
 
 public interface CharacterClassDataAccess {
     CharacterClassDao getCharacterClassDao(CharacterClassDao characterClassDao);

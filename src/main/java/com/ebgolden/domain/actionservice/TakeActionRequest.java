@@ -1,11 +1,11 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Action;
-import common.Character;
-import common.Die;
-import common.Player;
+import com.ebgolden.common.Action;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.Die;
+import com.ebgolden.common.Player;
 
 @Builder
 @Value

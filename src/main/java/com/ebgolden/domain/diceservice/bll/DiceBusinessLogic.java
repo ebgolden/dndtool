@@ -1,7 +1,7 @@
-package domain.diceservice.bll;
+package com.ebgolden.domain.diceservice.bll;
 
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
 
 public interface DiceBusinessLogic {
     DiceBo getDiceBo(DiceAndPlayerBo diceAndPlayerBo);

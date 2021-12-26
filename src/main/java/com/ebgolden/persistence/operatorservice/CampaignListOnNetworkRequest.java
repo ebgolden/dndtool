@@ -1,6 +1,6 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
-import common.Player;
+import com.ebgolden.common.Player;
 import lombok.Builder;
 import lombok.Value;
 

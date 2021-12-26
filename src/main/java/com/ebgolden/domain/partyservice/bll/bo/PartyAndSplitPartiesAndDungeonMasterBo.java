@@ -1,9 +1,9 @@
-package domain.partyservice.bll.bo;
+package com.ebgolden.domain.partyservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Data;
-import common.DungeonMaster;
-import common.Party;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Party;
 
 @Builder
 @Data

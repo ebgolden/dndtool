@@ -1,8 +1,8 @@
-package domain.turnqueueservice;
+package com.ebgolden.domain.turnqueueservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Party;
+import com.ebgolden.common.Party;
 
 @Builder
 @Value

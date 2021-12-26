@@ -1,6 +1,6 @@
-package application.armorreaderservice;
+package com.ebgolden.application.armorreaderservice;
 
-import application.armorreaderservice.module.ArmorReaderModule;
+import com.ebgolden.application.armorreaderservice.module.ArmorReaderModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.Assertions;

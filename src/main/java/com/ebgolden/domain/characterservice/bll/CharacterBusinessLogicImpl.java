@@ -1,17 +1,17 @@
-package domain.characterservice.bll;
+package com.ebgolden.domain.characterservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.*;
-import common.Character;
+import com.ebgolden.common.*;
+import com.ebgolden.common.Character;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.characterservice.bll.bo.*;
-import domain.characterservice.dal.CharacterDataAccess;
-import domain.characterservice.dal.CharacterDataAccessConverter;
-import domain.characterservice.dal.dao.*;
+import com.ebgolden.domain.characterservice.bll.bo.*;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccess;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccessConverter;
+import com.ebgolden.domain.characterservice.dal.dao.*;
 import java.util.Map;
 
 public class CharacterBusinessLogicImpl implements CharacterBusinessLogic {

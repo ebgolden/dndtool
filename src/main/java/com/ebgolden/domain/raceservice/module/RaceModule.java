@@ -1,16 +1,16 @@
-package domain.raceservice.module;
+package com.ebgolden.domain.raceservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.raceservice.GetUpdatedRace;
-import domain.raceservice.GetUpdatedRaceImpl;
-import domain.raceservice.bll.RaceBusinessLogic;
-import domain.raceservice.bll.RaceBusinessLogicConverter;
-import domain.raceservice.bll.RaceBusinessLogicConverterImpl;
-import domain.raceservice.bll.RaceBusinessLogicImpl;
-import domain.raceservice.dal.RaceDataAccess;
-import domain.raceservice.dal.RaceDataAccessConverter;
-import domain.raceservice.dal.RaceDataAccessConverterImpl;
-import domain.raceservice.dal.RaceDataAccessImpl;
+import com.ebgolden.domain.raceservice.GetUpdatedRace;
+import com.ebgolden.domain.raceservice.GetUpdatedRaceImpl;
+import com.ebgolden.domain.raceservice.bll.RaceBusinessLogic;
+import com.ebgolden.domain.raceservice.bll.RaceBusinessLogicConverter;
+import com.ebgolden.domain.raceservice.bll.RaceBusinessLogicConverterImpl;
+import com.ebgolden.domain.raceservice.bll.RaceBusinessLogicImpl;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccess;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccessConverter;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccessConverterImpl;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccessImpl;
 
 public class RaceModule extends AbstractModule {
     @Override

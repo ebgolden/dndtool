@@ -1,7 +1,7 @@
-package domain.spellservice.dal;
+package com.ebgolden.domain.spellservice.dal;
 
-import domain.spellservice.dal.dao.SpellDao;
-import domain.spellservice.dal.dao.SpellAndVisibilityDao;
+import com.ebgolden.domain.spellservice.dal.dao.SpellDao;
+import com.ebgolden.domain.spellservice.dal.dao.SpellAndVisibilityDao;
 
 public interface SpellDataAccess {
     SpellAndVisibilityDao getSpellAndVisibilityDao(SpellDao spellDao);

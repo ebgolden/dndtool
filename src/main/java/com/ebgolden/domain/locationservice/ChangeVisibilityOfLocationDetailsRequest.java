@@ -1,10 +1,10 @@
-package domain.locationservice;
+package com.ebgolden.domain.locationservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.DungeonMaster;
-import common.Location;
-import common.Visibility;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Location;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

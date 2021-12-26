@@ -1,4 +1,4 @@
-package domain.turnqueueservice;
+package com.ebgolden.domain.turnqueueservice;
 
 public interface GetTurnQueue {
     /**

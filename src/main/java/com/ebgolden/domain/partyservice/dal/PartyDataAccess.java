@@ -1,6 +1,6 @@
-package domain.partyservice.dal;
+package com.ebgolden.domain.partyservice.dal;
 
-import domain.partyservice.dal.dao.*;
+import com.ebgolden.domain.partyservice.dal.dao.*;
 
 public interface PartyDataAccess {
     PartyDao getPartyDao(PartyAndCharacterDao partyAndCharacterDao);

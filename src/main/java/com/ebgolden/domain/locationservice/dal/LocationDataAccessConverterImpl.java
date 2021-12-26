@@ -1,17 +1,17 @@
-package domain.locationservice.dal;
+package com.ebgolden.domain.locationservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Location;
-import common.Visibility;
+import com.ebgolden.common.Location;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
-import domain.locationservice.dal.dao.LocationDao;
-import domain.locationservice.dal.dao.LocationAndVisibilityDao;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.dal.dao.LocationDao;
+import com.ebgolden.domain.locationservice.dal.dao.LocationAndVisibilityDao;
 import java.util.HashMap;
 import java.util.Map;
 

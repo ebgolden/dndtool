@@ -1,10 +1,10 @@
-package domain.diceservice;
+package com.ebgolden.domain.diceservice;
 
 import com.google.inject.Inject;
-import domain.diceservice.bll.DiceBusinessLogic;
-import domain.diceservice.bll.DiceBusinessLogicConverter;
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogic;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogicConverter;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
 
 public class GetUpdatedDiceImpl implements GetUpdatedDice {
     @Inject

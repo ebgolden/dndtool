@@ -1,17 +1,17 @@
-package domain.worldservice.dal;
+package com.ebgolden.domain.worldservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Visibility;
-import common.World;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.common.World;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.worldservice.bll.bo.WorldAndPlayerBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
-import domain.worldservice.dal.dao.WorldDao;
-import domain.worldservice.dal.dao.WorldAndVisibilityDao;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndPlayerBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.dal.dao.WorldDao;
+import com.ebgolden.domain.worldservice.dal.dao.WorldAndVisibilityDao;
 import java.util.HashMap;
 import java.util.Map;
 

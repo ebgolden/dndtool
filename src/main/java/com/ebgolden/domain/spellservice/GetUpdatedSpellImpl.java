@@ -1,10 +1,10 @@
-package domain.spellservice;
+package com.ebgolden.domain.spellservice;
 
 import com.google.inject.Inject;
-import domain.spellservice.bll.SpellBusinessLogic;
-import domain.spellservice.bll.SpellBusinessLogicConverter;
-import domain.spellservice.bll.bo.SpellAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityBo;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogic;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogicConverter;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityBo;
 
 public class GetUpdatedSpellImpl implements GetUpdatedSpell {
     @Inject

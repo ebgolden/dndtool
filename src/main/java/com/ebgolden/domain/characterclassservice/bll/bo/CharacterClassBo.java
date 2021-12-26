@@ -1,8 +1,8 @@
-package domain.characterclassservice.bll.bo;
+package com.ebgolden.domain.characterclassservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.CharacterClass;
+import com.ebgolden.common.CharacterClass;
 
 @Builder
 @Value

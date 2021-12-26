@@ -1,7 +1,7 @@
-package domain.characterservice.bll;
+package com.ebgolden.domain.characterservice.bll;
 
-import domain.characterservice.*;
-import domain.characterservice.bll.bo.*;
+import com.ebgolden.domain.characterservice.*;
+import com.ebgolden.domain.characterservice.bll.bo.*;
 
 public interface CharacterBusinessLogicConverter {
     CharacterAndVisibilityAndPlayerBo getCharacterAndVisibilityAndPlayerBoFromCreateCharacterRequest(CreateCharacterRequest createCharacterRequest);

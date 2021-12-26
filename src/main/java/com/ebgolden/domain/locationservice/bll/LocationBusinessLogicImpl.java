@@ -1,22 +1,22 @@
-package domain.locationservice.bll;
+package com.ebgolden.domain.locationservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.DungeonMaster;
-import common.Location;
-import common.Player;
-import common.Visibility;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Location;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
-import domain.locationservice.dal.LocationDataAccess;
-import domain.locationservice.dal.LocationDataAccessConverter;
-import domain.locationservice.dal.dao.LocationDao;
-import domain.locationservice.dal.dao.LocationAndVisibilityDao;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccess;
+import com.ebgolden.domain.locationservice.dal.LocationDataAccessConverter;
+import com.ebgolden.domain.locationservice.dal.dao.LocationDao;
+import com.ebgolden.domain.locationservice.dal.dao.LocationAndVisibilityDao;
 import java.util.Map;
 
 public class LocationBusinessLogicImpl implements LocationBusinessLogic {

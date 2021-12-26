@@ -1,11 +1,11 @@
-package persistence.operatorservice.bll;
+package com.ebgolden.persistence.operatorservice.bll;
 
-import common.Campaign;
-import common.DungeonMaster;
-import common.Player;
-import common.QueryType;
-import persistence.operatorservice.*;
-import persistence.operatorservice.bll.bo.*;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.persistence.operatorservice.*;
+import com.ebgolden.persistence.operatorservice.bll.bo.*;
 import java.util.Map;
 
 public class OperatorBusinessLogicConverterImpl implements OperatorBusinessLogicConverter {

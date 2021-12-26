@@ -1,6 +1,6 @@
-package domain.campaignservice.bll;
+package com.ebgolden.domain.campaignservice.bll;
 
-import domain.campaignservice.bll.bo.*;
+import com.ebgolden.domain.campaignservice.bll.bo.*;
 
 public interface CampaignBusinessLogic {
     CampaignBo getCampaignBo(CampaignAndVisibilityAndDungeonMasterBo campaignAndVisibilityAndDungeonMasterBo);

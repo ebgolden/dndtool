@@ -1,19 +1,19 @@
-package domain.spellservice.bll;
+package com.ebgolden.domain.spellservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.*;
+import com.ebgolden.common.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.spellservice.bll.bo.SpellAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityBo;
-import domain.spellservice.dal.SpellDataAccess;
-import domain.spellservice.dal.SpellDataAccessConverter;
-import domain.spellservice.dal.dao.SpellDao;
-import domain.spellservice.dal.dao.SpellAndVisibilityDao;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityBo;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccess;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccessConverter;
+import com.ebgolden.domain.spellservice.dal.dao.SpellDao;
+import com.ebgolden.domain.spellservice.dal.dao.SpellAndVisibilityDao;
 import java.util.Map;
 
 public class SpellBusinessLogicImpl implements SpellBusinessLogic {

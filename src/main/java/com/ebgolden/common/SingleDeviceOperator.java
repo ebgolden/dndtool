@@ -1,4 +1,4 @@
-package common;
+package com.ebgolden.common;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

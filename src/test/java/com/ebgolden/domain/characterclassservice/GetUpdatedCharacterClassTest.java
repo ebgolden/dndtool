@@ -1,4 +1,4 @@
-package domain.characterclassservice;
+package com.ebgolden.domain.characterclassservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,16 +6,16 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
-import common.*;
-import common.CharacterClass;
+import com.ebgolden.common.*;
+import com.ebgolden.common.CharacterClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import domain.characterclassservice.module.CharacterClassModule;
-import persistence.operatorservice.module.GlobalNetworkOperatorModule;
+import com.ebgolden.domain.characterclassservice.module.CharacterClassModule;
+import com.ebgolden.persistence.operatorservice.module.GlobalNetworkOperatorModule;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

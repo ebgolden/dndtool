@@ -1,8 +1,8 @@
-package domain.itemservice.bll;
+package com.ebgolden.domain.itemservice.bll;
 
-import domain.itemservice.bll.bo.ItemAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityBo;
 
 public interface ItemBusinessLogic {
     ItemAndVisibilityBo getItemAndVisibilityBo(ItemAndPlayerBo itemAndPlayerBo);

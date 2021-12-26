@@ -1,4 +1,4 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
 public interface GetActionFromNonStandardAction {
     /**

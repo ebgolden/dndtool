@@ -1,6 +1,6 @@
-package domain.characterclassservice.bll;
+package com.ebgolden.domain.characterclassservice.bll;
 
-import domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
 
 public interface CharacterClassBusinessLogic {
     CharacterClassBo getCharacterClassBo(CharacterClassBo characterClassBo);

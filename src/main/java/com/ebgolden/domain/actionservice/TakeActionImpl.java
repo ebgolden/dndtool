@@ -1,10 +1,10 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
 import com.google.inject.Inject;
-import domain.actionservice.bll.ActionBusinessLogic;
-import domain.actionservice.bll.ActionBusinessLogicConverter;
-import domain.actionservice.bll.bo.ActionAndDiceAndCharacterAndPlayerBo;
-import domain.actionservice.bll.bo.ResultBo;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogic;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogicConverter;
+import com.ebgolden.domain.actionservice.bll.bo.ActionAndDiceAndCharacterAndPlayerBo;
+import com.ebgolden.domain.actionservice.bll.bo.ResultBo;
 
 public class TakeActionImpl implements TakeAction {
     @Inject

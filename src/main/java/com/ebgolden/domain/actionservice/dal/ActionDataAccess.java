@@ -1,6 +1,6 @@
-package domain.actionservice.dal;
+package com.ebgolden.domain.actionservice.dal;
 
-import domain.actionservice.dal.dao.*;
+import com.ebgolden.domain.actionservice.dal.dao.*;
 
 public interface ActionDataAccess {
     ActionsDao getActionsDao(CharacterDao characterDao);

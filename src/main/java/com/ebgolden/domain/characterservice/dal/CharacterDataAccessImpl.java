@@ -1,14 +1,14 @@
-package domain.characterservice.dal;
+package com.ebgolden.domain.characterservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import common.QueryType;
-import domain.characterservice.dal.dao.*;
-import persistence.operatorservice.RequestQueryRequest;
-import persistence.operatorservice.RequestQueryResponse;
-import persistence.operatorservice.SendRequestQuery;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.domain.characterservice.dal.dao.*;
+import com.ebgolden.persistence.operatorservice.RequestQueryRequest;
+import com.ebgolden.persistence.operatorservice.RequestQueryResponse;
+import com.ebgolden.persistence.operatorservice.SendRequestQuery;
 
 public class CharacterDataAccessImpl implements CharacterDataAccess {
     @Inject

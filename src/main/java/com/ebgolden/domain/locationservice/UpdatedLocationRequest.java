@@ -1,9 +1,9 @@
-package domain.locationservice;
+package com.ebgolden.domain.locationservice;
 
 import lombok.Builder;
 import lombok.Data;
-import common.Location;
-import common.Player;
+import com.ebgolden.common.Location;
+import com.ebgolden.common.Player;
 
 @Builder
 @Data

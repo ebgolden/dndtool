@@ -1,10 +1,10 @@
-package domain.partyservice;
+package com.ebgolden.domain.partyservice;
 
 import com.google.inject.Inject;
-import domain.partyservice.bll.PartyBusinessLogic;
-import domain.partyservice.bll.PartyBusinessLogicConverter;
-import domain.partyservice.bll.bo.PartyAndSplitPartiesAndDungeonMasterBo;
-import domain.partyservice.bll.bo.SplitPartiesBo;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogic;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogicConverter;
+import com.ebgolden.domain.partyservice.bll.bo.PartyAndSplitPartiesAndDungeonMasterBo;
+import com.ebgolden.domain.partyservice.bll.bo.SplitPartiesBo;
 
 public class SplitPartyImpl implements SplitParty {
     @Inject

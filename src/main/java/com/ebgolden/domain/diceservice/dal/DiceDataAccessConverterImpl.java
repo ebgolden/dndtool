@@ -1,13 +1,13 @@
-package domain.diceservice.dal;
+package com.ebgolden.domain.diceservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Die;
-import common.Player;
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
-import domain.diceservice.dal.dao.DiceAndPlayerDao;
-import domain.diceservice.dal.dao.DiceDao;
+import com.ebgolden.common.Die;
+import com.ebgolden.common.Player;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.domain.diceservice.dal.dao.DiceAndPlayerDao;
+import com.ebgolden.domain.diceservice.dal.dao.DiceDao;
 
 public class DiceDataAccessConverterImpl implements DiceDataAccessConverter {
     public DiceAndPlayerDao getDiceAndPlayerDaoFromDiceAndPlayerBo(DiceAndPlayerBo diceAndPlayerBo) {

@@ -1,15 +1,15 @@
-package domain.campaignservice.module;
+package com.ebgolden.domain.campaignservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.campaignservice.*;
-import domain.campaignservice.bll.CampaignBusinessLogic;
-import domain.campaignservice.bll.CampaignBusinessLogicConverter;
-import domain.campaignservice.bll.CampaignBusinessLogicConverterImpl;
-import domain.campaignservice.bll.CampaignBusinessLogicImpl;
-import domain.campaignservice.dal.CampaignDataAccess;
-import domain.campaignservice.dal.CampaignDataAccessConverter;
-import domain.campaignservice.dal.CampaignDataAccessConverterImpl;
-import domain.campaignservice.dal.CampaignDataAccessImpl;
+import com.ebgolden.domain.campaignservice.*;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogic;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogicConverter;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogicConverterImpl;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogicImpl;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccess;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccessConverter;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccessConverterImpl;
+import com.ebgolden.domain.campaignservice.dal.CampaignDataAccessImpl;
 
 public class CampaignModule extends AbstractModule {
     @Override

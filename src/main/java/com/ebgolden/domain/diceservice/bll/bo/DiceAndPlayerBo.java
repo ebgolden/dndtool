@@ -1,9 +1,9 @@
-package domain.diceservice.bll.bo;
+package com.ebgolden.domain.diceservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Die;
-import common.Player;
+import com.ebgolden.common.Die;
+import com.ebgolden.common.Player;
 
 @Builder
 @Value

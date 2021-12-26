@@ -1,10 +1,10 @@
-package persistence.operatorservice.module;
+package com.ebgolden.persistence.operatorservice.module;
 
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import common.Operator;
-import common.Player;
-import common.WideNetworkOperator;
+import com.ebgolden.common.Operator;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.WideNetworkOperator;
 
 public class WideNetworkOperatorModule extends OperatorModule {
     private final String IP_ADDRESS;

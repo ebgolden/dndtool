@@ -1,11 +1,11 @@
-package domain.partyservice.bll;
+package com.ebgolden.domain.partyservice.bll;
 
-import common.Character;
-import common.DungeonMaster;
-import common.Party;
-import common.Player;
-import domain.partyservice.*;
-import domain.partyservice.bll.bo.*;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Party;
+import com.ebgolden.common.Player;
+import com.ebgolden.domain.partyservice.*;
+import com.ebgolden.domain.partyservice.bll.bo.*;
 
 public class PartyBusinessLogicConverterImpl implements PartyBusinessLogicConverter {
     public PartyAndCharacterAndPlayerBo getPartyAndCharacterAndPlayerBoFromLeavePartyRequest(LeavePartyRequest leavePartyRequest) {

@@ -1,9 +1,9 @@
-package application.characterclassreaderservice;
+package com.ebgolden.application.characterclassreaderservice;
 
-import application.characterclassreaderservice.bll.CharacterClassReaderBusinessLogic;
-import application.characterclassreaderservice.bll.CharacterClassReaderBusinessLogicConverter;
-import application.characterclassreaderservice.bll.bo.CharacterClassBo;
-import application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
+import com.ebgolden.application.characterclassreaderservice.bll.CharacterClassReaderBusinessLogic;
+import com.ebgolden.application.characterclassreaderservice.bll.CharacterClassReaderBusinessLogicConverter;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassBo;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
 import com.google.inject.Inject;
 
 public class GetCharacterClassFromResourceImpl implements GetCharacterClassFromResource {

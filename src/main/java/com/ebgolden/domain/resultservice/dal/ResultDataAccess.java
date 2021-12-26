@@ -1,7 +1,7 @@
-package domain.resultservice.dal;
+package com.ebgolden.domain.resultservice.dal;
 
-import domain.resultservice.dal.dao.ResultDao;
-import domain.resultservice.dal.dao.ResultAndVisibilityDao;
+import com.ebgolden.domain.resultservice.dal.dao.ResultDao;
+import com.ebgolden.domain.resultservice.dal.dao.ResultAndVisibilityDao;
 
 public interface ResultDataAccess {
     ResultAndVisibilityDao getResultAndVisibilityDao(ResultDao resultDao);

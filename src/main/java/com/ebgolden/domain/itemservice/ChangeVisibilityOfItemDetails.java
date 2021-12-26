@@ -1,4 +1,4 @@
-package domain.itemservice;
+package com.ebgolden.domain.itemservice;
 
 public interface ChangeVisibilityOfItemDetails {
     /**

@@ -1,6 +1,6 @@
-package application.armorreaderservice;
+package com.ebgolden.application.armorreaderservice;
 
-import common.Armor;
+import com.ebgolden.common.Armor;
 import lombok.Builder;
 import lombok.Value;
 

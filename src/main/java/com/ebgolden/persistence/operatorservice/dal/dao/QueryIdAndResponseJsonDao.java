@@ -1,4 +1,4 @@
-package persistence.operatorservice.dal.dao;
+package com.ebgolden.persistence.operatorservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

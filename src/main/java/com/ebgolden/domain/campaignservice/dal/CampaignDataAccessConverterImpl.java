@@ -1,20 +1,20 @@
-package domain.campaignservice.dal;
+package com.ebgolden.domain.campaignservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Campaign;
-import common.DungeonMaster;
-import common.Player;
-import common.Visibility;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.campaignservice.bll.bo.*;
-import domain.campaignservice.dal.dao.CampaignAndPlayerDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
-import domain.campaignservice.dal.dao.CampaignDao;
+import com.ebgolden.domain.campaignservice.bll.bo.*;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndPlayerDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignDao;
 import java.util.HashMap;
 import java.util.Map;
 

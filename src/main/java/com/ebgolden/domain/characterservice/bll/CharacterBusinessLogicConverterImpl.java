@@ -1,9 +1,9 @@
-package domain.characterservice.bll;
+package com.ebgolden.domain.characterservice.bll;
 
-import common.*;
-import common.Character;
-import domain.characterservice.*;
-import domain.characterservice.bll.bo.*;
+import com.ebgolden.common.*;
+import com.ebgolden.common.Character;
+import com.ebgolden.domain.characterservice.*;
+import com.ebgolden.domain.characterservice.bll.bo.*;
 import java.util.Map;
 
 public class CharacterBusinessLogicConverterImpl implements CharacterBusinessLogicConverter {

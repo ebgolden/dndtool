@@ -1,22 +1,22 @@
-package domain.worldservice.bll;
+package com.ebgolden.domain.worldservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.DungeonMaster;
-import common.Player;
-import common.Visibility;
-import common.World;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.common.World;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.worldservice.bll.bo.WorldAndPlayerBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
-import domain.worldservice.dal.WorldDataAccess;
-import domain.worldservice.dal.WorldDataAccessConverter;
-import domain.worldservice.dal.dao.WorldDao;
-import domain.worldservice.dal.dao.WorldAndVisibilityDao;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndPlayerBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccess;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccessConverter;
+import com.ebgolden.domain.worldservice.dal.dao.WorldDao;
+import com.ebgolden.domain.worldservice.dal.dao.WorldAndVisibilityDao;
 import java.util.Map;
 
 public class WorldBusinessLogicImpl implements WorldBusinessLogic {

@@ -1,11 +1,11 @@
-package application.characterclassreaderservice.dal;
+package com.ebgolden.application.characterclassreaderservice.dal;
 
-import application.characterclassreaderservice.bll.bo.CharacterClassBo;
-import application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
-import application.characterclassreaderservice.dal.dao.CharacterClassDao;
-import application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
-import common.CharacterClass;
-import common.Die;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassBo;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassDao;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
+import com.ebgolden.common.CharacterClass;
+import com.ebgolden.common.Die;
 import org.apache.commons.text.WordUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -1,9 +1,9 @@
-package domain.raceservice.bll;
+package com.ebgolden.domain.raceservice.bll;
 
-import common.Race;
-import domain.raceservice.UpdatedRaceRequest;
-import domain.raceservice.UpdatedRaceResponse;
-import domain.raceservice.bll.bo.RaceBo;
+import com.ebgolden.common.Race;
+import com.ebgolden.domain.raceservice.UpdatedRaceRequest;
+import com.ebgolden.domain.raceservice.UpdatedRaceResponse;
+import com.ebgolden.domain.raceservice.bll.bo.RaceBo;
 
 public class RaceBusinessLogicConverterImpl implements RaceBusinessLogicConverter {
     public RaceBo getRaceBoFromUpdatedRaceRequest(UpdatedRaceRequest updatedRaceRequest) {

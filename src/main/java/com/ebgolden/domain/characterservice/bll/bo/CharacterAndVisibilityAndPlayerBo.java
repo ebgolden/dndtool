@@ -1,10 +1,10 @@
-package domain.characterservice.bll.bo;
+package com.ebgolden.domain.characterservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Character;
-import common.Player;
-import common.Visibility;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

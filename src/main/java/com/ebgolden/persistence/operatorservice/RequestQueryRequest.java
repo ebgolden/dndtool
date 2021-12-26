@@ -1,8 +1,8 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
-import common.Campaign;
-import common.Player;
-import common.QueryType;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
 import lombok.*;
 
 @Builder

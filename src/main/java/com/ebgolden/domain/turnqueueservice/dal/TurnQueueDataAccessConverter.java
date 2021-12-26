@@ -1,9 +1,9 @@
-package domain.turnqueueservice.dal;
+package com.ebgolden.domain.turnqueueservice.dal;
 
-import domain.turnqueueservice.bll.bo.EncounterBo;
-import domain.turnqueueservice.bll.bo.TurnQueueBo;
-import domain.turnqueueservice.dal.dao.EncounterDao;
-import domain.turnqueueservice.dal.dao.TurnQueueDao;
+import com.ebgolden.domain.turnqueueservice.bll.bo.EncounterBo;
+import com.ebgolden.domain.turnqueueservice.bll.bo.TurnQueueBo;
+import com.ebgolden.domain.turnqueueservice.dal.dao.EncounterDao;
+import com.ebgolden.domain.turnqueueservice.dal.dao.TurnQueueDao;
 
 public interface TurnQueueDataAccessConverter {
     EncounterDao getEncounterDaoFromEncounterBo(EncounterBo encounterBo);

@@ -1,10 +1,10 @@
-package domain.characterservice;
+package com.ebgolden.domain.characterservice;
 
 import com.google.inject.Inject;
-import domain.characterservice.bll.CharacterBusinessLogic;
-import domain.characterservice.bll.CharacterBusinessLogicConverter;
-import domain.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
-import domain.characterservice.bll.bo.NonPlayableCharacterBo;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogic;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogicConverter;
+import com.ebgolden.domain.characterservice.bll.bo.NonPlayableCharacterAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.characterservice.bll.bo.NonPlayableCharacterBo;
 
 public class CreateNonPlayableCharacterImpl implements CreateNonPlayableCharacter {
     @Inject

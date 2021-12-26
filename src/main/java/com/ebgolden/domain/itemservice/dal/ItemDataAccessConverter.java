@@ -1,9 +1,9 @@
-package domain.itemservice.dal;
+package com.ebgolden.domain.itemservice.dal;
 
-import domain.itemservice.bll.bo.ItemAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityBo;
-import domain.itemservice.dal.dao.ItemDao;
-import domain.itemservice.dal.dao.ItemAndVisibilityDao;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityBo;
+import com.ebgolden.domain.itemservice.dal.dao.ItemDao;
+import com.ebgolden.domain.itemservice.dal.dao.ItemAndVisibilityDao;
 
 public interface ItemDataAccessConverter {
     ItemDao getItemDaoFromItemAndPlayerBo(ItemAndPlayerBo itemAndPlayerBo);

@@ -1,7 +1,7 @@
-package domain.campaignservice.bll;
+package com.ebgolden.domain.campaignservice.bll;
 
-import domain.campaignservice.*;
-import domain.campaignservice.bll.bo.*;
+import com.ebgolden.domain.campaignservice.*;
+import com.ebgolden.domain.campaignservice.bll.bo.*;
 
 public interface CampaignBusinessLogicConverter {
     CampaignAndVisibilityAndDungeonMasterBo getCampaignAndVisibilityAndDungeonMasterBoFromCreateCampaignRequest(CreateCampaignRequest createCampaignRequest);

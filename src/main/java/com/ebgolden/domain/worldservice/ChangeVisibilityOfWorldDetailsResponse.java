@@ -1,8 +1,8 @@
-package domain.worldservice;
+package com.ebgolden.domain.worldservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Visibility;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

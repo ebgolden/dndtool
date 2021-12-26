@@ -1,4 +1,4 @@
-package common;
+package com.ebgolden.common;
 
 public interface Operator {
     OperatorResponseQuery getOperatorResponseQuery(OperatorRequestQuery operatorRequestQuery);

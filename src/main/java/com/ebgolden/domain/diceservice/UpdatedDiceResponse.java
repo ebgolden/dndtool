@@ -1,8 +1,8 @@
-package domain.diceservice;
+package com.ebgolden.domain.diceservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Die;
+import com.ebgolden.common.Die;
 
 @Builder
 @Value

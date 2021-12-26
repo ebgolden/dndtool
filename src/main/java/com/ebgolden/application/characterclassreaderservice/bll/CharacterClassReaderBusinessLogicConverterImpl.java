@@ -1,10 +1,10 @@
-package application.characterclassreaderservice.bll;
+package com.ebgolden.application.characterclassreaderservice.bll;
 
-import application.characterclassreaderservice.CharacterClassFromResourceRequest;
-import application.characterclassreaderservice.CharacterClassFromResourceResponse;
-import application.characterclassreaderservice.bll.bo.CharacterClassBo;
-import application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
-import common.CharacterClass;
+import com.ebgolden.application.characterclassreaderservice.CharacterClassFromResourceRequest;
+import com.ebgolden.application.characterclassreaderservice.CharacterClassFromResourceResponse;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassBo;
+import com.ebgolden.application.characterclassreaderservice.bll.bo.CharacterClassNameBo;
+import com.ebgolden.common.CharacterClass;
 
 public class CharacterClassReaderBusinessLogicConverterImpl implements CharacterClassReaderBusinessLogicConverter {
     public CharacterClassNameBo getCharacterClassNameBoFromCharacterClassFromResourceRequest(CharacterClassFromResourceRequest characterClassFromResourceRequest) {

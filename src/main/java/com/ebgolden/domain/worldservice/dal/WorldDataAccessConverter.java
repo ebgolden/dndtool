@@ -1,9 +1,9 @@
-package domain.worldservice.dal;
+package com.ebgolden.domain.worldservice.dal;
 
-import domain.worldservice.bll.bo.WorldAndPlayerBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
-import domain.worldservice.dal.dao.WorldDao;
-import domain.worldservice.dal.dao.WorldAndVisibilityDao;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndPlayerBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.dal.dao.WorldDao;
+import com.ebgolden.domain.worldservice.dal.dao.WorldAndVisibilityDao;
 
 public interface WorldDataAccessConverter {
     WorldDao getWorldDaoFromWorldAndPlayerBo(WorldAndPlayerBo worldAndPlayerBo);

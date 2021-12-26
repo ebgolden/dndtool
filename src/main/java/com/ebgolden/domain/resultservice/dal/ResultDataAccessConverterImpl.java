@@ -1,17 +1,17 @@
-package domain.resultservice.dal;
+package com.ebgolden.domain.resultservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Result;
-import common.Visibility;
+import com.ebgolden.common.Result;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.resultservice.bll.bo.ResultAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityBo;
-import domain.resultservice.dal.dao.ResultDao;
-import domain.resultservice.dal.dao.ResultAndVisibilityDao;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityBo;
+import com.ebgolden.domain.resultservice.dal.dao.ResultDao;
+import com.ebgolden.domain.resultservice.dal.dao.ResultAndVisibilityDao;
 import java.util.HashMap;
 import java.util.Map;
 

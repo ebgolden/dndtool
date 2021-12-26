@@ -1,18 +1,18 @@
-package domain.spellservice.module;
+package com.ebgolden.domain.spellservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.spellservice.GetUpdatedSpell;
-import domain.spellservice.GetUpdatedSpellImpl;
-import domain.spellservice.ChangeVisibilityOfSpellDetails;
-import domain.spellservice.ChangeVisibilityOfSpellDetailsImpl;
-import domain.spellservice.bll.SpellBusinessLogic;
-import domain.spellservice.bll.SpellBusinessLogicConverter;
-import domain.spellservice.bll.SpellBusinessLogicConverterImpl;
-import domain.spellservice.bll.SpellBusinessLogicImpl;
-import domain.spellservice.dal.SpellDataAccess;
-import domain.spellservice.dal.SpellDataAccessConverter;
-import domain.spellservice.dal.SpellDataAccessConverterImpl;
-import domain.spellservice.dal.SpellDataAccessImpl;
+import com.ebgolden.domain.spellservice.GetUpdatedSpell;
+import com.ebgolden.domain.spellservice.GetUpdatedSpellImpl;
+import com.ebgolden.domain.spellservice.ChangeVisibilityOfSpellDetails;
+import com.ebgolden.domain.spellservice.ChangeVisibilityOfSpellDetailsImpl;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogic;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogicConverter;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogicConverterImpl;
+import com.ebgolden.domain.spellservice.bll.SpellBusinessLogicImpl;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccess;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccessConverter;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccessConverterImpl;
+import com.ebgolden.domain.spellservice.dal.SpellDataAccessImpl;
 
 public class SpellModule extends AbstractModule {
     @Override

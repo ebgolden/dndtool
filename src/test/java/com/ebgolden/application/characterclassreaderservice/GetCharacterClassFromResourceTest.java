@@ -1,6 +1,6 @@
-package application.characterclassreaderservice;
+package com.ebgolden.application.characterclassreaderservice;
 
-import application.characterclassreaderservice.module.CharacterClassReaderModule;
+import com.ebgolden.application.characterclassreaderservice.module.CharacterClassReaderModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.Assertions;

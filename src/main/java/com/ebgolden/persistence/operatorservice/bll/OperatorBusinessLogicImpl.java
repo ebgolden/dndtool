@@ -1,14 +1,14 @@
-package persistence.operatorservice.bll;
+package com.ebgolden.persistence.operatorservice.bll;
 
 import com.google.inject.Inject;
-import common.Campaign;
-import common.CampaignStatus;
-import common.Player;
-import common.QueryType;
-import persistence.operatorservice.bll.bo.*;
-import persistence.operatorservice.dal.dao.*;
-import persistence.operatorservice.dal.OperatorDataAccess;
-import persistence.operatorservice.dal.OperatorDataAccessConverter;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.CampaignStatus;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.persistence.operatorservice.bll.bo.*;
+import com.ebgolden.persistence.operatorservice.dal.dao.*;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccess;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccessConverter;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;

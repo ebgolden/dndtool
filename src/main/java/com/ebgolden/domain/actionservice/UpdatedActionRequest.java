@@ -1,7 +1,7 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
-import common.Action;
-import common.Player;
+import com.ebgolden.common.Action;
+import com.ebgolden.common.Player;
 import lombok.Builder;
 import lombok.Value;
 

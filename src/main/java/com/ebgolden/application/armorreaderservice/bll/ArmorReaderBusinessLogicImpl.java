@@ -1,11 +1,11 @@
-package application.armorreaderservice.bll;
+package com.ebgolden.application.armorreaderservice.bll;
 
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
-import application.armorreaderservice.dal.ArmorReaderDataAccess;
-import application.armorreaderservice.dal.ArmorReaderDataAccessConverter;
-import application.armorreaderservice.dal.dao.ArmorDao;
-import application.armorreaderservice.dal.dao.ArmorTypeDao;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccess;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccessConverter;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorDao;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorTypeDao;
 import com.google.inject.Inject;
 
 public class ArmorReaderBusinessLogicImpl implements ArmorReaderBusinessLogic {

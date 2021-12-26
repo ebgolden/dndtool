@@ -1,9 +1,9 @@
-package domain.itemservice.bll.bo;
+package com.ebgolden.domain.itemservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Data;
-import common.Item;
-import common.Player;
+import com.ebgolden.common.Item;
+import com.ebgolden.common.Player;
 
 @Builder
 @Data

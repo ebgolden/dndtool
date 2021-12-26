@@ -1,4 +1,4 @@
-package application.armorreaderservice;
+package com.ebgolden.application.armorreaderservice;
 
 public interface GetArmorFromResource {
     /**

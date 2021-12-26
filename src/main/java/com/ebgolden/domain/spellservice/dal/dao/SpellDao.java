@@ -1,4 +1,4 @@
-package domain.spellservice.dal.dao;
+package com.ebgolden.domain.spellservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Data;

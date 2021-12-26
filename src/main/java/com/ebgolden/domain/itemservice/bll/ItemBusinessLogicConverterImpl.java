@@ -1,15 +1,15 @@
-package domain.itemservice.bll;
+package com.ebgolden.domain.itemservice.bll;
 
-import common.Item;
-import common.Player;
-import common.Visibility;
-import domain.itemservice.UpdatedItemRequest;
-import domain.itemservice.UpdatedItemResponse;
-import domain.itemservice.ChangeVisibilityOfItemDetailsRequest;
-import domain.itemservice.ChangeVisibilityOfItemDetailsResponse;
-import domain.itemservice.bll.bo.ItemAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityBo;
+import com.ebgolden.common.Item;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.domain.itemservice.UpdatedItemRequest;
+import com.ebgolden.domain.itemservice.UpdatedItemResponse;
+import com.ebgolden.domain.itemservice.ChangeVisibilityOfItemDetailsRequest;
+import com.ebgolden.domain.itemservice.ChangeVisibilityOfItemDetailsResponse;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityBo;
 import java.util.Map;
 
 public class ItemBusinessLogicConverterImpl implements ItemBusinessLogicConverter {

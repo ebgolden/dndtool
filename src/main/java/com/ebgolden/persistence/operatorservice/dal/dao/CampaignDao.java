@@ -1,6 +1,6 @@
-package persistence.operatorservice.dal.dao;
+package com.ebgolden.persistence.operatorservice.dal.dao;
 
-import common.Campaign;
+import com.ebgolden.common.Campaign;
 import lombok.Builder;
 import lombok.Value;
 

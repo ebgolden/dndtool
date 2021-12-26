@@ -1,10 +1,10 @@
-package domain.raceservice.bll;
+package com.ebgolden.domain.raceservice.bll;
 
 import com.google.inject.Inject;
-import domain.raceservice.bll.bo.RaceBo;
-import domain.raceservice.dal.RaceDataAccess;
-import domain.raceservice.dal.RaceDataAccessConverter;
-import domain.raceservice.dal.dao.RaceDao;
+import com.ebgolden.domain.raceservice.bll.bo.RaceBo;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccess;
+import com.ebgolden.domain.raceservice.dal.RaceDataAccessConverter;
+import com.ebgolden.domain.raceservice.dal.dao.RaceDao;
 
 public class RaceBusinessLogicImpl implements RaceBusinessLogic {
     @Inject

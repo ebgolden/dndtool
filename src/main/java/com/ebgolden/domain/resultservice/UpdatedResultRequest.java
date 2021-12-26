@@ -1,9 +1,9 @@
-package domain.resultservice;
+package com.ebgolden.domain.resultservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Player;
-import common.Result;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Result;
 
 @Builder
 @Value

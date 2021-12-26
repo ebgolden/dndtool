@@ -1,8 +1,8 @@
-package domain.spellservice;
+package com.ebgolden.domain.spellservice;
 
 import lombok.Builder;
 import lombok.Data;
-import common.Spell;
+import com.ebgolden.common.Spell;
 
 @Builder
 @Data

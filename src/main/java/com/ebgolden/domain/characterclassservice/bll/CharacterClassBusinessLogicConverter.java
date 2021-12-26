@@ -1,8 +1,8 @@
-package domain.characterclassservice.bll;
+package com.ebgolden.domain.characterclassservice.bll;
 
-import domain.characterclassservice.UpdatedCharacterClassRequest;
-import domain.characterclassservice.UpdatedCharacterClassResponse;
-import domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.UpdatedCharacterClassRequest;
+import com.ebgolden.domain.characterclassservice.UpdatedCharacterClassResponse;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
 
 public interface CharacterClassBusinessLogicConverter {
     CharacterClassBo getCharacterClassBoFromUpdatedCharacterClassRequest(UpdatedCharacterClassRequest updatedCharacterClassRequest);

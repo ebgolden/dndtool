@@ -1,9 +1,9 @@
-package application.armorreaderservice.dal;
+package com.ebgolden.application.armorreaderservice.dal;
 
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
-import application.armorreaderservice.dal.dao.ArmorDao;
-import application.armorreaderservice.dal.dao.ArmorTypeDao;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorDao;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorTypeDao;
 
 public interface ArmorReaderDataAccessConverter {
     ArmorTypeDao getArmorTypeDaoFromArmorNameBo(ArmorTypeBo armorTypeBo);

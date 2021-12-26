@@ -1,10 +1,10 @@
-package domain.worldservice;
+package com.ebgolden.domain.worldservice;
 
 import com.google.inject.Inject;
-import domain.worldservice.bll.WorldBusinessLogic;
-import domain.worldservice.bll.WorldBusinessLogicConverter;
-import domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogic;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogicConverter;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
 
 public class ChangeVisibilityOfWorldDetailsImpl implements ChangeVisibilityOfWorldDetails {
     @Inject

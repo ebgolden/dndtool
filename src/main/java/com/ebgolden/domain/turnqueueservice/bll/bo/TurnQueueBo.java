@@ -1,8 +1,8 @@
-package domain.turnqueueservice.bll.bo;
+package com.ebgolden.domain.turnqueueservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Character;
+import com.ebgolden.common.Character;
 
 @Builder
 @Value

@@ -1,7 +1,7 @@
-package application.characterclassreaderservice.dal;
+package com.ebgolden.application.characterclassreaderservice.dal;
 
-import application.characterclassreaderservice.dal.dao.CharacterClassDao;
-import application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassDao;
+import com.ebgolden.application.characterclassreaderservice.dal.dao.CharacterClassNameDao;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.commons.io.IOUtils;

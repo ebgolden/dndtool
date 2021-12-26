@@ -1,9 +1,9 @@
-package domain.diceservice.bll;
+package com.ebgolden.domain.diceservice.bll;
 
-import domain.diceservice.UpdatedDiceRequest;
-import domain.diceservice.UpdatedDiceResponse;
-import domain.diceservice.bll.bo.DiceAndPlayerBo;
-import domain.diceservice.bll.bo.DiceBo;
+import com.ebgolden.domain.diceservice.UpdatedDiceRequest;
+import com.ebgolden.domain.diceservice.UpdatedDiceResponse;
+import com.ebgolden.domain.diceservice.bll.bo.DiceAndPlayerBo;
+import com.ebgolden.domain.diceservice.bll.bo.DiceBo;
 
 public interface DiceBusinessLogicConverter {
     DiceAndPlayerBo getDiceAndPlayerBoFromUpdatedDiceRequest(UpdatedDiceRequest updatedDiceRequest);

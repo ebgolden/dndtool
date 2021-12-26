@@ -1,15 +1,15 @@
-package domain.worldservice.dal;
+package com.ebgolden.domain.worldservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import common.QueryType;
-import persistence.operatorservice.RequestQueryRequest;
-import persistence.operatorservice.RequestQueryResponse;
-import persistence.operatorservice.SendRequestQuery;
-import domain.worldservice.dal.dao.WorldDao;
-import domain.worldservice.dal.dao.WorldAndVisibilityDao;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.persistence.operatorservice.RequestQueryRequest;
+import com.ebgolden.persistence.operatorservice.RequestQueryResponse;
+import com.ebgolden.persistence.operatorservice.SendRequestQuery;
+import com.ebgolden.domain.worldservice.dal.dao.WorldDao;
+import com.ebgolden.domain.worldservice.dal.dao.WorldAndVisibilityDao;
 
 public class WorldDataAccessImpl implements WorldDataAccess {
     @Inject

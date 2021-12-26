@@ -1,15 +1,15 @@
-package domain.turnqueueservice.dal;
+package com.ebgolden.domain.turnqueueservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import common.QueryType;
-import persistence.operatorservice.RequestQueryRequest;
-import persistence.operatorservice.RequestQueryResponse;
-import persistence.operatorservice.SendRequestQuery;
-import domain.turnqueueservice.dal.dao.EncounterDao;
-import domain.turnqueueservice.dal.dao.TurnQueueDao;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.persistence.operatorservice.RequestQueryRequest;
+import com.ebgolden.persistence.operatorservice.RequestQueryResponse;
+import com.ebgolden.persistence.operatorservice.SendRequestQuery;
+import com.ebgolden.domain.turnqueueservice.dal.dao.EncounterDao;
+import com.ebgolden.domain.turnqueueservice.dal.dao.TurnQueueDao;
 
 public class TurnQueueDataAccessImpl implements TurnQueueDataAccess {
     @Inject

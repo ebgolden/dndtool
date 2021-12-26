@@ -1,9 +1,9 @@
-package domain.resultservice.bll.bo;
+package com.ebgolden.domain.resultservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Result;
-import common.Visibility;
+import com.ebgolden.common.Result;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

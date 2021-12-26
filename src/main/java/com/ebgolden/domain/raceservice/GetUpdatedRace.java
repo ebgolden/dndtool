@@ -1,4 +1,4 @@
-package domain.raceservice;
+package com.ebgolden.domain.raceservice;
 
 public interface GetUpdatedRace {
     /**

@@ -1,8 +1,8 @@
-package domain.raceservice.bll.bo;
+package com.ebgolden.domain.raceservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Race;
+import com.ebgolden.common.Race;
 
 @Builder
 @Value

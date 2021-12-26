@@ -1,4 +1,4 @@
-package domain.campaignservice;
+package com.ebgolden.domain.campaignservice;
 
 public interface CreateCampaign {
     /**

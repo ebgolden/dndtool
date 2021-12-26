@@ -1,6 +1,6 @@
-package application.characterclassreaderservice.bll.bo;
+package com.ebgolden.application.characterclassreaderservice.bll.bo;
 
-import common.CharacterClass;
+import com.ebgolden.common.CharacterClass;
 import lombok.Builder;
 import lombok.Value;
 

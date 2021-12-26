@@ -1,8 +1,8 @@
-package domain.campaignservice;
+package com.ebgolden.domain.campaignservice;
 
-import common.Campaign;
-import common.DungeonMaster;
-import common.Player;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
 import lombok.Builder;
 import lombok.Value;
 

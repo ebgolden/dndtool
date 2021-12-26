@@ -1,7 +1,7 @@
-package domain.locationservice.dal;
+package com.ebgolden.domain.locationservice.dal;
 
-import domain.locationservice.dal.dao.LocationDao;
-import domain.locationservice.dal.dao.LocationAndVisibilityDao;
+import com.ebgolden.domain.locationservice.dal.dao.LocationDao;
+import com.ebgolden.domain.locationservice.dal.dao.LocationAndVisibilityDao;
 
 public interface LocationDataAccess {
     LocationAndVisibilityDao getLocationAndVisibilityDao(LocationDao locationDao);

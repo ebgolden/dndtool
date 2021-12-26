@@ -1,8 +1,8 @@
-package persistence.operatorservice.module;
+package com.ebgolden.persistence.operatorservice.module;
 
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import common.*;
+import com.ebgolden.common.*;
 import java.util.HashMap;
 import java.util.Map;
 

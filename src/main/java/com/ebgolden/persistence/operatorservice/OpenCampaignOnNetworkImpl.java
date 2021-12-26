@@ -1,10 +1,10 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
 import com.google.inject.Inject;
-import persistence.operatorservice.bll.OperatorBusinessLogic;
-import persistence.operatorservice.bll.OperatorBusinessLogicConverter;
-import persistence.operatorservice.bll.bo.DungeonMasterBo;
-import persistence.operatorservice.bll.bo.PortBo;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogic;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogicConverter;
+import com.ebgolden.persistence.operatorservice.bll.bo.DungeonMasterBo;
+import com.ebgolden.persistence.operatorservice.bll.bo.PortBo;
 
 public class OpenCampaignOnNetworkImpl implements OpenCampaignOnNetwork {
     @Inject

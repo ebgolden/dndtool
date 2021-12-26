@@ -1,10 +1,10 @@
-package domain.partyservice;
+package com.ebgolden.domain.partyservice;
 
 import com.google.inject.Inject;
-import domain.partyservice.bll.PartyBusinessLogic;
-import domain.partyservice.bll.PartyBusinessLogicConverter;
-import domain.partyservice.bll.bo.PartyAndCharacterAndPlayerAndAcceptedByPartyBo;
-import domain.partyservice.bll.bo.PartyBo;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogic;
+import com.ebgolden.domain.partyservice.bll.PartyBusinessLogicConverter;
+import com.ebgolden.domain.partyservice.bll.bo.PartyAndCharacterAndPlayerAndAcceptedByPartyBo;
+import com.ebgolden.domain.partyservice.bll.bo.PartyBo;
 
 public class JoinPartyImpl implements JoinParty {
     @Inject

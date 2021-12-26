@@ -1,17 +1,17 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
-import common.*;
+import com.ebgolden.common.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.operatorservice.module.LocalNetworkOperatorModule;
+import com.ebgolden.persistence.operatorservice.module.LocalNetworkOperatorModule;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

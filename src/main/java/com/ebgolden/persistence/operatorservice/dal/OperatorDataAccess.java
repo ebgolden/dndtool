@@ -1,6 +1,6 @@
-package persistence.operatorservice.dal;
+package com.ebgolden.persistence.operatorservice.dal;
 
-import persistence.operatorservice.dal.dao.*;
+import com.ebgolden.persistence.operatorservice.dal.dao.*;
 
 public interface OperatorDataAccess {
     QueryIdAndResponseJsonDao getQueryIdAndResponseJsonDao(CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao campaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonDao);

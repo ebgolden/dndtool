@@ -1,4 +1,4 @@
-package domain.turnqueueservice.dal.dao;
+package com.ebgolden.domain.turnqueueservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

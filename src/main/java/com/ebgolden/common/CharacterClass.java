@@ -1,4 +1,4 @@
-package common;
+package com.ebgolden.common;
 
 import lombok.*;
 import org.json.simple.JSONArray;

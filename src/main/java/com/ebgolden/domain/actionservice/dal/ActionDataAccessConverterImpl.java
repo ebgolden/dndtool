@@ -1,15 +1,15 @@
-package domain.actionservice.dal;
+package com.ebgolden.domain.actionservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.*;
-import common.Character;
+import com.ebgolden.common.*;
+import com.ebgolden.common.Character;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.actionservice.bll.bo.*;
-import domain.actionservice.dal.dao.*;
+import com.ebgolden.domain.actionservice.bll.bo.*;
+import com.ebgolden.domain.actionservice.dal.dao.*;
 import java.util.HashMap;
 import java.util.Map;
 

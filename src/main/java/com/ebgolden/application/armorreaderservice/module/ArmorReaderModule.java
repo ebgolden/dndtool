@@ -1,15 +1,15 @@
-package application.armorreaderservice.module;
+package com.ebgolden.application.armorreaderservice.module;
 
-import application.armorreaderservice.GetArmorFromResource;
-import application.armorreaderservice.GetArmorFromResourceImpl;
-import application.armorreaderservice.bll.ArmorReaderBusinessLogic;
-import application.armorreaderservice.bll.ArmorReaderBusinessLogicConverter;
-import application.armorreaderservice.bll.ArmorReaderBusinessLogicConverterImpl;
-import application.armorreaderservice.bll.ArmorReaderBusinessLogicImpl;
-import application.armorreaderservice.dal.ArmorReaderDataAccess;
-import application.armorreaderservice.dal.ArmorReaderDataAccessConverter;
-import application.armorreaderservice.dal.ArmorReaderDataAccessConverterImpl;
-import application.armorreaderservice.dal.ArmorReaderDataAccessImpl;
+import com.ebgolden.application.armorreaderservice.GetArmorFromResource;
+import com.ebgolden.application.armorreaderservice.GetArmorFromResourceImpl;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogic;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogicConverter;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogicConverterImpl;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogicImpl;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccess;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccessConverter;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccessConverterImpl;
+import com.ebgolden.application.armorreaderservice.dal.ArmorReaderDataAccessImpl;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;

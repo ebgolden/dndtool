@@ -1,4 +1,4 @@
-package domain.diceservice;
+package com.ebgolden.domain.diceservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
-import common.*;
+import com.ebgolden.common.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.operatorservice.module.GlobalNetworkOperatorModule;
-import domain.diceservice.module.DiceModule;
+import com.ebgolden.persistence.operatorservice.module.GlobalNetworkOperatorModule;
+import com.ebgolden.domain.diceservice.module.DiceModule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

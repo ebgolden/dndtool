@@ -1,4 +1,4 @@
-package domain.resultservice;
+package com.ebgolden.domain.resultservice;
 
 public interface GetUpdatedResult {
     /**

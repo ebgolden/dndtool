@@ -1,9 +1,9 @@
-package application.armorreaderservice.bll;
+package com.ebgolden.application.armorreaderservice.bll;
 
-import application.armorreaderservice.ArmorFromResourceResponse;
-import application.armorreaderservice.ArmorFromResourceRequest;
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.ArmorFromResourceResponse;
+import com.ebgolden.application.armorreaderservice.ArmorFromResourceRequest;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
 
 public interface ArmorReaderBusinessLogicConverter {
     ArmorTypeBo getArmorTypeBoFromArmorFromResourceRequest(ArmorFromResourceRequest armorFromResourceRequest);

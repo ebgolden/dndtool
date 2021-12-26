@@ -1,8 +1,8 @@
-package domain.campaignservice;
+package com.ebgolden.domain.campaignservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Campaign;
+import com.ebgolden.common.Campaign;
 
 @Builder
 @Value

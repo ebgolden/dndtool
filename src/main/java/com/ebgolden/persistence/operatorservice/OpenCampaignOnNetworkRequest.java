@@ -1,6 +1,6 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
-import common.DungeonMaster;
+import com.ebgolden.common.DungeonMaster;
 import lombok.Builder;
 import lombok.Value;
 

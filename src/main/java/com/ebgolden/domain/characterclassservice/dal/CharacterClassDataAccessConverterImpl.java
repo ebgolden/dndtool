@@ -1,10 +1,10 @@
-package domain.characterclassservice.dal;
+package com.ebgolden.domain.characterclassservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.CharacterClass;
-import domain.characterclassservice.bll.bo.CharacterClassBo;
-import domain.characterclassservice.dal.dao.CharacterClassDao;
+import com.ebgolden.common.CharacterClass;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.dal.dao.CharacterClassDao;
 
 public class CharacterClassDataAccessConverterImpl implements CharacterClassDataAccessConverter {
     public CharacterClassDao getCharacterClassDaoFromCharacterClassBo(CharacterClassBo characterClassBo) {

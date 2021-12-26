@@ -1,9 +1,9 @@
-package domain.spellservice.dal;
+package com.ebgolden.domain.spellservice.dal;
 
-import domain.spellservice.bll.bo.SpellAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityBo;
-import domain.spellservice.dal.dao.SpellDao;
-import domain.spellservice.dal.dao.SpellAndVisibilityDao;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityBo;
+import com.ebgolden.domain.spellservice.dal.dao.SpellDao;
+import com.ebgolden.domain.spellservice.dal.dao.SpellAndVisibilityDao;
 
 public interface SpellDataAccessConverter {
     SpellDao getSpellDaoFromSpellAndPlayerBo(SpellAndPlayerBo spellAndPlayerBo);

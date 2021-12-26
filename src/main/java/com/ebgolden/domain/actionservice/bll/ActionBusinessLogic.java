@@ -1,6 +1,6 @@
-package domain.actionservice.bll;
+package com.ebgolden.domain.actionservice.bll;
 
-import domain.actionservice.bll.bo.*;
+import com.ebgolden.domain.actionservice.bll.bo.*;
 
 public interface ActionBusinessLogic {
     ActionsBo getActionsBo(CharacterAndPlayerBo characterAndPlayerBo);

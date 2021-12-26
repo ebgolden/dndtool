@@ -1,4 +1,4 @@
-package domain.locationservice;
+package com.ebgolden.domain.locationservice;
 
 public interface GetUpdatedLocation {
     /**

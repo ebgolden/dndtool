@@ -1,12 +1,12 @@
-package domain.worldservice.bll;
+package com.ebgolden.domain.worldservice.bll;
 
-import domain.worldservice.ChangeVisibilityOfWorldDetailsRequest;
-import domain.worldservice.ChangeVisibilityOfWorldDetailsResponse;
-import domain.worldservice.GetUpdatedWorldRequest;
-import domain.worldservice.GetUpdatedWorldResponse;
-import domain.worldservice.bll.bo.WorldAndPlayerBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.ChangeVisibilityOfWorldDetailsRequest;
+import com.ebgolden.domain.worldservice.ChangeVisibilityOfWorldDetailsResponse;
+import com.ebgolden.domain.worldservice.GetUpdatedWorldRequest;
+import com.ebgolden.domain.worldservice.GetUpdatedWorldResponse;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndPlayerBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
 
 public interface WorldBusinessLogicConverter {
     WorldAndPlayerBo getWorldAndPlayerBoFromGetUpdatedWorldRequest(GetUpdatedWorldRequest getUpdatedWorldRequest);

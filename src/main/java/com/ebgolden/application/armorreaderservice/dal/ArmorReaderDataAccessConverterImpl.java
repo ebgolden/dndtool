@@ -1,10 +1,10 @@
-package application.armorreaderservice.dal;
+package com.ebgolden.application.armorreaderservice.dal;
 
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
-import application.armorreaderservice.dal.dao.ArmorDao;
-import application.armorreaderservice.dal.dao.ArmorTypeDao;
-import common.*;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorDao;
+import com.ebgolden.application.armorreaderservice.dal.dao.ArmorTypeDao;
+import com.ebgolden.common.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.simple.JSONArray;

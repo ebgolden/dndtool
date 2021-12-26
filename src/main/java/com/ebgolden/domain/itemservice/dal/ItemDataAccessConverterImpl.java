@@ -1,17 +1,17 @@
-package domain.itemservice.dal;
+package com.ebgolden.domain.itemservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Item;
-import common.Visibility;
+import com.ebgolden.common.Item;
+import com.ebgolden.common.Visibility;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.itemservice.bll.bo.ItemAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityBo;
-import domain.itemservice.dal.dao.ItemDao;
-import domain.itemservice.dal.dao.ItemAndVisibilityDao;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityBo;
+import com.ebgolden.domain.itemservice.dal.dao.ItemDao;
+import com.ebgolden.domain.itemservice.dal.dao.ItemAndVisibilityDao;
 import java.util.HashMap;
 import java.util.Map;
 

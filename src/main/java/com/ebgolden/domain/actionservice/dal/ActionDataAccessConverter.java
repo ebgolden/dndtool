@@ -1,7 +1,7 @@
-package domain.actionservice.dal;
+package com.ebgolden.domain.actionservice.dal;
 
-import domain.actionservice.bll.bo.*;
-import domain.actionservice.dal.dao.*;
+import com.ebgolden.domain.actionservice.bll.bo.*;
+import com.ebgolden.domain.actionservice.dal.dao.*;
 
 public interface ActionDataAccessConverter {
     CharacterDao getCharacterDaoFromCharacterAndPlayerBo(CharacterAndPlayerBo characterAndPlayerBo);

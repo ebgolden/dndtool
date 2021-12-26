@@ -1,10 +1,10 @@
-package domain.actionservice;
+package com.ebgolden.domain.actionservice;
 
 import com.google.inject.Inject;
-import domain.actionservice.bll.ActionBusinessLogic;
-import domain.actionservice.bll.ActionBusinessLogicConverter;
-import domain.actionservice.bll.bo.ActionAndVisibilityAndPlayerBo;
-import domain.actionservice.bll.bo.ActionAndVisibilityBo;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogic;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogicConverter;
+import com.ebgolden.domain.actionservice.bll.bo.ActionAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.actionservice.bll.bo.ActionAndVisibilityBo;
 
 public class ChangeVisibilityOfActionDetailsImpl implements ChangeVisibilityOfActionDetails {
     @Inject

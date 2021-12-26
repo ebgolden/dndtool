@@ -1,10 +1,10 @@
-package domain.worldservice.bll.bo;
+package com.ebgolden.domain.worldservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.DungeonMaster;
-import common.Visibility;
-import common.World;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.common.World;
 import java.util.Map;
 
 @Builder

@@ -1,7 +1,7 @@
-package domain.characterclassservice.dal;
+package com.ebgolden.domain.characterclassservice.dal;
 
-import domain.characterclassservice.bll.bo.CharacterClassBo;
-import domain.characterclassservice.dal.dao.CharacterClassDao;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.dal.dao.CharacterClassDao;
 
 public interface CharacterClassDataAccessConverter {
     CharacterClassDao getCharacterClassDaoFromCharacterClassBo(CharacterClassBo characterClassBo);

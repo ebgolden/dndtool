@@ -1,4 +1,4 @@
-package domain.worldservice;
+package com.ebgolden.domain.worldservice;
 
 public interface ChangeVisibilityOfWorldDetails {
     /**

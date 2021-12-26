@@ -1,10 +1,10 @@
-package domain.itemservice;
+package com.ebgolden.domain.itemservice;
 
 import com.google.inject.Inject;
-import domain.itemservice.bll.ItemBusinessLogic;
-import domain.itemservice.bll.ItemBusinessLogicConverter;
-import domain.itemservice.bll.bo.ItemAndPlayerBo;
-import domain.itemservice.bll.bo.ItemAndVisibilityBo;
+import com.ebgolden.domain.itemservice.bll.ItemBusinessLogic;
+import com.ebgolden.domain.itemservice.bll.ItemBusinessLogicConverter;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndPlayerBo;
+import com.ebgolden.domain.itemservice.bll.bo.ItemAndVisibilityBo;
 
 public class GetUpdatedItemImpl implements GetUpdatedItem {
     @Inject

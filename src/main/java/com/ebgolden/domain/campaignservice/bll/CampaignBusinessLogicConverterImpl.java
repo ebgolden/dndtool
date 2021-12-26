@@ -1,11 +1,11 @@
-package domain.campaignservice.bll;
+package com.ebgolden.domain.campaignservice.bll;
 
-import common.Campaign;
-import common.DungeonMaster;
-import common.Player;
-import common.Visibility;
-import domain.campaignservice.*;
-import domain.campaignservice.bll.bo.*;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.domain.campaignservice.*;
+import com.ebgolden.domain.campaignservice.bll.bo.*;
 import java.util.Map;
 
 public class CampaignBusinessLogicConverterImpl implements CampaignBusinessLogicConverter {

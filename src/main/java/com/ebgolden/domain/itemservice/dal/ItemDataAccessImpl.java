@@ -1,15 +1,15 @@
-package domain.itemservice.dal;
+package com.ebgolden.domain.itemservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import common.QueryType;
-import persistence.operatorservice.RequestQueryRequest;
-import persistence.operatorservice.RequestQueryResponse;
-import persistence.operatorservice.SendRequestQuery;
-import domain.itemservice.dal.dao.ItemDao;
-import domain.itemservice.dal.dao.ItemAndVisibilityDao;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.persistence.operatorservice.RequestQueryRequest;
+import com.ebgolden.persistence.operatorservice.RequestQueryResponse;
+import com.ebgolden.persistence.operatorservice.SendRequestQuery;
+import com.ebgolden.domain.itemservice.dal.dao.ItemDao;
+import com.ebgolden.domain.itemservice.dal.dao.ItemAndVisibilityDao;
 
 public class ItemDataAccessImpl implements ItemDataAccess {
     @Inject

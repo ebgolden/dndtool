@@ -1,10 +1,10 @@
-package domain.campaignservice;
+package com.ebgolden.domain.campaignservice;
 
 import com.google.inject.Inject;
-import domain.campaignservice.bll.CampaignBusinessLogic;
-import domain.campaignservice.bll.CampaignBusinessLogicConverter;
-import domain.campaignservice.bll.bo.CampaignAndPlayerAndDungeonMasterBo;
-import domain.campaignservice.bll.bo.CampaignBo;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogic;
+import com.ebgolden.domain.campaignservice.bll.CampaignBusinessLogicConverter;
+import com.ebgolden.domain.campaignservice.bll.bo.CampaignAndPlayerAndDungeonMasterBo;
+import com.ebgolden.domain.campaignservice.bll.bo.CampaignBo;
 
 public class AddPlayerToCampaignImpl implements AddPlayerToCampaign {
     @Inject

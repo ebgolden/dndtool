@@ -1,10 +1,10 @@
-package persistence.operatorservice.dal;
+package com.ebgolden.persistence.operatorservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.*;
-import persistence.operatorservice.bll.bo.*;
-import persistence.operatorservice.dal.dao.*;
+import com.ebgolden.common.*;
+import com.ebgolden.persistence.operatorservice.bll.bo.*;
+import com.ebgolden.persistence.operatorservice.dal.dao.*;
 import java.util.Map;
 
 public class OperatorDataAccessConverterImpl implements OperatorDataAccessConverter {

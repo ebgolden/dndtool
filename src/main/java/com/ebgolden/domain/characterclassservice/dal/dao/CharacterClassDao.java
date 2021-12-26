@@ -1,4 +1,4 @@
-package domain.characterclassservice.dal.dao;
+package com.ebgolden.domain.characterclassservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

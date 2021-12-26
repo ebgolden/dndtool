@@ -1,4 +1,4 @@
-package domain.spellservice;
+package com.ebgolden.domain.spellservice;
 
 public interface ChangeVisibilityOfSpellDetails {
     /**

@@ -1,4 +1,4 @@
-package domain.partyservice;
+package com.ebgolden.domain.partyservice;
 
 public interface JoinParty {
     /**

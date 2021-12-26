@@ -1,8 +1,8 @@
-package domain.worldservice.bll;
+package com.ebgolden.domain.worldservice.bll;
 
-import domain.worldservice.bll.bo.WorldAndPlayerBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
-import domain.worldservice.bll.bo.WorldAndVisibilityBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndPlayerBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.worldservice.bll.bo.WorldAndVisibilityBo;
 
 public interface WorldBusinessLogic {
     WorldAndVisibilityBo getWorldAndVisibilityBo(WorldAndPlayerBo worldAndPlayerBo);

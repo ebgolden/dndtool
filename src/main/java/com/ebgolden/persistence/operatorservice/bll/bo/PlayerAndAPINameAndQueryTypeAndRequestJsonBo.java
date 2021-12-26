@@ -1,7 +1,7 @@
-package persistence.operatorservice.bll.bo;
+package com.ebgolden.persistence.operatorservice.bll.bo;
 
-import common.Player;
-import common.QueryType;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
 import lombok.Builder;
 import lombok.Value;
 

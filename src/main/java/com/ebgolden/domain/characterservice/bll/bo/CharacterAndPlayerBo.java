@@ -1,7 +1,7 @@
-package domain.characterservice.bll.bo;
+package com.ebgolden.domain.characterservice.bll.bo;
 
-import common.Character;
-import common.Player;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.Player;
 import lombok.Builder;
 import lombok.Value;
 

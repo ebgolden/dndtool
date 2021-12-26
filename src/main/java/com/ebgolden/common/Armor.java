@@ -1,4 +1,4 @@
-package common;
+package com.ebgolden.common;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

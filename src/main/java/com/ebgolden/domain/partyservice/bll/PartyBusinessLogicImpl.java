@@ -1,14 +1,14 @@
-package domain.partyservice.bll;
+package com.ebgolden.domain.partyservice.bll;
 
 import com.google.inject.Inject;
-import common.Character;
-import common.DungeonMaster;
-import common.Party;
-import common.Player;
-import domain.partyservice.bll.bo.*;
-import domain.partyservice.dal.PartyDataAccess;
-import domain.partyservice.dal.PartyDataAccessConverter;
-import domain.partyservice.dal.dao.*;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.Party;
+import com.ebgolden.common.Player;
+import com.ebgolden.domain.partyservice.bll.bo.*;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccess;
+import com.ebgolden.domain.partyservice.dal.PartyDataAccessConverter;
+import com.ebgolden.domain.partyservice.dal.dao.*;
 
 public class PartyBusinessLogicImpl implements PartyBusinessLogic {
     @Inject

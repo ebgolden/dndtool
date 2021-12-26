@@ -1,6 +1,6 @@
-package domain.raceservice.dal;
+package com.ebgolden.domain.raceservice.dal;
 
-import domain.raceservice.dal.dao.RaceDao;
+import com.ebgolden.domain.raceservice.dal.dao.RaceDao;
 
 public interface RaceDataAccess {
     RaceDao getRaceDao(RaceDao raceDao);

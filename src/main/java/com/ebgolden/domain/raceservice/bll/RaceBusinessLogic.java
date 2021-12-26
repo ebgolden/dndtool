@@ -1,6 +1,6 @@
-package domain.raceservice.bll;
+package com.ebgolden.domain.raceservice.bll;
 
-import domain.raceservice.bll.bo.RaceBo;
+import com.ebgolden.domain.raceservice.bll.bo.RaceBo;
 
 public interface RaceBusinessLogic {
     RaceBo getRaceBo(RaceBo raceBo);

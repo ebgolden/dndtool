@@ -1,4 +1,4 @@
-package domain.locationservice.dal.dao;
+package com.ebgolden.domain.locationservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Data;

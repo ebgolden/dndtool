@@ -1,17 +1,17 @@
-package domain.turnqueueservice.dal;
+package com.ebgolden.domain.turnqueueservice.dal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import common.Character;
-import common.Encounter;
+import com.ebgolden.common.Character;
+import com.ebgolden.common.Encounter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.turnqueueservice.bll.bo.EncounterBo;
-import domain.turnqueueservice.bll.bo.TurnQueueBo;
-import domain.turnqueueservice.dal.dao.EncounterDao;
-import domain.turnqueueservice.dal.dao.TurnQueueDao;
+import com.ebgolden.domain.turnqueueservice.bll.bo.EncounterBo;
+import com.ebgolden.domain.turnqueueservice.bll.bo.TurnQueueBo;
+import com.ebgolden.domain.turnqueueservice.dal.dao.EncounterDao;
+import com.ebgolden.domain.turnqueueservice.dal.dao.TurnQueueDao;
 
 public class TurnQueueDataAccessConverterImpl implements TurnQueueDataAccessConverter {
     public EncounterDao getEncounterDaoFromEncounterBo(EncounterBo encounterBo) {

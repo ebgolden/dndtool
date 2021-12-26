@@ -1,12 +1,12 @@
-package domain.resultservice.bll;
+package com.ebgolden.domain.resultservice.bll;
 
-import domain.resultservice.ChangeVisibilityOfResultDetailsRequest;
-import domain.resultservice.ChangeVisibilityOfResultDetailsResponse;
-import domain.resultservice.UpdatedResultRequest;
-import domain.resultservice.UpdatedResultResponse;
-import domain.resultservice.bll.bo.ResultAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityBo;
+import com.ebgolden.domain.resultservice.ChangeVisibilityOfResultDetailsRequest;
+import com.ebgolden.domain.resultservice.ChangeVisibilityOfResultDetailsResponse;
+import com.ebgolden.domain.resultservice.UpdatedResultRequest;
+import com.ebgolden.domain.resultservice.UpdatedResultResponse;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityBo;
 
 public interface ResultBusinessLogicConverter {
     ResultAndPlayerBo getResultAndPlayerBoFromUpdatedResultRequest(UpdatedResultRequest updatedResultRequest);

@@ -1,7 +1,7 @@
-package domain.campaignservice.bll.bo;
+package com.ebgolden.domain.campaignservice.bll.bo;
 
-import common.Campaign;
-import common.Player;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
 import lombok.Builder;
 import lombok.Value;
 

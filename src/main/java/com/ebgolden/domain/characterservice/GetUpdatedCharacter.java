@@ -1,4 +1,4 @@
-package domain.characterservice;
+package com.ebgolden.domain.characterservice;
 
 public interface GetUpdatedCharacter {
     /**

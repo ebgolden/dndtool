@@ -1,9 +1,9 @@
-package domain.actionservice.bll;
+package com.ebgolden.domain.actionservice.bll;
 
-import common.*;
-import common.Character;
-import domain.actionservice.*;
-import domain.actionservice.bll.bo.*;
+import com.ebgolden.common.*;
+import com.ebgolden.common.Character;
+import com.ebgolden.domain.actionservice.*;
+import com.ebgolden.domain.actionservice.bll.bo.*;
 import java.util.Map;
 
 public class ActionBusinessLogicConverterImpl implements ActionBusinessLogicConverter {

@@ -1,8 +1,8 @@
-package domain.worldservice;
+package com.ebgolden.domain.worldservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.World;
+import com.ebgolden.common.World;
 
 @Builder
 @Value

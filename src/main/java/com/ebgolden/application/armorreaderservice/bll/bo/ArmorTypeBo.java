@@ -1,4 +1,4 @@
-package application.armorreaderservice.bll.bo;
+package com.ebgolden.application.armorreaderservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;

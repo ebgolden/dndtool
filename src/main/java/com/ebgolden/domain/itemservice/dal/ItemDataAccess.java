@@ -1,7 +1,7 @@
-package domain.itemservice.dal;
+package com.ebgolden.domain.itemservice.dal;
 
-import domain.itemservice.dal.dao.ItemDao;
-import domain.itemservice.dal.dao.ItemAndVisibilityDao;
+import com.ebgolden.domain.itemservice.dal.dao.ItemDao;
+import com.ebgolden.domain.itemservice.dal.dao.ItemAndVisibilityDao;
 
 public interface ItemDataAccess {
     ItemAndVisibilityDao getItemAndVisibilityDao(ItemDao itemDao);

@@ -1,10 +1,10 @@
-package domain.resultservice;
+package com.ebgolden.domain.resultservice;
 
 import com.google.inject.Inject;
-import domain.resultservice.bll.ResultBusinessLogic;
-import domain.resultservice.bll.ResultBusinessLogicConverter;
-import domain.resultservice.bll.bo.ResultAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityBo;
+import com.ebgolden.domain.resultservice.bll.ResultBusinessLogic;
+import com.ebgolden.domain.resultservice.bll.ResultBusinessLogicConverter;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityBo;
 
 public class GetUpdatedResultImpl implements GetUpdatedResult {
     @Inject

@@ -1,12 +1,12 @@
-package domain.locationservice.bll;
+package com.ebgolden.domain.locationservice.bll;
 
-import domain.locationservice.UpdatedLocationRequest;
-import domain.locationservice.UpdatedLocationResponse;
-import domain.locationservice.ChangeVisibilityOfLocationDetailsRequest;
-import domain.locationservice.ChangeVisibilityOfLocationDetailsResponse;
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.UpdatedLocationRequest;
+import com.ebgolden.domain.locationservice.UpdatedLocationResponse;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetailsRequest;
+import com.ebgolden.domain.locationservice.ChangeVisibilityOfLocationDetailsResponse;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityAndDungeonMasterBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
 
 public interface LocationBusinessLogicConverter {
     LocationAndPlayerBo getLocationAndPlayerBoFromUpdatedLocationRequest(UpdatedLocationRequest updatedLocationRequest);

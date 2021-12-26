@@ -1,8 +1,8 @@
-package domain.spellservice;
+package com.ebgolden.domain.spellservice;
 
 import lombok.Builder;
 import lombok.Data;
-import common.Visibility;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

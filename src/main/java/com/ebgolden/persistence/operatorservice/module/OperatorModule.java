@@ -1,19 +1,19 @@
-package persistence.operatorservice.module;
+package com.ebgolden.persistence.operatorservice.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import persistence.operatorservice.*;
-import persistence.operatorservice.dal.OperatorDataAccessConverterImpl;
-import persistence.operatorservice.dal.OperatorDataAccessImpl;
-import persistence.operatorservice.bll.OperatorBusinessLogic;
-import persistence.operatorservice.bll.OperatorBusinessLogicConverter;
-import persistence.operatorservice.bll.OperatorBusinessLogicConverterImpl;
-import persistence.operatorservice.bll.OperatorBusinessLogicImpl;
-import persistence.operatorservice.dal.OperatorDataAccess;
-import persistence.operatorservice.dal.OperatorDataAccessConverter;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.persistence.operatorservice.*;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccessConverterImpl;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccessImpl;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogic;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogicConverter;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogicConverterImpl;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogicImpl;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccess;
+import com.ebgolden.persistence.operatorservice.dal.OperatorDataAccessConverter;
 
 public abstract class OperatorModule extends AbstractModule {
     private final Campaign CAMPAIGN;

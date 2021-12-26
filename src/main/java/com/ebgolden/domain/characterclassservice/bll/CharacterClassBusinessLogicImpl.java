@@ -1,10 +1,10 @@
-package domain.characterclassservice.bll;
+package com.ebgolden.domain.characterclassservice.bll;
 
 import com.google.inject.Inject;
-import domain.characterclassservice.bll.bo.CharacterClassBo;
-import domain.characterclassservice.dal.CharacterClassDataAccess;
-import domain.characterclassservice.dal.CharacterClassDataAccessConverter;
-import domain.characterclassservice.dal.dao.CharacterClassDao;
+import com.ebgolden.domain.characterclassservice.bll.bo.CharacterClassBo;
+import com.ebgolden.domain.characterclassservice.dal.CharacterClassDataAccess;
+import com.ebgolden.domain.characterclassservice.dal.CharacterClassDataAccessConverter;
+import com.ebgolden.domain.characterclassservice.dal.dao.CharacterClassDao;
 
 public class CharacterClassBusinessLogicImpl implements CharacterClassBusinessLogic {
     @Inject

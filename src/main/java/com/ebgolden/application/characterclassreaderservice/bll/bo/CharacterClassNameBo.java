@@ -1,4 +1,4 @@
-package application.characterclassreaderservice.bll.bo;
+package com.ebgolden.application.characterclassreaderservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;

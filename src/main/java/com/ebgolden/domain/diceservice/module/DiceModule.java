@@ -1,16 +1,16 @@
-package domain.diceservice.module;
+package com.ebgolden.domain.diceservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.diceservice.GetUpdatedDice;
-import domain.diceservice.GetUpdatedDiceImpl;
-import domain.diceservice.bll.DiceBusinessLogic;
-import domain.diceservice.bll.DiceBusinessLogicConverter;
-import domain.diceservice.bll.DiceBusinessLogicConverterImpl;
-import domain.diceservice.bll.DiceBusinessLogicImpl;
-import domain.diceservice.dal.DiceDataAccess;
-import domain.diceservice.dal.DiceDataAccessConverter;
-import domain.diceservice.dal.DiceDataAccessConverterImpl;
-import domain.diceservice.dal.DiceDataAccessImpl;
+import com.ebgolden.domain.diceservice.GetUpdatedDice;
+import com.ebgolden.domain.diceservice.GetUpdatedDiceImpl;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogic;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogicConverter;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogicConverterImpl;
+import com.ebgolden.domain.diceservice.bll.DiceBusinessLogicImpl;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccess;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccessConverter;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccessConverterImpl;
+import com.ebgolden.domain.diceservice.dal.DiceDataAccessImpl;
 
 public class DiceModule extends AbstractModule {
     @Override

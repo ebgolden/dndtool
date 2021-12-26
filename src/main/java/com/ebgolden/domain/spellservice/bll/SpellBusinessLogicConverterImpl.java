@@ -1,15 +1,15 @@
-package domain.spellservice.bll;
+package com.ebgolden.domain.spellservice.bll;
 
-import common.Player;
-import common.Spell;
-import common.Visibility;
-import domain.spellservice.ChangeVisibilityOfSpellDetailsRequest;
-import domain.spellservice.UpdatedSpellRequest;
-import domain.spellservice.UpdatedSpellResponse;
-import domain.spellservice.ChangeVisibilityOfSpellDetailsResponse;
-import domain.spellservice.bll.bo.SpellAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityAndPlayerBo;
-import domain.spellservice.bll.bo.SpellAndVisibilityBo;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.Spell;
+import com.ebgolden.common.Visibility;
+import com.ebgolden.domain.spellservice.ChangeVisibilityOfSpellDetailsRequest;
+import com.ebgolden.domain.spellservice.UpdatedSpellRequest;
+import com.ebgolden.domain.spellservice.UpdatedSpellResponse;
+import com.ebgolden.domain.spellservice.ChangeVisibilityOfSpellDetailsResponse;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.spellservice.bll.bo.SpellAndVisibilityBo;
 import java.util.Map;
 
 public class SpellBusinessLogicConverterImpl implements SpellBusinessLogicConverter {

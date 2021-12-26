@@ -1,7 +1,7 @@
-package domain.characterservice.dal;
+package com.ebgolden.domain.characterservice.dal;
 
-import domain.characterservice.bll.bo.*;
-import domain.characterservice.dal.dao.*;
+import com.ebgolden.domain.characterservice.bll.bo.*;
+import com.ebgolden.domain.characterservice.dal.dao.*;
 
 public interface CharacterDataAccessConverter {
     CharacterAndVisibilityAndPlayerDao getCharacterAndVisibilityAndPlayerDaoFromCharacterAndVisibilityAndPlayerBo(CharacterAndVisibilityAndPlayerBo characterAndVisibilityAndPlayerBo);

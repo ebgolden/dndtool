@@ -1,4 +1,4 @@
-package application.characterclassreaderservice.dal.dao;
+package com.ebgolden.application.characterclassreaderservice.dal.dao;
 
 import lombok.Builder;
 import lombok.Value;

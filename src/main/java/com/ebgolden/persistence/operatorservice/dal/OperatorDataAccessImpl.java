@@ -1,11 +1,11 @@
-package persistence.operatorservice.dal;
+package com.ebgolden.persistence.operatorservice.dal;
 
 import com.google.inject.Inject;
-import common.Campaign;
-import common.Operator;
-import common.OperatorRequestQuery;
-import common.OperatorResponseQuery;
-import persistence.operatorservice.dal.dao.*;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Operator;
+import com.ebgolden.common.OperatorRequestQuery;
+import com.ebgolden.common.OperatorResponseQuery;
+import com.ebgolden.persistence.operatorservice.dal.dao.*;
 import java.util.HashMap;
 import java.util.Map;
 

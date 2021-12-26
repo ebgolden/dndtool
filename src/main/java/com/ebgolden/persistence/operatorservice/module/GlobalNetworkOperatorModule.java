@@ -1,12 +1,12 @@
-package persistence.operatorservice.module;
+package com.ebgolden.persistence.operatorservice.module;
 
 import com.amazonaws.regions.Regions;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Operator;
-import common.GlobalNetworkOperator;
-import common.Player;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Operator;
+import com.ebgolden.common.GlobalNetworkOperator;
+import com.ebgolden.common.Player;
 
 public class GlobalNetworkOperatorModule extends OperatorModule {
     public GlobalNetworkOperatorModule(Campaign campaign, Player player, Object api) {

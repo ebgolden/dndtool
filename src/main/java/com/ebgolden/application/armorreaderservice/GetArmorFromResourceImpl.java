@@ -1,9 +1,9 @@
-package application.armorreaderservice;
+package com.ebgolden.application.armorreaderservice;
 
-import application.armorreaderservice.bll.ArmorReaderBusinessLogic;
-import application.armorreaderservice.bll.ArmorReaderBusinessLogicConverter;
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogic;
+import com.ebgolden.application.armorreaderservice.bll.ArmorReaderBusinessLogicConverter;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
 import com.google.inject.Inject;
 
 public class GetArmorFromResourceImpl implements GetArmorFromResource {

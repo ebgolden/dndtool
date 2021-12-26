@@ -1,4 +1,4 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
 public interface OpenCampaignOnNetwork {
     /**

@@ -1,6 +1,6 @@
-package persistence.operatorservice.bll.bo;
+package com.ebgolden.persistence.operatorservice.bll.bo;
 
-import common.Campaign;
+import com.ebgolden.common.Campaign;
 import lombok.Builder;
 import lombok.Value;
 

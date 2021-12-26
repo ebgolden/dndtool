@@ -1,10 +1,10 @@
-package persistence.operatorservice;
+package com.ebgolden.persistence.operatorservice;
 
 import com.google.inject.Inject;
-import persistence.operatorservice.bll.OperatorBusinessLogic;
-import persistence.operatorservice.bll.OperatorBusinessLogicConverter;
-import persistence.operatorservice.bll.bo.CampaignBo;
-import persistence.operatorservice.bll.bo.PlayerBo;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogic;
+import com.ebgolden.persistence.operatorservice.bll.OperatorBusinessLogicConverter;
+import com.ebgolden.persistence.operatorservice.bll.bo.CampaignBo;
+import com.ebgolden.persistence.operatorservice.bll.bo.PlayerBo;
 
 public class GetCampaignOnNetworkImpl implements GetCampaignOnNetwork {
     @Inject

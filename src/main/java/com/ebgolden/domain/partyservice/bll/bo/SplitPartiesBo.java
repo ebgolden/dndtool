@@ -1,8 +1,8 @@
-package domain.partyservice.bll.bo;
+package com.ebgolden.domain.partyservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Data;
-import common.Party;
+import com.ebgolden.common.Party;
 
 @Builder
 @Data

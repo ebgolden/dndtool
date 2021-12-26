@@ -1,17 +1,17 @@
-package domain.campaignservice.dal;
+package com.ebgolden.domain.campaignservice.dal;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import common.Campaign;
-import common.Player;
-import common.QueryType;
-import domain.campaignservice.dal.dao.CampaignAndPlayerDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
-import domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
-import domain.campaignservice.dal.dao.CampaignDao;
-import persistence.operatorservice.RequestQueryRequest;
-import persistence.operatorservice.RequestQueryResponse;
-import persistence.operatorservice.SendRequestQuery;
+import com.ebgolden.common.Campaign;
+import com.ebgolden.common.Player;
+import com.ebgolden.common.QueryType;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndPlayerDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityAndDungeonMasterDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignAndVisibilityDao;
+import com.ebgolden.domain.campaignservice.dal.dao.CampaignDao;
+import com.ebgolden.persistence.operatorservice.RequestQueryRequest;
+import com.ebgolden.persistence.operatorservice.RequestQueryResponse;
+import com.ebgolden.persistence.operatorservice.SendRequestQuery;
 
 public class CampaignDataAccessImpl implements CampaignDataAccess {
     @Inject

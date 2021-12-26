@@ -1,18 +1,18 @@
-package domain.worldservice.module;
+package com.ebgolden.domain.worldservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.worldservice.GetUpdatedWorldDetails;
-import domain.worldservice.GetUpdatedWorldDetailsImpl;
-import domain.worldservice.ChangeVisibilityOfWorldDetails;
-import domain.worldservice.ChangeVisibilityOfWorldDetailsImpl;
-import domain.worldservice.bll.WorldBusinessLogic;
-import domain.worldservice.bll.WorldBusinessLogicConverter;
-import domain.worldservice.bll.WorldBusinessLogicConverterImpl;
-import domain.worldservice.bll.WorldBusinessLogicImpl;
-import domain.worldservice.dal.WorldDataAccess;
-import domain.worldservice.dal.WorldDataAccessConverter;
-import domain.worldservice.dal.WorldDataAccessConverterImpl;
-import domain.worldservice.dal.WorldDataAccessImpl;
+import com.ebgolden.domain.worldservice.GetUpdatedWorldDetails;
+import com.ebgolden.domain.worldservice.GetUpdatedWorldDetailsImpl;
+import com.ebgolden.domain.worldservice.ChangeVisibilityOfWorldDetails;
+import com.ebgolden.domain.worldservice.ChangeVisibilityOfWorldDetailsImpl;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogic;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogicConverter;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogicConverterImpl;
+import com.ebgolden.domain.worldservice.bll.WorldBusinessLogicImpl;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccess;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccessConverter;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccessConverterImpl;
+import com.ebgolden.domain.worldservice.dal.WorldDataAccessImpl;
 
 public class WorldModule extends AbstractModule {
     @Override

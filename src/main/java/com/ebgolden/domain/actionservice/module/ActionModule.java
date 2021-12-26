@@ -1,15 +1,15 @@
-package domain.actionservice.module;
+package com.ebgolden.domain.actionservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.actionservice.*;
-import domain.actionservice.bll.ActionBusinessLogic;
-import domain.actionservice.bll.ActionBusinessLogicConverter;
-import domain.actionservice.bll.ActionBusinessLogicConverterImpl;
-import domain.actionservice.bll.ActionBusinessLogicImpl;
-import domain.actionservice.dal.ActionDataAccess;
-import domain.actionservice.dal.ActionDataAccessConverter;
-import domain.actionservice.dal.ActionDataAccessConverterImpl;
-import domain.actionservice.dal.ActionDataAccessImpl;
+import com.ebgolden.domain.actionservice.*;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogic;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogicConverter;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogicConverterImpl;
+import com.ebgolden.domain.actionservice.bll.ActionBusinessLogicImpl;
+import com.ebgolden.domain.actionservice.dal.ActionDataAccess;
+import com.ebgolden.domain.actionservice.dal.ActionDataAccessConverter;
+import com.ebgolden.domain.actionservice.dal.ActionDataAccessConverterImpl;
+import com.ebgolden.domain.actionservice.dal.ActionDataAccessImpl;
 
 public class ActionModule extends AbstractModule {
     @Override

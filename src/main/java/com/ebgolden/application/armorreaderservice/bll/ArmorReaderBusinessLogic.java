@@ -1,7 +1,7 @@
-package application.armorreaderservice.bll;
+package com.ebgolden.application.armorreaderservice.bll;
 
-import application.armorreaderservice.bll.bo.ArmorBo;
-import application.armorreaderservice.bll.bo.ArmorTypeBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorBo;
+import com.ebgolden.application.armorreaderservice.bll.bo.ArmorTypeBo;
 
 public interface ArmorReaderBusinessLogic {
     ArmorBo getArmorBo(ArmorTypeBo armorTypeBo);

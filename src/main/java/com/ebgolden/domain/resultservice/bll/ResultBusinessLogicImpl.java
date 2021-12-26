@@ -1,19 +1,19 @@
-package domain.resultservice.bll;
+package com.ebgolden.domain.resultservice.bll;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import common.*;
+import com.ebgolden.common.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import domain.resultservice.bll.bo.ResultAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityAndPlayerBo;
-import domain.resultservice.bll.bo.ResultAndVisibilityBo;
-import domain.resultservice.dal.ResultDataAccess;
-import domain.resultservice.dal.ResultDataAccessConverter;
-import domain.resultservice.dal.dao.ResultDao;
-import domain.resultservice.dal.dao.ResultAndVisibilityDao;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityAndPlayerBo;
+import com.ebgolden.domain.resultservice.bll.bo.ResultAndVisibilityBo;
+import com.ebgolden.domain.resultservice.dal.ResultDataAccess;
+import com.ebgolden.domain.resultservice.dal.ResultDataAccessConverter;
+import com.ebgolden.domain.resultservice.dal.dao.ResultDao;
+import com.ebgolden.domain.resultservice.dal.dao.ResultAndVisibilityDao;
 import java.util.Map;
 
 public class ResultBusinessLogicImpl implements ResultBusinessLogic {

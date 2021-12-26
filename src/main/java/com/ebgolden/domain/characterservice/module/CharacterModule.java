@@ -1,15 +1,15 @@
-package domain.characterservice.module;
+package com.ebgolden.domain.characterservice.module;
 
 import com.google.inject.AbstractModule;
-import domain.characterservice.*;
-import domain.characterservice.bll.CharacterBusinessLogic;
-import domain.characterservice.bll.CharacterBusinessLogicConverter;
-import domain.characterservice.bll.CharacterBusinessLogicConverterImpl;
-import domain.characterservice.bll.CharacterBusinessLogicImpl;
-import domain.characterservice.dal.CharacterDataAccess;
-import domain.characterservice.dal.CharacterDataAccessConverter;
-import domain.characterservice.dal.CharacterDataAccessConverterImpl;
-import domain.characterservice.dal.CharacterDataAccessImpl;
+import com.ebgolden.domain.characterservice.*;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogic;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogicConverter;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogicConverterImpl;
+import com.ebgolden.domain.characterservice.bll.CharacterBusinessLogicImpl;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccess;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccessConverter;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccessConverterImpl;
+import com.ebgolden.domain.characterservice.dal.CharacterDataAccessImpl;
 
 public class CharacterModule extends AbstractModule {
     @Override

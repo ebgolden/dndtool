@@ -1,9 +1,9 @@
-package domain.locationservice.dal;
+package com.ebgolden.domain.locationservice.dal;
 
-import domain.locationservice.bll.bo.LocationAndPlayerBo;
-import domain.locationservice.bll.bo.LocationAndVisibilityBo;
-import domain.locationservice.dal.dao.LocationDao;
-import domain.locationservice.dal.dao.LocationAndVisibilityDao;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndPlayerBo;
+import com.ebgolden.domain.locationservice.bll.bo.LocationAndVisibilityBo;
+import com.ebgolden.domain.locationservice.dal.dao.LocationDao;
+import com.ebgolden.domain.locationservice.dal.dao.LocationAndVisibilityDao;
 
 public interface LocationDataAccessConverter {
     LocationDao getLocationDaoFromLocationAndPlayerBo(LocationAndPlayerBo locationAndPlayerBo);

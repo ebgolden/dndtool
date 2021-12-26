@@ -1,4 +1,4 @@
-package domain.raceservice;
+package com.ebgolden.domain.raceservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,15 +6,15 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
-import common.*;
+import com.ebgolden.common.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import domain.raceservice.module.RaceModule;
-import persistence.operatorservice.module.GlobalNetworkOperatorModule;
+import com.ebgolden.domain.raceservice.module.RaceModule;
+import com.ebgolden.persistence.operatorservice.module.GlobalNetworkOperatorModule;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

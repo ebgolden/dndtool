@@ -1,8 +1,8 @@
-package domain.resultservice;
+package com.ebgolden.domain.resultservice;
 
 import lombok.Builder;
 import lombok.Value;
-import common.Visibility;
+import com.ebgolden.common.Visibility;
 import java.util.Map;
 
 @Builder

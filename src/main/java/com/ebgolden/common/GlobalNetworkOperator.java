@@ -1,4 +1,4 @@
-package common;
+package com.ebgolden.common;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.regions.Regions;

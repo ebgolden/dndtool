@@ -1,9 +1,9 @@
-package domain.characterservice.bll.bo;
+package com.ebgolden.domain.characterservice.bll.bo;
 
 import lombok.Builder;
 import lombok.Value;
-import common.DungeonMaster;
-import common.NonPlayableCharacter;
+import com.ebgolden.common.DungeonMaster;
+import com.ebgolden.common.NonPlayableCharacter;
 
 @Builder
 @Value
