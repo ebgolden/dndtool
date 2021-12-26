@@ -14,8 +14,8 @@ test {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    implementation 'junit:junit:4.12'
+    testCompile 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     implementation group: 'com.google.inject', name: 'guice', version: '4.0'
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
