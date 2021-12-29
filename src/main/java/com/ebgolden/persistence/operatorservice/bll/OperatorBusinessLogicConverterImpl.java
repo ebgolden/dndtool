@@ -11,7 +11,7 @@ import java.util.Map;
 public class OperatorBusinessLogicConverterImpl implements OperatorBusinessLogicConverter {
     public CampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBo getCampaignIdAndPlayerIdAndAPINameAndQueryTypeAndRequestJsonBoFromRequestQueryResponse(RequestQueryRequest requestQueryRequest) {
         Campaign campaign = requestQueryRequest.getCampaign();
-        String campaignId = campaign.getId();
+        String campaignId = (campaign != null) ? campaign.getId() : null;
         Player player = requestQueryRequest.getPlayer();
         String playerId = player.getId();
         Object api = requestQueryRequest.getApi();

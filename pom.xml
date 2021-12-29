@@ -6,7 +6,7 @@
 
   <groupId>com.ebgolden</groupId>
   <artifactId>dndtool</artifactId>
-  <version>0.1.0-alpha</version>
+  <version>0.1.1-alpha</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A Java library for create, managing, and running DnD campaigns</description>
